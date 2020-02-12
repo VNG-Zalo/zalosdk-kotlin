@@ -5,10 +5,11 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.zing.zalo.zalosdk.openapi.ZaloOpenApi
-import com.zing.zalo.zalosdk.openapi.ZaloOpenApiCallback
-import com.zing.zalo.zalosdk.openapi.ZaloPluginCallback
-import com.zing.zalo.zalosdk.openapi.model.FeedData
+import com.zing.zalo.zalosdk.kotlin.oauth.ZaloSDK
+import com.zing.zalo.zalosdk.kotlin.openapi.ZaloOpenApi
+import com.zing.zalo.zalosdk.kotlin.openapi.ZaloOpenApiCallback
+import com.zing.zalo.zalosdk.kotlin.openapi.ZaloPluginCallback
+import com.zing.zalo.zalosdk.kotlin.openapi.model.FeedData
 import org.json.JSONObject
 
 class OpenApiActivity : AppCompatActivity(), ZaloOpenApiCallback, ZaloPluginCallback {
@@ -37,12 +38,18 @@ class OpenApiActivity : AppCompatActivity(), ZaloOpenApiCallback, ZaloPluginCall
 
     private lateinit var callBackTextView: TextView
 
+    private lateinit var zaloSDKClone:ZaloSDK
+
+    private lateinit var zaloOpenApi: ZaloOpenApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_open_api)
         bindUI()
+        configureLogic()
         configureUI()
         bindViewsListener()
+
+
     }
 
     //#region private supportive method
@@ -63,40 +70,53 @@ class OpenApiActivity : AppCompatActivity(), ZaloOpenApiCallback, ZaloPluginCall
 
     }
 
+    private fun configureLogic() {
+        zaloSDKClone = ZaloSDK(this)
+        zaloOpenApi = ZaloOpenApi(
+            this,
+            zaloSDKClone.getOauthCode()
+        )
+    }
+
     private fun bindViewsListener() {
         getProfileButton.setOnClickListener {
             val fields = arrayOf("id", "birthday", "gender", "picture", "name")
-            ZaloOpenApi.getInstance().getProfile(fields, this)
+//            ZaloOpenApi.getInstance().getProfile(fields, this)
+            zaloOpenApi.getProfile(fields, this)
         }
         getFriendListUsedAppButton.setOnClickListener {
             val fields = arrayOf("id", "name", "gender", "picture")
-            ZaloOpenApi.getInstance().getFriendListUsedApp(fields, 0, 999, this)
+            zaloOpenApi.getFriendListUsedApp(fields, 0, 999, this)
         }
         getFriendListInvitableButton.setOnClickListener {
             val fields = arrayOf("id", "name", "gender", "picture")
-            ZaloOpenApi.getInstance().getFriendListInvitable(fields, 0, 999, this)
-
+            zaloOpenApi.getFriendListInvitable(fields, 0, 999, this)
         }
+
         inviteFriendUseAppButton.setOnClickListener {
             val friendsList = arrayOf("")
-            ZaloOpenApi.getInstance().inviteFriendUseApp(friendsList, "Hello!", this)
+            zaloOpenApi.inviteFriendUseApp(friendsList, "Hello!", this)
+
         }
+
         postToWallButton.setOnClickListener {
-            ZaloOpenApi.getInstance().postToWall(
+            zaloOpenApi.postToWall(
                 "http://vnexpress.net",
                 "http://vnexpress.net",
                 this
             )
         }
+
         sendMsgToFriendButton.setOnClickListener {
-            ZaloOpenApi.getInstance()
-                .sendMsgToFriend("1491696566623706686", "msg", "http://vnexpress.net", this)
+            zaloOpenApi.sendMsgToFriend("1491696566623706686", "msg", "http://vnexpress.net", this)
         }
+
         sendMessageViaApp.setOnClickListener {
-            ZaloOpenApi.getInstance().shareMessage(mockFeedData(), this)
+            zaloOpenApi.shareMessage(mockFeedData(), this)
         }
+
         sharePostViaApp.setOnClickListener {
-            ZaloOpenApi.getInstance().shareFeed(mockFeedData(), this)
+            zaloOpenApi.shareFeed(mockFeedData(), this)
         }
     }
 
