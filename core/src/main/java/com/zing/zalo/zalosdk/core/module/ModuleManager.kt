@@ -2,16 +2,17 @@ package com.zing.zalo.zalosdk.core.module
 
 import android.annotation.SuppressLint
 import android.content.Context
-import com.zing.zalo.devicetrackingsdk.DeviceTracking
-import com.zing.zalo.devicetrackingsdk.DeviceTrackingListener
-import com.zing.zalo.devicetrackingsdk.SdkTracking
-import com.zing.zalo.zalosdk.core.apptracking.AppTracker
-import com.zing.zalo.zalosdk.core.apptracking.AppTrackerListener
-import com.zing.zalo.zalosdk.core.apptracking.AppTrackerStorage
-import com.zing.zalo.zalosdk.core.helper.Storage
-import com.zing.zalo.zalosdk.core.log.Log
-import com.zing.zalo.zalosdk.core.servicemap.ServiceMapManager
-import com.zing.zalo.zalosdk.core.settings.SettingsManager
+import com.zing.zalo.zalosdk.kotlin.core.devicetrackingsdk.DeviceTracking
+import com.zing.zalo.zalosdk.kotlin.core.devicetrackingsdk.DeviceTrackingListener
+import com.zing.zalo.zalosdk.kotlin.core.devicetrackingsdk.SdkTracking
+import com.zing.zalo.zalosdk.kotlin.core.apptracking.AppTracker
+import com.zing.zalo.zalosdk.kotlin.core.apptracking.AppTrackerListener
+import com.zing.zalo.zalosdk.kotlin.core.apptracking.AppTrackerStorage
+import com.zing.zalo.zalosdk.kotlin.core.helper.Storage
+import com.zing.zalo.zalosdk.kotlin.core.log.Log
+import com.zing.zalo.zalosdk.kotlin.core.module.IModule
+import com.zing.zalo.zalosdk.kotlin.core.servicemap.ServiceMapManager
+import com.zing.zalo.zalosdk.kotlin.core.settings.SettingsManager
 import java.util.concurrent.atomic.AtomicBoolean
 
 @SuppressLint("StaticFieldLeak")

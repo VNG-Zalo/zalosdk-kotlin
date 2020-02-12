@@ -1,3 +1,5 @@
+import java.text.SimpleDateFormat
+
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
@@ -27,6 +29,9 @@ allprojects {
     }
 }
 
+String date =  new SimpleDateFormat("MM-dd").format(new Date())
+String day = date.split("-")[0]
+String month = date.split("-")[1]
 ext {
     androidSupportV4 = "com.android.support:support-v4:28.0.0"
     bintrayName = 'com.zing.zalo.zalosdk.kotlin'
@@ -40,7 +45,7 @@ ext {
     minSdkVersion = 14
 
     //bintray jfrog
-    zdklibVersion = '1.0'
+    zdklibVersion = "2.4." + month + day
     bintrayRepo = 'ZaloSDKKotlin'
     libGroup = 'com.zing.zalo.zalosdk.kotlin' //group
     siteUrl = 'https://github.com/VNG-Zalo/zalosdk-kotlin'
@@ -55,7 +60,7 @@ ext {
     licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
     allLicenses = ["Apache-2.0"]
 
-    userOrg = 'vng'  //important
+    userOrg = 'zalo'  //important
 }
 
 task clean(type: Delete) {
