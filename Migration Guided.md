@@ -1,56 +1,7 @@
 # **ZALO&#39;S KOTLIN SDK**
 
-1. Cách sử dụng
 
-- Import module từ jfrog/jCenter
-
-```
-        def versionSDK = sdk_version
-        implementation "com.zing.zalo.zalosdk:core:$versionSDK"
-        implementation "com.zing.zalo.zalosdk:auth:$versionSDK"
-        implementation "com.zing.zalo.zalosdk:analytics:$versionSDK"
-        implementation "com.zing.zalo.zalosdk:openapi:$versionSDK"
-```
-
-- Lấy application hash key
-
-```
-        AppInfo.INSTANCE.getApplicationHashKey(this);
-```
-
-- Đăng ký app trên web [https://developers.zalo.me](https://developers.zalo.me/) để lấy appID
-- Tạo ứng dụng android với package name và appID
-
-- Thêm thẻ provider và meta-data vào Android Manifest
-
-```
-        <provider
-            tools:replace="android:authorities"
-            android:name="com.zing.zalo.zalosdk.core.module.ZaloSDKInitProvider"
-            android:authorities= package_ name
-            android:exported="false" />
-
-        <meta-data
-            android:name="com.zing.zalo.zalosdk.appID"
-            android:value="@string/appID" />
-```
-
-- Thêm thẻ string vào string.xml
-
-```
-        <string name="zalosdk_login_protocol_schema"
-                translatable="false">zalo-$appID</string>
-        <string name="zalosdk_app_id" translatable="false">$appID</string>
-```
-
-2. Gọi phương thức ZaloSdk trong Java - Kotlin
-
-```
-        Java:   ZaloSDK zaloSDK = new ZaloSDK(Context context, String authCode);
-        Kotlin: val zaaloSDK = ZaloSDK(context:Context, authCode:String) 
-```
-
-3. So sánh ZaloSDK Kotlin (bản mới) - Java (bản cũ)
+1. So sánh ZaloSDK Kotlin (bản mới) - Java (bản cũ)
 
 - Cài đặt
 
@@ -62,7 +13,7 @@
 | Thêm attribute name của Application | Xóa attribute name của Appplication trong manifest  |
 | Thêm activity để login Zalo bằng Web | Bỏ bước này (hoặc xóa đi nếu upgrade từ java sdk lên kotlin sdk) |
 
-4. Chuyển đổi ZaloSDK từ **Java** qua **Kotlin**
+2. Chuyển đổi ZaloSDK từ **Java** qua **Kotlin**
 
 - Xóa attribute name của Application
 

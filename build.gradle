@@ -3,6 +3,7 @@ import java.text.SimpleDateFormat
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
+    ext.kotlin_version = '1.3.61'
     ext.kotlin_version = '1.3.50'
     ext.tools_build_version = '3.4.0'
     repositories {
@@ -30,8 +31,8 @@ allprojects {
 }
 
 String date =  new SimpleDateFormat("MM-dd").format(new Date())
-String day = date.split("-")[0]
-String month = date.split("-")[1]
+String month = date.split("-")[0]
+String day = date.split("-")[1]
 ext {
     androidSupportV4 = "com.android.support:support-v4:28.0.0"
     bintrayName = 'com.zing.zalo.zalosdk.kotlin'

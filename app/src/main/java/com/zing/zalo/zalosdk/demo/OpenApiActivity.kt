@@ -38,7 +38,7 @@ class OpenApiActivity : AppCompatActivity(), ZaloOpenApiCallback, ZaloPluginCall
 
     private lateinit var callBackTextView: TextView
 
-    private lateinit var zaloSDKClone:ZaloSDK
+    private lateinit var zaloSDK:ZaloSDK
 
     private lateinit var zaloOpenApi: ZaloOpenApi
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -71,10 +71,10 @@ class OpenApiActivity : AppCompatActivity(), ZaloOpenApiCallback, ZaloPluginCall
     }
 
     private fun configureLogic() {
-        zaloSDKClone = ZaloSDK(this)
+        zaloSDK = ZaloSDK(this)
         zaloOpenApi = ZaloOpenApi(
             this,
-            zaloSDKClone.getOauthCode()
+            zaloSDK.getOauthCode()
         )
     }
 

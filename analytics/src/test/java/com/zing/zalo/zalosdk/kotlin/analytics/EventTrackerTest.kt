@@ -48,7 +48,6 @@ class EventTrackerTest {
 
         sut = EventTracker.getInstance()
         startModuleTest()
-
     }
 
     @Test

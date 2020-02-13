@@ -70,6 +70,11 @@ dependencies {
     androidTestImplementation "com.google.truth:truth:0.43"
     androidTestImplementation 'org.objenesis:objenesis:2.6'
     androidTestImplementation('io.mockk:mockk-android:1.9.3') { exclude module: 'objenesis' }
+    implementation "androidx.core:core-ktx:+"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
 
 apply plugin: 'com.google.gms.google-services'
+repositories {
+    mavenCentral()
+}
