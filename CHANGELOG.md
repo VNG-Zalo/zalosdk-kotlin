@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [2.4.mmdd] - 2020/MM/DD
+## [2.5.0214] - 2020/02/14
 
 ### Changed
 

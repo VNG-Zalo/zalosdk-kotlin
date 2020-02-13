@@ -46,7 +46,7 @@ ext {
     minSdkVersion = 14
 
     //bintray jfrog
-    zdklibVersion = "2.4." + month + day
+    zdklibVersion = "2.5." + month + day
     bintrayRepo = 'ZaloSDKKotlin'
     libGroup = 'com.zing.zalo.zalosdk.kotlin' //group
     siteUrl = 'https://github.com/VNG-Zalo/zalosdk-kotlin'
