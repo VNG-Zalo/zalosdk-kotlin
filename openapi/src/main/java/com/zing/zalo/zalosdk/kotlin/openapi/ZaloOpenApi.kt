@@ -40,7 +40,7 @@ class ZaloOpenApi(context: Context, oauthCode: String?){
      * @param callback
      */
     fun getProfile(fields: Array<String>, @Nullable callback: ZaloOpenApiCallback) {
-        openApi?.getProfile(fields, callback)
+        openApi.getProfile(fields, callback)
     }
 
     /**
@@ -57,7 +57,7 @@ class ZaloOpenApi(context: Context, oauthCode: String?){
         count: Int,
         @Nullable callback: ZaloOpenApiCallback
     ) {
-        openApi?.getFriendListUsedApp(fields, position, count, callback)
+        openApi.getFriendListUsedApp(fields, position, count, callback)
     }
 
 
@@ -76,7 +76,7 @@ class ZaloOpenApi(context: Context, oauthCode: String?){
         count: Int,
         @Nullable callback: ZaloOpenApiCallback
     ) {
-        openApi?.getFriendListInvitable(fields, position, count, callback)
+        openApi.getFriendListInvitable(fields, position, count, callback)
     }
 
 
@@ -91,7 +91,7 @@ class ZaloOpenApi(context: Context, oauthCode: String?){
         message: String,
         @Nullable callback: ZaloOpenApiCallback
     ) {
-        openApi?.inviteFriendUseApp(friendId, message, callback)
+        openApi.inviteFriendUseApp(friendId, message, callback)
     }
 
 
@@ -103,7 +103,7 @@ class ZaloOpenApi(context: Context, oauthCode: String?){
      * @param callback ZaloOpenApiCallback
      */
     fun postToWall(link: String, msg: String, @Nullable callback: ZaloOpenApiCallback) {
-        openApi?.postToWall(link, msg, callback)
+        openApi.postToWall(link, msg, callback)
     }
 
     /**
@@ -121,7 +121,7 @@ class ZaloOpenApi(context: Context, oauthCode: String?){
         link: String,
         @Nullable callback: ZaloOpenApiCallback
     ) {
-        openApi?.sendMsgToFriend(friendId, msg, link, callback)
+        openApi.sendMsgToFriend(friendId, msg, link, callback)
     }
 
     /**
@@ -134,7 +134,7 @@ class ZaloOpenApi(context: Context, oauthCode: String?){
         feedData: FeedData,
         callback: ZaloPluginCallback?
     ) {
-        openApi?.shareMessage(feedData, callback)
+        openApi.shareMessage(feedData, callback)
     }
 
     /**
@@ -147,7 +147,7 @@ class ZaloOpenApi(context: Context, oauthCode: String?){
         feedData: FeedData,
         callback: ZaloPluginCallback?
     ) {
-        openApi?.shareFeed(feedData, callback)
+        openApi.shareFeed(feedData, callback)
     }
 
 
