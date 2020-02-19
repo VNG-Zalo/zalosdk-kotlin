@@ -8,8 +8,8 @@ import android.os.Looper
 import android.telephony.TelephonyManager
 import android.text.TextUtils
 import android.view.WindowManager
-import com.zing.zalo.zalosdk.kotlin.core.devicetrackingsdk.model.PreloadInfo
 import com.zing.zalo.zalosdk.kotlin.core.Constant
+import com.zing.zalo.zalosdk.kotlin.core.devicetrackingsdk.model.PreloadInfo
 import com.zing.zalo.zalosdk.kotlin.core.log.Log
 import org.json.JSONArray
 import org.json.JSONException

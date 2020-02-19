@@ -9,8 +9,7 @@ import java.util.concurrent.ThreadPoolExecutor
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicInteger
 
-object ZTaskExecutor
-{
+object ZTaskExecutor {
     interface TaskQueue {
         fun queueRunnable(runnable: Runnable)
         fun queueDelayedRunnable(runnable: Runnable, milliseconds: Long)
@@ -54,8 +53,7 @@ object ZTaskExecutor
 
 }
 
-internal class MyThreadFactory(poolName: String) : ThreadFactory
-{
+internal class MyThreadFactory(poolName: String) : ThreadFactory {
     private val threadNumber = AtomicInteger(1)
     private val namePrefix: String = "pool-$poolName-thread-"
 

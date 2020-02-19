@@ -3,10 +3,10 @@ package com.zing.zalo.zalosdk.kotlin.analytics
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider
 import com.google.common.truth.Truth.assertThat
-import com.zing.zalo.zalosdk.kotlin.core.devicetrackingsdk.DeviceTracking
 import com.zing.zalo.zalosdk.kotlin.analytics.helper.AppInfoHelper
 import com.zing.zalo.zalosdk.kotlin.analytics.helper.DataHelper
 import com.zing.zalo.zalosdk.kotlin.analytics.helper.DeviceHelper
+import com.zing.zalo.zalosdk.kotlin.core.devicetrackingsdk.DeviceTracking
 import com.zing.zalo.zalosdk.kotlin.core.helper.AppInfo
 import com.zing.zalo.zalosdk.kotlin.core.helper.DeviceInfo
 import com.zing.zalo.zalosdk.kotlin.core.helper.Utils
@@ -48,7 +48,6 @@ class EventTrackerTest {
 
         sut = EventTracker.getInstance()
         startModuleTest()
-
     }
 
     @Test

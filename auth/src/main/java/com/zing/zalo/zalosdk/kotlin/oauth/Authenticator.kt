@@ -49,13 +49,13 @@ class Authenticator(val context: Context, private val mStorage: AuthStorage) :
         via: LoginVia,
         listener: IAuthenticateCompleteListener?
     ) {
-        if (listener == null) throw IllegalArgumentException("AuthCompleteListenerI must be set.")
+        if (listener == null) throw IllegalArgumentException("IAuthenticateCompleteListener must be set.")
         setOAuthCompleteListener(listener)
         sendOAuthRequest(activity, via)
     }
 
     override fun registerZalo(activity: Activity, listener: IAuthenticateCompleteListener?) {
-        if (listener == null) throw IllegalArgumentException("AuthCompleteListenerI must be set.")
+        if (listener == null) throw IllegalArgumentException("IAuthenticateCompleteListener must be set.")
         setOAuthCompleteListener(listener)
         val intent = WebLoginActivity.newIntent(activity, true)
         activity.startActivityForResult(intent, Constant.ZALO_AUTHENTICATE_REQUEST_CODE)

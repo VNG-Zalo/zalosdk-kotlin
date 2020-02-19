@@ -5,8 +5,8 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.core.content.pm.ApplicationInfoBuilder
 import androidx.test.core.content.pm.PackageInfoBuilder
 import com.google.common.truth.Truth.assertThat
-import com.zing.zalo.zalosdk.kotlin.core.devicetrackingsdk.DeviceTracking
 import com.zing.zalo.zalosdk.kotlin.core.Constant
+import com.zing.zalo.zalosdk.kotlin.core.devicetrackingsdk.DeviceTracking
 import com.zing.zalo.zalosdk.kotlin.core.helper.DeviceInfo
 import com.zing.zalo.zalosdk.kotlin.core.helper.Utils
 import com.zing.zalo.zalosdk.kotlin.core.http.BaseHttpRequest

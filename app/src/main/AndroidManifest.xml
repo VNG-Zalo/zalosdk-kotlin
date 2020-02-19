@@ -14,13 +14,6 @@
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
 
-        <meta-data
-                android:name="com.zing.zalo.zalosdk.appID"
-                android:value="@string/zalosdk_app_id" />
-        <meta-data
-                android:name="com.zing.zalo.sdk.preloadChannel"
-                android:value="@string/preloadChannel" />
-
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,6 +23,13 @@
         </activity>
 
         <activity android:name=".OpenApiActivity" />
+
+        <meta-data
+                android:name="com.zing.zalo.zalosdk.appID"
+                android:value="@string/zalosdk_app_id" />
+        <meta-data
+                android:name="com.zing.zalo.sdk.preloadChannel"
+                android:value="@string/preloadChannel" />
 
     </application>
 

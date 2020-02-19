@@ -8,7 +8,7 @@ interface IModule {
     fun stop()
 }
 
-abstract class BaseModule: IModule {
+abstract class BaseModule : IModule {
     protected var context: Context? = null
         private set
 

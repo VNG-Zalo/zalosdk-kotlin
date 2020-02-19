@@ -2,12 +2,12 @@ package com.zing.zalo.zalosdk.kotlin.core.module
 
 import android.annotation.SuppressLint
 import android.content.Context
-import com.zing.zalo.zalosdk.kotlin.core.devicetrackingsdk.DeviceTracking
-import com.zing.zalo.zalosdk.kotlin.core.devicetrackingsdk.DeviceTrackingListener
-import com.zing.zalo.zalosdk.kotlin.core.devicetrackingsdk.SdkTracking
 import com.zing.zalo.zalosdk.kotlin.core.apptracking.AppTracker
 import com.zing.zalo.zalosdk.kotlin.core.apptracking.AppTrackerListener
 import com.zing.zalo.zalosdk.kotlin.core.apptracking.AppTrackerStorage
+import com.zing.zalo.zalosdk.kotlin.core.devicetrackingsdk.DeviceTracking
+import com.zing.zalo.zalosdk.kotlin.core.devicetrackingsdk.DeviceTrackingListener
+import com.zing.zalo.zalosdk.kotlin.core.devicetrackingsdk.SdkTracking
 import com.zing.zalo.zalosdk.kotlin.core.helper.Storage
 import com.zing.zalo.zalosdk.kotlin.core.log.Log
 import com.zing.zalo.zalosdk.kotlin.core.servicemap.ServiceMapManager
@@ -32,7 +32,6 @@ object ModuleManager {
         modules.add(st)
         dt.sdkTracking = st
         modules.add(dt)
-
 
 
     }

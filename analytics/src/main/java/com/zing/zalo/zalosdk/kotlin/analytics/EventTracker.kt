@@ -5,9 +5,10 @@ import android.content.Context
 import android.os.Handler
 import android.os.HandlerThread
 import android.os.Message
+import androidx.annotation.Keep
+import com.zing.zalo.zalosdk.kotlin.analytics.model.Event
 import com.zing.zalo.zalosdk.kotlin.core.devicetrackingsdk.DeviceTracking
 import com.zing.zalo.zalosdk.kotlin.core.devicetrackingsdk.DeviceTrackingListener
-import com.zing.zalo.zalosdk.kotlin.analytics.model.Event
 import com.zing.zalo.zalosdk.kotlin.core.helper.AppInfo
 import com.zing.zalo.zalosdk.kotlin.core.helper.DeviceInfo
 import com.zing.zalo.zalosdk.kotlin.core.helper.Storage
@@ -22,6 +23,7 @@ import org.json.JSONArray
 import org.json.JSONObject
 import java.util.*
 
+@Keep
 @SuppressLint("StaticFieldLeak")
 class EventTracker : BaseModule(), IEventTracker {
     companion object {
@@ -49,6 +51,7 @@ class EventTracker : BaseModule(), IEventTracker {
 
 
     private var dispatchRunnable = object : Runnable {
+        @Keep
         override fun run() {
             dispatchEvent()
             dispatchHandler.postDelayed(this, DELAY_SECOND * 1000L)
@@ -73,8 +76,19 @@ class EventTracker : BaseModule(), IEventTracker {
 
         dispatchHandler = Handler(thread.looper)
 
-        handler = Handler(thread.looper, Handler.Callback {
-            this.handleMessage(it)
+
+//        handler = Handler(thread.looper,
+//            Handler.Callback {
+//                this.handleMessage(it)
+//            })
+////
+        handler = Handler(thread.looper, object : Handler.Callback {
+            @Keep
+            override fun handleMessage(msg: Message?): Boolean {
+                if (msg == null) return true
+                this@EventTracker.handleMessage(msg)
+                return true
+            }
         })
 
         eventStorage = EventStorage(context)
@@ -134,11 +148,13 @@ class EventTracker : BaseModule(), IEventTracker {
     }
 
     //#region private supportive method
+    @Keep
     private fun handleMessage(msg: Message): Boolean {
         when (msg.what) {
             ACT_DISPATCH_EVENTS -> {
                 Log.d("handleMessage", "ACT_DISPATCH_EVENTS")
                 DeviceTracking.getInstance().getDeviceId(object : DeviceTrackingListener {
+                    @Keep
                     override fun onComplete(result: String) {
                         val events = eventStorage.loadEventsFromDevice()
                         doDispatchEvent(events)
@@ -148,6 +164,7 @@ class EventTracker : BaseModule(), IEventTracker {
             ACT_DISPATCH_EVENT_IMMEDIATE -> {
                 Log.d("handleMessage", "ACT_DISPATCH_EVENT_IMMEDIATE")
                 DeviceTracking.getInstance().getDeviceId(object : DeviceTrackingListener {
+                    @Keep
                     override fun onComplete(result: String) {
                         val e = mutableListOf<Event>()
                         e.add(msg.obj as Event)

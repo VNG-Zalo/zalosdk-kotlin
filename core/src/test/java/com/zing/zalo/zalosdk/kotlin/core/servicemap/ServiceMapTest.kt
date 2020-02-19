@@ -39,10 +39,14 @@ class ServiceMapTest {
 
     private lateinit var context: Context
 
-    @MockK private lateinit var response1: HttpResponse
-    @MockK private lateinit var response2: HttpResponse
-    @MockK private lateinit var storage: ServiceMapStorage
-    @MockK private lateinit var client: HttpClient
+    @MockK
+    private lateinit var response1: HttpResponse
+    @MockK
+    private lateinit var response2: HttpResponse
+    @MockK
+    private lateinit var storage: ServiceMapStorage
+    @MockK
+    private lateinit var client: HttpClient
     private lateinit var sut: ServiceMapManager
 
     private val testScope = TestCoroutineScope()
@@ -111,10 +115,13 @@ class ServiceMapTest {
         val urlCentralized = "https://centralized.zaloapp.com/v3/auth?app_id="
         Thread.sleep(1000)
 
-        val testUrlOauth = ServiceMapManager.getInstance().urlFor(ServiceMapManager.KEY_URL_OAUTH, WEB_LOGIN_PATH)
-        val testUrlGraph = ServiceMapManager.getInstance().urlFor(ServiceMapManager.KEY_URL_GRAPH, WEB_LOGIN_PATH)
+        val testUrlOauth =
+            ServiceMapManager.getInstance().urlFor(ServiceMapManager.KEY_URL_OAUTH, WEB_LOGIN_PATH)
+        val testUrlGraph =
+            ServiceMapManager.getInstance().urlFor(ServiceMapManager.KEY_URL_GRAPH, WEB_LOGIN_PATH)
         val testUrlCentralized =
-            ServiceMapManager.getInstance().urlFor(ServiceMapManager.KEY_URL_CENTRALIZED, WEB_LOGIN_PATH)
+            ServiceMapManager.getInstance()
+                .urlFor(ServiceMapManager.KEY_URL_CENTRALIZED, WEB_LOGIN_PATH)
 
         //3.c return results
         assertThat(urlOauth).isEqualTo(testUrlOauth)
@@ -173,13 +180,13 @@ class ServiceMapTest {
         assertThat(requests[1].getUrl("")).isEqualTo(SERVICE_MAP_URLS[1])
     }
 
-    private fun verifySaveCache(times:Int ) {
+    private fun verifySaveCache(times: Int) {
         verify(exactly = times) { storage.setKeyUrlCentralized("https://centralized.zaloapp.com") }
         verify(exactly = times) { storage.setKeyUrlGraph("https://graph.zaloapp.com") }
         verify(exactly = times) { storage.setKeyUrlOauth("https://oauth.zaloapp.com") }
     }
 
-    private fun verifyLoadFromCache(times:Int ) {
+    private fun verifyLoadFromCache(times: Int) {
         verify(exactly = times) { storage.getKeyUrlCentralized() }
         verify(exactly = times) { storage.getKeyUrlGraph() }
         verify(exactly = times) { storage.getKeyUrlOauth() }

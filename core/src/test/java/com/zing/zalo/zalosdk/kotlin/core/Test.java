@@ -7,7 +7,7 @@ public class Test {
     @org.junit.Test
     public void Abc() {
 
-        String date =  new SimpleDateFormat("MM-dd").format(new Date());
+        String date = new SimpleDateFormat("MM-dd").format(new Date());
         String day = date.split("-")[0];
         String month = date.split("-")[1];
         System.out.println(day);

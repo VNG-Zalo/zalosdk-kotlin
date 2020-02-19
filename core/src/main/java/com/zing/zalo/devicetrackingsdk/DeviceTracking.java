@@ -1,4 +1,4 @@
-package com.zing.zalo.zalosdk.java.devicetrackingsdk;
+package com.zing.zalo.devicetrackingsdk;
 
 import com.zing.zalo.zalosdk.kotlin.core.devicetrackingsdk.DeviceTrackingListener;
 import com.zing.zalo.zalosdk.kotlin.core.devicetrackingsdk.IDeviceTracking;
@@ -25,18 +25,18 @@ public class DeviceTracking implements IDeviceTracking {
     @Override
     public String getDeviceId() {
 
-        return DeviceTracking.instance.getDeviceId();
+        return com.zing.zalo.zalosdk.kotlin.core.devicetrackingsdk.DeviceTracking.Companion.getInstance().getDeviceId();
     }
 
     @Override
     public void getDeviceId(@Nullable DeviceTrackingListener listener) {
-        DeviceTracking.instance.getDeviceId(listener);
+        com.zing.zalo.zalosdk.kotlin.core.devicetrackingsdk.DeviceTracking.Companion.getInstance().getDeviceId(listener);
     }
 
     @NotNull
     @Override
     public String getVersion() {
-        return DeviceTracking.getInstance().getVersion();
+        return com.zing.zalo.zalosdk.kotlin.core.devicetrackingsdk.DeviceTracking.Companion.getInstance().getVersion();
     }
 }
 

@@ -18,7 +18,7 @@ class HttpClient(private val baseUrl: String) : IHttpClient {
             }
 
             when (request.getMethod()) {
-                HttpMethod.POST-> {
+                HttpMethod.POST -> {
                     val postRequest = request as IPostHttpRequest
                     conn.requestMethod = "POST"
                     conn.doOutput = true // Triggers POST.

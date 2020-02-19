@@ -9,11 +9,17 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.zing.zalo.zalosdk.kotlin.analytics.EventTracker
+import com.zing.zalo.zalosdk.kotlin.analytics.EventTrackerListener
+import com.zing.zalo.zalosdk.kotlin.analytics.model.Event
 import com.zing.zalo.zalosdk.kotlin.core.apptracking.AppTracker
 import com.zing.zalo.zalosdk.kotlin.core.apptracking.AppTrackerListener
 import com.zing.zalo.zalosdk.kotlin.core.helper.AppInfo
 import com.zing.zalo.zalosdk.kotlin.core.log.Log
-import com.zing.zalo.zalosdk.kotlin.oauth.*
+import com.zing.zalo.zalosdk.kotlin.oauth.Constant
+import com.zing.zalo.zalosdk.kotlin.oauth.IAuthenticateCompleteListener
+import com.zing.zalo.zalosdk.kotlin.oauth.LoginVia
+import com.zing.zalo.zalosdk.kotlin.oauth.ZaloSDK
 import com.zing.zalo.zalosdk.kotlin.oauth.callback.GetZaloLoginStatus
 import com.zing.zalo.zalosdk.kotlin.oauth.callback.ValidateOAuthCodeCallback
 import com.zing.zalo.zalosdk.kotlin.oauth.helper.AuthStorage
@@ -36,7 +42,7 @@ class MainActivity : AppCompatActivity(), ValidateOAuthCodeCallback, GetZaloLogi
 
     private lateinit var mStorage: AuthStorage
     
-    private lateinit var zaloSDK:ZaloSDK
+    private lateinit var zaloSDK: ZaloSDK
 
     private val appTrackerListener: AppTrackerListener = object : AppTrackerListener {
         override fun onAppTrackerCompleted(
@@ -70,12 +76,12 @@ class MainActivity : AppCompatActivity(), ValidateOAuthCodeCallback, GetZaloLogi
         }
     }
 
-//    private val eventTrackerListener = object : EventTrackerListener {
-//        override fun dispatchComplete() {
-//            super.dispatchComplete()
-//            Log.d("got Main Activity ")
-//        }
-//    }
+    private val eventTrackerListener = object : EventTrackerListener {
+        override fun dispatchComplete() {
+            super.dispatchComplete()
+            Log.d("got Main Activity ")
+        }
+    }
 
     //#region override activity method
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -203,11 +209,11 @@ class MainActivity : AppCompatActivity(), ValidateOAuthCodeCallback, GetZaloLogi
 
         eventTrackingButton.setOnClickListener {
 
-//            val eventTracker = EventTracker.getInstance()
-//
-//            eventTracker.addEvent(mockEvent())
-//            eventTracker.setListener(eventTrackerListener)
-//            eventTracker.dispatchEventImmediate(mockEvent())
+            val eventTracker = EventTracker.getInstance()
+
+            eventTracker.addEvent(mockEvent())
+            eventTracker.setListener(eventTrackerListener)
+            eventTracker.dispatchEventImmediate(mockEvent())
         }
 
         openApiButton.setOnClickListener {
@@ -225,14 +231,14 @@ class MainActivity : AppCompatActivity(), ValidateOAuthCodeCallback, GetZaloLogi
             .setPositiveButton(android.R.string.yes, null).show()
     }
 
-//    private fun mockEvent(): Event {
-//        val timeStamp = System.currentTimeMillis()
-//        val action = "action-$timeStamp"
-//        val params = mutableMapOf<String, String>()
-//
-//        params["name"] = "datahelper-$timeStamp"
-//        params["age"] = timeStamp.toString()
-//        return Event(action, params, timeStamp)
-//    }
+    private fun mockEvent(): Event {
+        val timeStamp = System.currentTimeMillis()
+        val action = "action-$timeStamp"
+        val params = mutableMapOf<String, String>()
+
+        params["name"] = "datahelper-$timeStamp"
+        params["age"] = timeStamp.toString()
+        return Event(action, params, timeStamp)
+    }
 
 }

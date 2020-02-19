@@ -35,7 +35,7 @@ class ZaloSDK(context: Context) {
     /**
      * Get authentication code
      */
-    fun getOauthCode() :String?  {
+    fun getOauthCode(): String? {
         return mStorage.getOAuthCode()
     }
 
@@ -43,15 +43,15 @@ class ZaloSDK(context: Context) {
      * Logout current Zalo's account
      */
     fun unAuthenticate() {
-            mAuthenticator.unAuthenticate()
+        mAuthenticator.unAuthenticate()
     }
 
     fun registerZalo(activity: Activity, listener: IAuthenticateCompleteListener?) {
-            mAuthenticator.registerZalo(activity, listener)
+        mAuthenticator.registerZalo(activity, listener)
     }
 
     fun getZaloLoginStatus(callback: GetZaloLoginStatus?) {
-            mAuthenticator.getZaloLoginStatus(callback)
+        mAuthenticator.getZaloLoginStatus(callback)
     }
 
     /**
@@ -60,7 +60,7 @@ class ZaloSDK(context: Context) {
      * @return True if oauth code cached, otherwise false
      */
     fun isAuthenticate(callback: ValidateOAuthCodeCallback?): Boolean {
-            return mAuthenticator.isAuthenticate(mStorage.getOAuthCode().toString(), callback)!!
+        return mAuthenticator.isAuthenticate(mStorage.getOAuthCode().toString(), callback)!!
     }
 
     fun getVersion(): String {
@@ -73,7 +73,7 @@ class ZaloSDK(context: Context) {
         resultCode: Int,
         data: Intent?
     ): Boolean {
-            return mAuthenticator.onActivityResult(activity, requestCode, resultCode, data)!!
+        return mAuthenticator.onActivityResult(activity, requestCode, resultCode, data)!!
     }
 
 

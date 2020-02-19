@@ -1,6 +1,6 @@
 package com.zing.zalo.zalosdk.kotlin.core.log
 
-import java.util.Locale
+import java.util.*
 
 
 object Log {

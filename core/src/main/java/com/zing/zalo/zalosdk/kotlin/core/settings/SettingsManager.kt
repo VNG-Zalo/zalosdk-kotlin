@@ -3,10 +3,10 @@ package com.zing.zalo.zalosdk.kotlin.core.settings
 import android.annotation.SuppressLint
 import android.content.Context
 import androidx.annotation.Keep
-import com.zing.zalo.zalosdk.kotlin.core.devicetrackingsdk.DeviceTracking
 import com.zing.zalo.zalosdk.kotlin.core.Api.API_GET_SETTING
 import com.zing.zalo.zalosdk.kotlin.core.Constant
 import com.zing.zalo.zalosdk.kotlin.core.SharedPreferenceConstant.PREFS_NAME_WAKEUP
+import com.zing.zalo.zalosdk.kotlin.core.devicetrackingsdk.DeviceTracking
 import com.zing.zalo.zalosdk.kotlin.core.helper.AppInfo
 import com.zing.zalo.zalosdk.kotlin.core.helper.PrivateSharedPreferenceInterface
 import com.zing.zalo.zalosdk.kotlin.core.helper.Storage

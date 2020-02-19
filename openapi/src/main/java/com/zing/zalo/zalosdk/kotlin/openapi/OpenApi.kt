@@ -2,8 +2,8 @@ package com.zing.zalo.zalosdk.kotlin.openapi
 
 import android.content.*
 import android.text.TextUtils
-import com.zing.zalo.zalosdk.kotlin.core.devicetrackingsdk.DeviceTracking
 import com.zing.zalo.zalosdk.kotlin.core.Constant
+import com.zing.zalo.zalosdk.kotlin.core.devicetrackingsdk.DeviceTracking
 import com.zing.zalo.zalosdk.kotlin.core.helper.AppInfo
 import com.zing.zalo.zalosdk.kotlin.core.helper.DeviceInfo
 import com.zing.zalo.zalosdk.kotlin.core.helper.Utils
@@ -375,7 +375,7 @@ class OpenApi(
 
     private fun makeGetAccessTokenRequest(): Int {
 
-        val authCode = oauthCode?: ""
+        val authCode = oauthCode ?: ""
         if (TextUtils.isEmpty(authCode)) throw OpenApiException("Auth code is invalid - Login again!")
         accessTokenRequest.addQueryStringParameter("code", authCode)
         accessTokenRequest.addQueryStringParameter("pkg_name", AppInfo.getPackageName(context))

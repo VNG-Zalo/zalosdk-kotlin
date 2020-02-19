@@ -3,9 +3,9 @@ package com.zing.zalo.zalosdk.kotlin.core.apptracking
 import android.content.Context
 import android.os.Build
 import android.text.TextUtils
+import com.zing.zalo.zalosdk.kotlin.core.Constant
 import com.zing.zalo.zalosdk.kotlin.core.devicetrackingsdk.DeviceTracking
 import com.zing.zalo.zalosdk.kotlin.core.devicetrackingsdk.SdkTracking
-import com.zing.zalo.zalosdk.kotlin.core.Constant
 import com.zing.zalo.zalosdk.kotlin.core.helper.*
 import com.zing.zalo.zalosdk.kotlin.core.http.HttpClient
 import com.zing.zalo.zalosdk.kotlin.core.http.HttpGetRequest
@@ -21,7 +21,8 @@ class AppTracker : BaseModule(), IAppTracker {
         var installedPackagedNames = arrayListOf<String>()
     }
 
-    var httpClient = HttpClient(ServiceMapManager.getInstance().urlFor(ServiceMapManager.KEY_URL_CENTRALIZED))
+    var httpClient =
+        HttpClient(ServiceMapManager.getInstance().urlFor(ServiceMapManager.KEY_URL_CENTRALIZED))
     var expiredTime = 0L
     var scanId = ""
 
@@ -114,7 +115,7 @@ class AppTracker : BaseModule(), IAppTracker {
     /**
      * if sdkId or privateKey empty -> runGetSdkIDAsyncTask -> submit app
      * if sdkId or privateKey empty -> runGetSdkIDAsyncTask -> submit app
-    * */
+     * */
     fun submitInstalledApps() {
         try {
             if (installedPackagedNames.size == 0 || TextUtils.isEmpty(scanId) || submitRetry >= 5) {
@@ -175,7 +176,7 @@ class AppTracker : BaseModule(), IAppTracker {
 
         val data = jsonData.toString()
 
-        multipartRequest.setFileParameter("zce", "data.dat",data.toByteArray())
+        multipartRequest.setFileParameter("zce", "data.dat", data.toByteArray())
         val response = httpClient.send(multipartRequest)
         val responseData = response.getJSON()
 

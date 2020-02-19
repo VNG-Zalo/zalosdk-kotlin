@@ -1,38 +1,45 @@
--verbose
+#-verbose
 -keepattributes MethodParameters,LineNumberTable,LocalVariableTable,LocalVariableTypeTable
 
 #Android's module
 -dontwarn androidx.**
 -keep class androidx.** { *; }
--keep interface androidx.** { *;    }
+-keep interface androidx.** { *;}
 
-
-#ZDK"s module
--keep class com.zing.zalo.zalosdk.kotlin.core.log.** { *;}
+-dontwarn kotlinx.**
+-keep class kotlinx.** { *; }
+-keep interface kotlinx.** { *;}
 
 #Device Tracking
--keepclasseswithmembers class com.zing.zalo.zalosdk.kotlin.core.devicetrackingsdk.DeviceTracking { *; }
--keepclasseswithmembers class com.zing.zalo.zalosdk.kotlin.core.devicetrackingsdk.model.PreloadInfo {*;}
+-keep class com.zing.zalo.zalosdk.kotlin.core.devicetrackingsdk.** { *; }
+-keep class com.zing.zalo.devicetrackingsdk.** {*;}
+#-keepclasseswithmembers class com.zing.zalo.zalosdk.kotlin.core.devicetrackingsdk.model.PreloadInfo {*;}
+
+#App Tracking
+-keep interface com.zing.zalo.zalosdk.kotlin.core.apptracking.AppTrackerListener { *;}
+-keep interface com.zing.zalo.zalosdk.kotlin.core.apptracking.IAppTracker { *;}
+-keep class com.zing.zalo.zalosdk.kotlin.core.apptracking.** { *;}
 
 #Helper
 -keepclassmembers class com.zing.zalo.zalosdk.kotlin.core.helper.DeviceInfo { *;}
 -keep class com.zing.zalo.zalosdk.kotlin.core.helper.** {  *;}
 
+#Log
+-keep class com.zing.zalo.zalosdk.kotlin.core.log.Log { *;}
+
+#Module
 -keep class com.zing.zalo.zalosdk.kotlin.core.module.** {
  *;
 }
 
+#Http
 -keepclasseswithmembers class com.zing.zalo.zalosdk.kotlin.core.http.** { *;}
--keepclasseswithmembers class com.zing.zalo.zalosdk.kotlin.core.apptracking.** {  *;}
 
 #Service Map
--keep class com.zing.zalo.zalosdk.kotlin.core.servicemap.ServiceMapManager {
-  public *;
-}
+-keep class com.zing.zalo.zalosdk.kotlin.core.servicemap.** { *;}
 
--keep class com.zing.zalo.zalosdk.kotlin.core.settings.SettingsManager {
-  public *;
-}
+#SettingManager
+-keep class com.zing.zalo.zalosdk.kotlin.core.settings.** {*;}
 
 # -keep public class * extends android.content.BroadcastReceiver
 #Android"s module
