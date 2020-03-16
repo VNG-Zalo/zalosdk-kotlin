@@ -6,4 +6,14 @@
     <string name="zalo_app_not_installed">သင်က app ကို Zalo install လုပ်မရ</string>
     <string name="zalo_app_out_of_date">Zalo နေ့စွဲထဲကဖြစ်ပါတယ်</string>
     <string name="no_network">Network ကိုမတည်မငြိမ်နောက်မှထပ်ကြိုးစားကျေးဇူးပြုပြီး</string>
+    <string name="create_password"> ေနာက္တစ္ႀကိမ္ login ဝင္ရန္ လွ်ိဳ႕ဝွက္စကားလုံးဖန္တီးမည္။</string>
+    <string name="txt_password_regis">လွ်ိဳ႕ဝွက္စကားလုံး </string>
+    <string name="txt_password_regis_confirm">လွ်ဳိ့ဝွက္စကားလုံးအတည္ျပဳသည္ </string>
+    <string name="create_pasword_done">ေနာက္ဆုံးအခ်က္အလက္မ်ား</string>
+    <string name="create_password_caution">လွ်ဳိ့ဝွက္စကားလုံး : လွ်ိဳ႕ဝွက္စကားလုံးအသုံးျပဳျခင္းျဖင့္ ဘယ္ဖုန္းအမ်ိဳးအစားမွာမဆို အတည္ျပဳျခင္းဆိုင္ရာ သတ္မွတ္ခ်က္မ်ား ခဏခဏ ျပန္၍လုပ္စရာမလိုေတာ့ပါ။ \nလုံျခံဳေရး : က်းဇူးျပဳ၍ သင့္အေကာင့္၏ လုံျခံဳမႈအတြက္ လွ်ိဳ႕ဝွက္စကားလုံးကို တစ္ျခားသူအား မသိေစပါႏွင့္။ </string>
+    <string name="txt_input_male">အမ်ိဳးသား</string>
+    <string name="txt_input_female">အမ်ိဳးသမီး</string>
+    <string name="update_profile_done">ျပည့္စုံစြာလုပ္ေဆာင္သည္</string>
+    <string name="next_step"><![CDATA[သို႔မဟုတ္ <a href="http://"><u>ေက်ာ္မည္</u></a>]]></string>
+    <string name="txt_input_name">နာမည္အျပည့္အစု</string>
 </resources>

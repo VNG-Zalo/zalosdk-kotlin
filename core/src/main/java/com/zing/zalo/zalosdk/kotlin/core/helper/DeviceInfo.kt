@@ -1,15 +1,18 @@
 package com.zing.zalo.zalosdk.kotlin.core.helper
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Context
+import android.content.res.Configuration
 import android.graphics.Point
+import android.net.ConnectivityManager
 import android.os.Build
 import android.os.Looper
 import android.telephony.TelephonyManager
 import android.text.TextUtils
 import android.view.WindowManager
-import com.zing.zalo.zalosdk.kotlin.core.devicetrackingsdk.model.PreloadInfo
 import com.zing.zalo.zalosdk.kotlin.core.Constant
+import com.zing.zalo.zalosdk.kotlin.core.devicetrackingsdk.model.PreloadInfo
 import com.zing.zalo.zalosdk.kotlin.core.log.Log
 import org.json.JSONArray
 import org.json.JSONException
@@ -17,12 +20,15 @@ import org.json.JSONObject
 import java.io.File
 import java.io.FileNotFoundException
 
+
 object DeviceInfo {
 
+
     private var lock = Any()
-    internal var advertiserId: String? = null
+    internal var advertiserId: String = ""
     private var screenSize: String = "unknown"
     private var MNO: String = "unknown"
+    private var wLANMACAddress: String = ""
     var preloadInfo: PreloadInfo = PreloadInfo()
 
     private const val KEY_PRELOAD = "com.zing.zalo.sdk.preloadkey"
@@ -33,16 +39,16 @@ object DeviceInfo {
         "/system/etc/zalo_appchannel.in"//vivo: fileCode: 2
     )
 
-
+    @JvmStatic
     fun getAdvertiseID(context: Context): String {
-        if (!TextUtils.isEmpty(advertiserId)) return advertiserId.toString()
+        if (!TextUtils.isEmpty(advertiserId)) return advertiserId
 
         val advertiseStorage =
-            Storage(context).privateSharedPreferences(Constant.sharedPreference.PREFS_ADVERTISE_ID)
+            Storage(context).createPrivateStorage(Constant.sharedPreference.PREF_ADVERTISE_ID)
         try {
-            advertiserId = advertiseStorage.getString("adsidstr")
+            advertiserId = advertiseStorage.getString("adsidstr") ?: ""
             if (!TextUtils.isEmpty(advertiserId)) {
-                return advertiserId.toString()
+                return advertiserId
             }
 
             if (Looper.myLooper() == Looper.getMainLooper()) {
@@ -67,7 +73,7 @@ object DeviceInfo {
                     if (getId != null && isLimitAdTrackingEnabled != null) {
                         val result = Utils.invokeMethodQuietly(advertisingInfo, getId) as String?
                         if (!TextUtils.isEmpty(result)) {
-                            advertiserId = result
+                            advertiserId = result ?: ""
                         }
                     }
                 }
@@ -78,12 +84,13 @@ object DeviceInfo {
 
         //save to share pref
         if (!TextUtils.isEmpty(advertiserId)) {
-            advertiseStorage.setString("adsidstr", advertiserId.toString())
+            advertiseStorage.setString("adsidstr", advertiserId)
         }
 
-        return advertiserId ?: ""
+        return advertiserId
     }
 
+    @JvmStatic
     fun getOSVersion(): String {
         return Build.VERSION.RELEASE
     }
@@ -92,10 +99,12 @@ object DeviceInfo {
         return Constant.VERSION
     }
 
+    @JvmStatic
     fun getModel(): String {
         return Build.MODEL
     }
 
+    @JvmStatic
     fun getBrand(): String {
         return Build.BRAND
     }
@@ -121,6 +130,7 @@ object DeviceInfo {
         return screenSize
     }
 
+    @JvmStatic
     fun getMobileNetworkCode(context: Context): String {
         MNO = try {
             if (Utils.isPermissionGranted(
@@ -139,7 +149,6 @@ object DeviceInfo {
         return MNO
     }
 
-
     fun getPreloadInfo(context: Context): PreloadInfo {
         synchronized(lock) {
             if (preloadInfo.isPreloaded()) {
@@ -147,7 +156,7 @@ object DeviceInfo {
             }
 
             val preloadStorage =
-                Storage(context).privateSharedPreferences(Constant.sharedPreference.PREFS_NAME_PRELOAD)
+                Storage(context).createPrivateStorage(Constant.sharedPreference.PREF_NAME_PRELOAD)
 
             //load from cacheDeviceInfo
             val preload = preloadStorage.getString(KEY_PRELOAD) ?: ""
@@ -223,6 +232,16 @@ object DeviceInfo {
         return "unknown"
     }
 
+    /**
+     * Returns wlan MAC address of the given interface name.
+     *
+     * @return mac address or empty string
+     */
+    fun getWLANMACAddress(context: Context): String? {
+        if (!TextUtils.isEmpty(wLANMACAddress)) return wLANMACAddress
+        wLANMACAddress = getMACAddress(context, "wlan0") ?: ""
+        return wLANMACAddress
+    }
 
     fun prepareDeviceIdData(context: Context): JSONObject {
         val data = JSONObject()
@@ -242,14 +261,14 @@ object DeviceInfo {
     fun prepareTrackingData(context: Context, currentDeviceId: String?, ts: Long): JSONObject {
         val data = JSONObject()
         try {
-            data.put("pkg", AppInfo.getPackageName(context))
+            data.put("pkg", AppInfo.getInstance().getPackageName())
             data.put("pl", "android")
             data.put("osv", getOSVersion())
 
             data.put("sdkv", Constant.VERSION)
             data.put("sdkv", getSDKVersion())
-            data.put("an", AppInfo.getAppName(context)) //imp
-            data.put("av", AppInfo.getVersionName(context))
+            data.put("an", AppInfo.getInstance().getAppName()) //imp
+            data.put("av", AppInfo.getInstance().getVersionName())
 
             data.put("mod", getModel())
             data.put("ss", getScreenSize(context))
@@ -262,14 +281,14 @@ object DeviceInfo {
             data.put("dId", getAdvertiseID(context))
             data.put("adId", getAdvertiseID(context))
 
-            data.put("ins_pkg", AppInfo.getInstallerPackageName(context))
-            if (!TextUtils.isEmpty(AppInfo.getReferrer(context))) {
-                data.put("ref", AppInfo.getReferrer(context))
+            data.put("ins_pkg", AppInfo.getInstance().getInstallerPackageName())
+            if (!TextUtils.isEmpty(AppInfo.getInstance().getReferrer())) {
+                data.put("ref", AppInfo.getInstance().getReferrer())
             }
-            data.put("ins_dte", AppInfo.getInstallDate(context))
-            data.put("fst_ins_dte", AppInfo.getFirstInstallDate(context))
-            data.put("lst_ins_dte", AppInfo.getLastUpdate(context))
-            data.put("fst_run_dte", AppInfo.getFirstRunDate(context))
+            data.put("ins_dte", AppInfo.getInstance().getInstallDate())
+            data.put("fst_ins_dte", AppInfo.getInstance().getFirstInstallDate())
+            data.put("lst_ins_dte", AppInfo.getInstance().getLastUpdate())
+            data.put("fst_run_dte", AppInfo.getInstance().getFirstRunDate())
             data.put("ts", ts.toString())
             data.put("brd", getBrand())
             data.put("dev", Build.DEVICE)
@@ -277,14 +296,14 @@ object DeviceInfo {
             data.put("adk_ver", Build.VERSION.SDK_INT)
             data.put("mnft", with(DeviceInfo) { getManufacturer() })
             data.put("dev_type", Build.TYPE)
-            data.put("avc", AppInfo.getVersionCode(context))
-            data.put("was_ins", AppInfo.isPreInstalled(context).toString())
+            data.put("avc", AppInfo.getInstance().getVersionCode())
+            data.put("was_ins", AppInfo.getInstance().isPreInstalled().toString())
             data.put("dpi", context.resources.displayMetrics.density.toDouble())
 
             val preloadInfo = getPreloadInfo(context)
             data.put("preload", preloadInfo.preload)
 
-            data.put("preloadDefault", AppInfo.getPreloadChannel(context))
+            data.put("preloadDefault", AppInfo.getInstance().getPreloadChannel())
             if (!preloadInfo.isPreloaded()) {
                 data.put("preloadFailed", preloadInfo.error)
             }
@@ -295,4 +314,44 @@ object DeviceInfo {
         return data
     }
 
+    @JvmStatic
+    fun getConnectionType(context: Context): String? {
+        try {
+            val cm =
+                context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            @SuppressLint("MissingPermission")
+            val info = cm.activeNetworkInfo
+            if (info != null && info.isConnected) {
+                if (info.type == ConnectivityManager.TYPE_WIFI)
+                    return "wifi"
+                else if (info.type == ConnectivityManager.TYPE_MOBILE)
+                    return "mobile"
+            }
+        } catch (ignored: Error) {
+            Log.e(ignored.message.toString())
+        } catch (ignored: Exception) {
+            Log.e(ignored)
+        }
+        return ""
+    }
+
+    @JvmStatic
+    fun isTablet(context: Context): Boolean {
+        return ((context.resources.configuration.screenLayout
+                and Configuration.SCREENLAYOUT_SIZE_MASK)
+                >= Configuration.SCREENLAYOUT_SIZE_LARGE)
+    }
+
+    @JvmStatic
+    fun pxFromDp(context: Context, dp: Float): Float {
+        return dp * context.resources.displayMetrics.density
+    }
+
+    @SuppressLint("NewApi")
+    private fun getMACAddress(
+        context: Context,
+        interfaceName: String
+    ): String? {
+        return ""
+    }
 }

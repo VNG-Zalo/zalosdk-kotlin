@@ -7,7 +7,7 @@ import androidx.annotation.Keep
 
 @Keep
 object Constant {
-    const val VERSION = "4.0" // what ??
+    const val VERSION = BuildConfig.VERSION_NAME
     //    const val DEV_MODE = true
     var DEV_MODE = false
     const val ZALO_PACKAGE_NAME = "com.zing.zalo"
@@ -25,6 +25,12 @@ object SharedPreferenceConstant {
     const val PREF_ZALO_ID = "PREFERECE_ZALO_SDK_ZALO_ID"
     const val PREF_ZALO_DISPLAY_NAME = "PREFERECE_ZALO_SDK_ZALO_DISPLAY_NAME"
     const val PREF_ACCESS_TOKEN_NEW_API = "PREF_NEW_API_ACCESSTOKEN"
+    const val PREF_OAUTH_CODE_CHANNEL = "PREFERECE_ZALO_SDK_OAUTH_CODE_CHANNEL"
+    const val PREF_GUEST_DEVICE_ID = "PREF_GUEST_DEVICE_ID"
+    const val PREF_GUEST_IS_CERT = "PREF_GUEST_IS_CERTIFICATE"
+    const val PREF_ACESS_TOKEN = "PREF_ACESS_TOKEN"
+    const val PREF_IS_PROTECTED = "PREF_IS_PROTECTED"
+    const val PREF_SOCIAL_ID = "PREFERECE_SOCIAL_ID"
 
     //Prefs ServiceMapManager
     const val PREF_KEY_URL_AUTH = "PREFERECE_KEY_URL_OAUTH"
@@ -33,14 +39,15 @@ object SharedPreferenceConstant {
     const val PREF_EXPIRE_TIME = "PREFERCE_EXPIRE_TIME"
 
     //Prefs SettingsManager
-    const val PREFS_NAME_WAKEUP = "com.zing.zalo.sdk.preload.wakeup"
-    const val PREFS_NAME_PRELOAD = "com.zing.zalo.sdk.preload"
-    const val PREFS_ADVERTISE_ID = "adsid"
+    const val PREF_NAME_WAKEUP = "com.zing.zalo.sdk.preload.wakeup"
+    const val PREF_NAME_PRELOAD = "com.zing.zalo.sdk.preload"
+    const val PREF_ADVERTISE_ID = "adsid"
 
     //Prefs DeviceTrackingSdk
     const val PREF_SDK_ID = "PREFERECE_SDK_ID"
     const val PREF_PRIVATE_KEY = "PREFERECE_PRIVATE_KEY"
 
+    const val PREF_KEY_LIST_DEVICEID_WAKE_UP = "com.zing.zalo.sdk.wakeup.listdeviceid_wk"
 }
 
 @Keep

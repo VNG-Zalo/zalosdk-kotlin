@@ -1,19 +1,18 @@
--dontoptimize
+-keepattributes MethodParameters,LineNumberTable,LocalVariableTable,LocalVariableTypeTable
 
-#-dontwarn androidx.**
-#-keep class androidx.** { *; }
-#-keep interface androidx.** { *;}
-#-keep class com.zing.zalo.zalosdk.kotlin.oauth.ZaloSDK { com.zing.zalo.zalosdk.kotlin.oauth.ZaloSDK$Companion Companion; }
-#-keep class com.zing.zalo.zalosdk.kotlin.oauth.ZaloSDK$Companion { *; }
-#
+-dontwarn androidx.**
+-keep class androidx.** { *; }
+-keep interface androidx.** { *;}
+
 #-keep class com.zing.zalo.zalosdk.kotlin.oauth.helper.AuthStorage { *; }
-#-keepnames class com.zing.zalo.zalosdk.kotlin.oauth.ZaloSDK {
-#    public *;
-# }
+-keep class com.zing.zalo.zalosdk.kotlin.oauth.ZaloSDK {
+    public *;
+ }
 
-#-keepclassmembers class com.zing.zalo.zalosdk.kotlin.oauth.ZaloSDK { *;}
 -keep enum  com.zing.zalo.zalosdk.kotlin.oauth.LoginVia { *;}
 -keep class com.zing.zalo.zalosdk.kotlin.oauth.callback.** { *;}
 
+-keep class com.zing.zalo.zalosdk.java.** {*;}
+-keep class com.zing.zalo.zalosdk.java.LocalizedString {*;}
 #print mapping
 -printmapping proguard.map

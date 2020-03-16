@@ -9,9 +9,9 @@ object TestUtils {
     }
 }
 
-object DataHelper{
+object DataHelper {
 
-    const val PACKAGES_NAME= "{\n" +
+    const val APP_PACKAGE_NAMES = "{\n" +
             "  \"error\": 0,\n" +
             "  \"data\": {\n" +
             "    \"scanId\": \"${AppInfoHelper.scanId}\",\n" +
@@ -69,7 +69,8 @@ object DataHelper{
             "  }\n" +
             "}"
 
-    val INSTALLED_APP_LIST = arrayListOf("com.zing.mp3", "com.zing.zalo", "com.facebook.orca", "com.facebook.katana")
+    val INSTALLED_APP_LIST =
+        arrayListOf("com.zing.mp3", "com.zing.zalo", "com.facebook.orca", "com.facebook.katana")
 
     const val authCode = "authCode"
 //    const val responseGetDeviceIdAsyncTask = "{\"data\":{\"deviceId\":\"${AppTrackerHelper.deviceId}\",\"expiredTime\":43200000},\"error\":0,\"errorMsg\":\"\"}"

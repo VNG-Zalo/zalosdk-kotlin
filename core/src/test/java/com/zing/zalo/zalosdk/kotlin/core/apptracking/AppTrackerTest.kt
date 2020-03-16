@@ -52,7 +52,7 @@ class AppTrackerTest {
         mockDataSubmitInstalledApp()
         spyk(sut)
 
-        val resultJson = JSONObject(DataHelper.PACKAGES_NAME)
+        val resultJson = JSONObject(DataHelper.APP_PACKAGE_NAMES)
         val authCode =
             "nRHRPtwUxNE8smukCyQjIBdU0rvbeza6wArCKcUZwaAxrJTBMv_KSudR0d9qaj8wzROn0Ypu6fvGihxBlcg"
 
@@ -100,7 +100,7 @@ class AppTrackerTest {
         mockDataSubmitInstalledApp()
         spyk(sut)
 
-        val resultJson = JSONObject(DataHelper.PACKAGES_NAME)
+        val resultJson = JSONObject(DataHelper.APP_PACKAGE_NAMES)
         val authCode =
             "nRHRPtwUxNE8smukCyQjIBdU0rvbeza6wArCKcUZwaAxrJTBMv_KSudR0d9qaj8wzROn0Ypu6fvGihxBlcg"
 
@@ -138,7 +138,7 @@ class AppTrackerTest {
     }
 
     private fun getPackagesNameArrayFromJSON(): ArrayList<String> {
-        val jsonObject = JSONObject(DataHelper.PACKAGES_NAME)
+        val jsonObject = JSONObject(DataHelper.APP_PACKAGE_NAMES)
         val error = jsonObject.getInt("error")
         if (error != 0) throw Exception("Error when call api Download Packages")
 

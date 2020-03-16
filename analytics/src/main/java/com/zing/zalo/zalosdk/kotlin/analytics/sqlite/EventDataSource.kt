@@ -15,7 +15,7 @@ import org.json.JSONException
 import org.json.JSONObject
 import java.util.*
 
-class EventDataSource(var context: Context) {
+class EventDataSource(context: Context) {
 
     private val dbHelper: EventSQLiteHelper = EventSQLiteHelper(context)
     private var database: SQLiteDatabase = dbHelper.writableDatabase

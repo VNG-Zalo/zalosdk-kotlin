@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="zalosdk_app_name">ZaloSDK</string>
     <string name="zalosdk_processing">Processing</string>
     <string name="txt_regis_acc">Register</string>
@@ -8,4 +8,23 @@
     <string name="no_network">Network unstable, please try again later</string>
     <string name="zalosdk_login_protocol_schema" translatable="false">missing-protocol-schema</string>
     <string name="zalosdk_app_id" translatable="false">missing-app-id</string>
+    <string name="zalosdk_cancel" translatable="false">Trở lại</string>
+    <string name="zalosdk_notification" translatable="false">Thông báo</string>
+    <string name="zalosdk_close" translatable="false">Đóng</string>
+    <string name="create_password">Create a password to login next time. </string>
+    <string name="txt_password_regis">Password</string>
+    <string name="txt_password_regis_confirm">Confirm password</string>
+    <string name="create_pasword_done">Update</string>
+    <string name="create_password_caution">Password: Using password allows you to login on different device without the need to re-activate by receiving SMS message.\nSecurity: Please note not to share this password with anyone to ensure the security of your account.</string>
+    <string name="txt_input_male">Male</string>
+    <string name="txt_input_female">Female</string>
+    <string name="update_profile_done">Complete</string>
+    <string name="next_step"><![CDATA[or <a href="http://"><u>Skip</u></a>]]></string>
+    <string name="txt_input_name">Full name</string>
+    <string name="hint_zing_id" translatable="false">Zing ID</string>
+    <string name="hint_password" translatable="false">Password</string>
+    <string name="btn_login" translatable="false">Login</string>
+    <string name="title_sent_email_confirm" tools:ignore="MissingTranslation">Thông tin xác thực sẽ gửi đến email trên</string>
+    <string name="tt_continue_login_login_form" tools:ignore="MissingTranslation">Hoặc chơi tiếp</string>
+    <string name="tt_continue_login" tools:ignore="MissingTranslation">Bỏ qua</string>
 </resources>

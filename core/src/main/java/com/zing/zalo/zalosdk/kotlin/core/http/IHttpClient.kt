@@ -17,7 +17,7 @@ interface IHttpRequest {
     fun getMethod(): HttpMethod
 }
 
-interface IPostHttpRequest : IHttpRequest{
+interface IPostHttpRequest : IHttpRequest {
     fun addParameter(key: String, value: String)
     fun addParameters(params: Map<String, String>)
     fun encodeBody(stream: OutputStream)
@@ -30,7 +30,7 @@ interface IMultipartHttpRequest : IPostHttpRequest {
 interface IHttpResponse {
     fun getStatusCode(): Int
     fun getText(): String?
-    fun getJSON() : JSONObject?
+    fun getJSON(): JSONObject?
 }
 
 interface IHttpClient {

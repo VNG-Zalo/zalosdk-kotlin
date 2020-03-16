@@ -26,6 +26,7 @@ class DeviceTracking private constructor() : BaseModule(), IDeviceTracking {
     companion object {
         private val instance = DeviceTracking()
 
+        @JvmStatic
         fun getInstance(): DeviceTracking {
             return instance
         }
@@ -179,7 +180,7 @@ class DeviceTracking private constructor() : BaseModule(), IDeviceTracking {
                     DeviceInfo.prepareTrackingData(context, currentDeviceId, timestamp)
 
                 val sdkId = sdkTracking.getSDKId() ?: ""
-                val appId = AppInfo.getAppId(context)
+                val appId = AppInfo.getInstance().getAppId()
                 val authCode = storage.getOAuthCode() ?: ""
 
                 val param = arrayOf("pl", "appId", "oauthCode", "device", "data", "ts", "sdkId")

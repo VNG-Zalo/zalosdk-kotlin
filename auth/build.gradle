@@ -22,18 +22,21 @@ android {
     }
 
     buildTypes {
+        debug {
+            minifyEnabled false //debug
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
 }
 
 
-
 def nameLib = 'auth'
 ext {
-    bintrayName =  rootProject.ext.bintrayName + '.' + nameLib
+    bintrayName = rootProject.ext.bintrayName + '.' + nameLib
     bintrayRepo = rootProject.ext.bintrayRepo
     libVersion = rootProject.ext.zdklibVersion
 
@@ -41,7 +44,7 @@ ext {
     libraryName = nameLib
     artifact = nameLib // auth in 'com.zing.zalo.zalosdk.kotlin:auth:'
 
-    libraryDescription = 'A widget to load WebView as an Overlay.'
+    libraryDescription = 'Authenticate module'
 
     siteUrl = rootProject.ext.siteUrl
     gitUrl = rootProject.ext.gitUrl
@@ -52,9 +55,9 @@ ext {
     developerName = rootProject.ext.developerName
     developerEmail = rootProject.ext.developerEmail
 
-    licenseName =  rootProject.ext.licenseName
-    licenseUrl =  rootProject.ext.licenseUrl
-    allLicenses =  rootProject.ext.allLicenses
+    licenseName = rootProject.ext.licenseName
+    licenseUrl = rootProject.ext.licenseUrl
+    allLicenses = rootProject.ext.allLicenses
 }
 
 bintray {

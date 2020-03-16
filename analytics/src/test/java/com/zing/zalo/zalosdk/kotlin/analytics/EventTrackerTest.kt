@@ -3,10 +3,10 @@ package com.zing.zalo.zalosdk.kotlin.analytics
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider
 import com.google.common.truth.Truth.assertThat
-import com.zing.zalo.zalosdk.kotlin.core.devicetrackingsdk.DeviceTracking
 import com.zing.zalo.zalosdk.kotlin.analytics.helper.AppInfoHelper
 import com.zing.zalo.zalosdk.kotlin.analytics.helper.DataHelper
 import com.zing.zalo.zalosdk.kotlin.analytics.helper.DeviceHelper
+import com.zing.zalo.zalosdk.kotlin.core.devicetrackingsdk.DeviceTracking
 import com.zing.zalo.zalosdk.kotlin.core.helper.AppInfo
 import com.zing.zalo.zalosdk.kotlin.core.helper.DeviceInfo
 import com.zing.zalo.zalosdk.kotlin.core.helper.Utils
@@ -187,8 +187,15 @@ class EventTrackerTest {
 
     //#region private supportive method
     private fun startModuleTest() {
-        sut.start(context)
+
+
+//
+        AppInfoHelper.setup()
         DeviceTracking.getInstance().start(context)
+        sut.start(context)
+
+
+
     }
 
     private fun mockDataWithDeviceIdExpired() {
@@ -205,7 +212,6 @@ class EventTrackerTest {
         mockkObject(DeviceInfo)
         mockkObject(DeviceTracking)
         mockkObject(Utils)
-        mockkObject(AppInfo)
 
         val deviceIdSettingJSON =
             "{\"deviceId\":\"${DeviceHelper.deviceId}\",\"expiredTime\":\"${deviceExpiredTime}\"}"
@@ -218,9 +224,6 @@ class EventTrackerTest {
         } returns deviceIdSettingJSON
 
         every { DeviceInfo.getAdvertiseID(context) } returns DeviceHelper.adsId
-        every { AppInfo.getVersionName(context) } returns AppInfoHelper.versionName
-        every { AppInfo.getAppName(context) } returns AppInfoHelper.appName
-        every { AppInfo.getAppId(context) } returns AppInfoHelper.appId
 
         //returns data preloadInfo
         every { Utils.readFileData(File("/data/etc/appchannel/zalo_appchannel.in")) } returns "${DataHelper.preloadInfo}:${DataHelper.preloadInfo}"
@@ -277,7 +280,7 @@ class EventTrackerTest {
 
     private fun verifyPreloadInfo() {
         val times = 1
-        verify(exactly = times) { AppInfo.getPreloadChannel(context) }
+        verify(exactly = times) { AppInfo.getInstance().getPreloadChannel() }
         verify(exactly = times) { DeviceInfo.getPreloadInfo(context) }
         val preloadInfo = DeviceInfo.getPreloadInfo(context)
         assertThat(preloadInfo.preload).isEqualTo(DataHelper.preloadInfo)

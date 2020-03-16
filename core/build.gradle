@@ -15,15 +15,20 @@ android {
     defaultConfig {
         minSdkVersion rootProject.ext.minSdkVersion as Integer
         targetSdkVersion rootProject.ext.targetSdkVersion as Integer
+        versionCode rootProject.ext.zdklibVersionCode
+        versionName rootProject.ext.zdklibVersion
 
         consumerProguardFiles 'proguard-rules.pro'
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
+        debug {
+            minifyEnabled false //debug
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -35,7 +40,7 @@ android {
 
 def nameLib = 'core'
 ext {
-    bintrayName =  rootProject.ext.bintrayName + '.' + nameLib
+    bintrayName = rootProject.ext.bintrayName + '.' + nameLib
     bintrayRepo = rootProject.ext.bintrayRepo
     libVersion = rootProject.ext.zdklibVersion
 
@@ -43,7 +48,7 @@ ext {
     libraryName = nameLib
     artifact = nameLib // core in 'com.zing.zalo.zalosdk.kotlin:core:'
 
-    libraryDescription = 'A widget to load WebView as an Overlay.'
+    libraryDescription = 'Core module'
 
     siteUrl = rootProject.ext.siteUrl
     gitUrl = rootProject.ext.gitUrl
@@ -54,9 +59,9 @@ ext {
     developerName = rootProject.ext.developerName
     developerEmail = rootProject.ext.developerEmail
 
-    licenseName =  rootProject.ext.licenseName
-    licenseUrl =  rootProject.ext.licenseUrl
-    allLicenses =  rootProject.ext.allLicenses
+    licenseName = rootProject.ext.licenseName
+    licenseUrl = rootProject.ext.licenseUrl
+    allLicenses = rootProject.ext.allLicenses
 }
 
 bintray {
@@ -72,11 +77,8 @@ dependencies {
     api rootProject.ext.androidSupportV4
     api rootProject.ext.kotlinCoroutinesCore
     api rootProject.ext.kotlinCoroutinesAndroid
-
-
 //    Dependencies
-    implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
 
     //Unit Test
 

@@ -9,7 +9,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import org.jetbrains.annotations.Nullable
 
-class ZaloOpenApi(context: Context, oauthCode: String?){
+class ZaloOpenApi(context: Context, oauthCode: String?) {
 
     companion object {
 

@@ -57,9 +57,9 @@ open class Storage(val context: Context) {
         setString(PREF_OAUTH_CODE, code)
     }
 
-    fun privateSharedPreferences(prefName: String): PrivateSharedPreferenceInterface {
-        val prefEditor = context.getSharedPreferences(prefName, Context.MODE_PRIVATE).edit()
-        val sharedPref = context.getSharedPreferences(prefName, Context.MODE_PRIVATE)
+    fun createPrivateStorage(storageName: String): PrivateSharedPreferenceInterface {
+        val prefEditor = context.getSharedPreferences(storageName, Context.MODE_PRIVATE).edit()
+        val sharedPref = context.getSharedPreferences(storageName, Context.MODE_PRIVATE)
 
 
         return object : PrivateSharedPreferenceInterface {

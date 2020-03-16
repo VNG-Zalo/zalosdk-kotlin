@@ -1,6 +1,6 @@
 package com.zing.zalo.zalosdk.kotlin.openapi
 
-import android.content.res.Resources
+import android.content.Context
 import androidx.annotation.Keep
 
 @Keep
@@ -35,9 +35,6 @@ object ZaloOAuthResultCode {
             1 -> return RESULTCODE_ZALO_UNKNOWN_ERROR
             2 -> return RESULTCODE_USER_BACK
             3 -> return RESULTCODE_USER_REJECT
-//            4 -> return
-//            5 -> return
-//            6 -> return
             -201 -> return RESULTCODE_PERMISSION_DENIED
             -1000 -> return RESULTCODE_UNEXPECTED_ERROR
             -1001 -> return RESULTCODE_INVALID_APP_ID
@@ -59,13 +56,14 @@ object ZaloOAuthResultCode {
         }
     }
 
-    fun findErrorMessageByID(rawCode: Int): String {
+    fun findErrorMessageByID(context: Context, rawCode: Int): String {
+
         return when (rawCode) {
             RESULTCODE_ZALO_UNKNOWN_ERROR -> "Lỗi không xác định"
-            RESULTCODE_ZALO_SDK_NO_INTERNET_ACCESS -> Resources.getSystem().getString(R.string.no_network)
-            RESULTCODE_ZALO_APPLICATION_NOT_INSTALLED -> Resources.getSystem().getString(R.string.zalo_app_not_installed)
-            RESULTCODE_ZALO_OUT_OF_DATE -> Resources.getSystem().getString(R.string.zalo_app_out_of_date)
-            RESULTCODE_ZALO_OAUTH_INVALID -> "OAuth Code is invalid"
+            RESULTCODE_ZALO_SDK_NO_INTERNET_ACCESS -> context.getString(R.string.no_network)
+            RESULTCODE_ZALO_APPLICATION_NOT_INSTALLED -> context.getString(R.string.zalo_app_not_installed)
+            RESULTCODE_ZALO_OUT_OF_DATE -> context.getString(R.string.zalo_app_out_of_date)
+            RESULTCODE_ZALO_OAUTH_INVALID -> context.getString(R.string.zalo_oauth_code_invalid)
             else -> "Không thể đăng nhập Zalo."
         }
     }

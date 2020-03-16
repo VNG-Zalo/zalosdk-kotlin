@@ -1,6 +1,10 @@
 package com.zing.zalo.zalosdk.kotlin.analytics.helper
 
+
 import com.zing.zalo.zalosdk.kotlin.analytics.model.Event
+import com.zing.zalo.zalosdk.kotlin.core.helper.AppInfo
+import io.mockk.every
+import io.mockk.mockkObject
 
 object DataHelper {
     const val EVENT_STORED_IN_DEVICE =
@@ -19,14 +23,46 @@ object DataHelper {
     }
 }
 
-object AppInfoHelper {
-    const val appName = "app_name"
-    const val versionName = "version_name"
-    const val appId = "app_id"
-
-}
-
 object DeviceHelper {
     const val deviceId = "device_id"
     const val adsId = "ads_id"
+}
+
+
+object AppInfoHelper {
+    const val appId = "appId_123456"
+    const val scanId = "scanId_3"
+    const val appName = "appName"
+    const val versionName = "2"
+    const val applicationHashKey = "applicationHashKey"
+    const val advertiserId = "advertiserId"
+    const val packageName = "package_name"
+    const val referrer = "referrer"
+    const val installerPackageName = "installer_packageName"
+    const val installedDate = "installed_date"
+    const val firstInstalledDate = "installed_date"
+    const val lastUpdate = "last_update"
+    const val firstRunDate = "first_run_date"
+    const val versionCode = 4L
+    fun setup() {
+        mockkObject(AppInfo, recordPrivateCalls = true)
+
+        every { AppInfo.getInstance().getAppId() } returns appId
+        every { AppInfo.getInstance().getAppName() } returns appName
+        every { AppInfo.getInstance().getVersionName() } returns versionName
+        every { AppInfo.getInstance().getApplicationHashKey() } returns applicationHashKey
+        every { AppInfo.getInstance().getPackageName() } returns packageName
+        every { AppInfo.getInstance().getReferrer() } returns referrer
+        every { AppInfo.getInstance().getInstallerPackageName() } returns installerPackageName
+        every { AppInfo.getInstance().getInstallDate() } returns installedDate
+        every { AppInfo.getInstance().getFirstInstallDate() } returns firstInstalledDate
+        every { AppInfo.getInstance().getLastUpdate() } returns lastUpdate
+        every { AppInfo.getInstance().getFirstRunDate() } returns firstRunDate
+        every { AppInfo.getInstance().getVersionCode() } returns versionCode
+        every { AppInfo.getInstance().isPreInstalled() } returns true
+        every { AppInfo.getInstance().getPreloadChannel() } returns "preloadChanel"
+
+
+        every { AppInfo.getInstance().extracted } returns true
+    }
 }

@@ -142,7 +142,7 @@ class AuthenticatorTest {
                 Intent.EXTRA_UID,
                 0
             )
-        ).isEqualTo(AppInfo.getAppIdLong(context))
+        ).isEqualTo(AppInfo.getInstance().getAppIdLong())
 
         sut.onActivityResult(activity, reqCode.captured, Activity.RESULT_OK, successIntent)
     }
@@ -150,6 +150,9 @@ class AuthenticatorTest {
     @Test
     fun `test login via app not installed`() {
         //2. run
+        every {
+            AppInfo.getInstance().isPackageExists(Constant.core.ZALO_PACKAGE_NAME)
+        } returns false
         sut.authenticate(activity, LoginVia.APP, object : IAuthenticateCompleteListener {
             override fun onAuthenticateError(errorCode: Int, message: String) {
                 assertThat(errorCode).isEqualTo(RESULTCODE_ZALO_APPLICATION_NOT_INSTALLED)
@@ -299,7 +302,7 @@ class AuthenticatorTest {
         resolveInfo.activityInfo = activityInfo
         val browserIntent = Intent()
         browserIntent.setPackage(context.packageName)
-        browserIntent.data = Uri.parse("zalo-${AppInfo.getAppId(context)}://")
+        browserIntent.data = Uri.parse("zalo-${AppInfo.getInstance().getAppId()}://")
         packageMgr.addResolveInfoForIntent(browserIntent, resolveInfo)
     }
 

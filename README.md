@@ -7,24 +7,24 @@ ZaloSDK for Android
 - Import module từ jfrog/jCenter
 
 ```
-        def versionSDK = sdk_version
-        implementation "com.zing.zalo.zalosdk:core:$versionSDK"
-        implementation "com.zing.zalo.zalosdk:auth:$versionSDK"
-        implementation "com.zing.zalo.zalosdk:analytics:$versionSDK"
-        implementation "com.zing.zalo.zalosdk:openapi:$versionSDK"
+        def sdkVersion = sdk_version
+        implementation "com.zing.zalo.zalosdk.kotlin:core:$sdkVersion"
+        implementation "com.zing.zalo.zalosdk.kotlin:auth:$sdkVersion"
+        implementation "com.zing.zalo.zalosdk.kotlin:openapi:$sdkVersion"
+        implementation "com.zing.zalo.zalosdk.kotlin:analytics:$sdkVersion"
 ```
 
 - Lấy application hash key
 
 ```
-        AppInfo.INSTANCE.getApplicationHashKey(this);
+        AppInfo.getInstance().getApplicationHashKey(this);
 ```
 
 - Đăng ký app trên web
   [https://developers.zalo.me](https://developers.zalo.me/) để lấy appID
 - Tạo ứng dụng android với package name và appID
 
-- Thêm thẻ provider và meta-data vào Android Manifest
+- Thêm meta-data vào Android Manifest
 
 ```
         <meta-data

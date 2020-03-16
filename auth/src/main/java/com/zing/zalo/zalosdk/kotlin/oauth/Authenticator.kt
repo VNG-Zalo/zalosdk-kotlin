@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.*
 import android.net.Uri
 import android.text.TextUtils
+import com.zing.zalo.zalosdk.java.LoginChannel
 import com.zing.zalo.zalosdk.kotlin.core.helper.AppInfo
 import com.zing.zalo.zalosdk.kotlin.core.helper.Utils
 import com.zing.zalo.zalosdk.kotlin.core.helper.ZTaskExecutor
@@ -72,8 +73,8 @@ class Authenticator(val context: Context, private val mStorage: AuthStorage) :
             return false
         }
 
-        val appID = AppInfo.getAppId(context)
-        val appVersion = AppInfo.getSDKVersion()
+        val appID = AppInfo.getInstance().getAppId()
+        val appVersion = AppInfo.getInstance().getSDKVersion()
         val isOnline = Utils.isOnline(context)
 
         val task = ValidateOAuthCodeTask(httpClient, code, appID, appVersion, isOnline, callback)
@@ -82,7 +83,7 @@ class Authenticator(val context: Context, private val mStorage: AuthStorage) :
     }
 
     private fun sendOAuthRequest(activity: Activity, loginVia: LoginVia) {
-        val isZaloInstalled = AppInfo.isPackageExists(context, Constant.core.ZALO_PACKAGE_NAME)
+        val isZaloInstalled = AppInfo.getInstance().isPackageExists(Constant.core.ZALO_PACKAGE_NAME)
         val settingsManager = SettingsManager.getInstance()
 
         when (loginVia) {
@@ -123,7 +124,7 @@ class Authenticator(val context: Context, private val mStorage: AuthStorage) :
             activity.registerReceiver(receiver, intentFilter)
 
             val i = Intent("com.zing.zalo.intent.action.THIRD_PARTY_APP_AUTHORIZATION")
-            i.putExtra(Intent.EXTRA_UID, AppInfo.getAppIdLong(activity))
+            i.putExtra(Intent.EXTRA_UID, AppInfo.getInstance().getAppIdLong())
             activity.startActivityForResult(i, Constant.ZALO_AUTHENTICATE_REQUEST_CODE)
         } catch (ex: SecurityException) {
             bIsZaloOutOfDate = true
@@ -175,11 +176,11 @@ class Authenticator(val context: Context, private val mStorage: AuthStorage) :
             )
         )
         try {
-            url.append(AppInfo.getAppIdLong(activity))
+            url.append(AppInfo.getInstance().getAppIdLong())
                 .append("&sign_key=")
-                .append(URLEncoder.encode(AppInfo.getApplicationHashKey(activity), "UTF-8"))
+                .append(URLEncoder.encode(AppInfo.getInstance().getApplicationHashKey(), "UTF-8"))
                 .append("&pkg_name=")
-                .append(URLEncoder.encode(activity.getPackageName(), "UTF-8"))
+                .append(URLEncoder.encode(activity.packageName, "UTF-8"))
                 .append("&orientation=")
                 .append(activity.resources.configuration.orientation)
                 .append("&ts=").append(System.currentTimeMillis())
@@ -277,11 +278,12 @@ class Authenticator(val context: Context, private val mStorage: AuthStorage) :
                 val id = data.getLongExtra(Constant.user.UID, 0)
                 val authCode = data.getStringExtra(Constant.user.AUTH_CODE)
 
+                mStorage.setLastLoginChannel(LoginChannel.ZALO.toString())
                 mStorage.setAuthCode(authCode!!)
                 mStorage.setZaloId(id)
                 try {
                     val jsData = data.getStringExtra("data")
-                    val exData = JSONObject(jsData!!).getJSONObject("data")
+                    val exData = JSONObject(jsData).getJSONObject("data")
                     val displayName = exData.getString(Constant.user.DISPLAY_NAME)
 
                     mStorage.setZaloDisplayName(displayName)

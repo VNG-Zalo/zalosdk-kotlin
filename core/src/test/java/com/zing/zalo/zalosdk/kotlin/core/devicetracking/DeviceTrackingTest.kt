@@ -3,9 +3,9 @@ package com.zing.zalo.zalosdk.kotlin.core.devicetracking
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider
 import com.google.common.truth.Truth.assertThat
+import com.zing.zalo.zalosdk.kotlin.core.Constant
 import com.zing.zalo.zalosdk.kotlin.core.devicetrackingsdk.DeviceTracking
 import com.zing.zalo.zalosdk.kotlin.core.devicetrackingsdk.SdkTracking
-import com.zing.zalo.zalosdk.kotlin.core.Constant
 import com.zing.zalo.zalosdk.kotlin.core.helper.AppInfoHelper
 import com.zing.zalo.zalosdk.kotlin.core.helper.DataHelper
 import com.zing.zalo.zalosdk.kotlin.core.helper.Storage
@@ -18,6 +18,7 @@ import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.slot
 import io.mockk.verify
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.TestCoroutineScope
 import org.json.JSONObject
 import org.junit.After
@@ -30,6 +31,7 @@ import java.io.ByteArrayOutputStream
 import java.io.File
 import java.net.URLEncoder
 
+@ExperimentalCoroutinesApi
 @RunWith(RobolectricTestRunner::class)
 class DeviceTrackingTest {
     private lateinit var context: Context

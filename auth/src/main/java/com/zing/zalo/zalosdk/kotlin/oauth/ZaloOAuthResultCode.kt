@@ -27,8 +27,10 @@ object ZaloOAuthResultCode {
     const val RESULTCODE_ZALO_SDK_NO_INTERNET_ACCESS = -1022
     const val RESULTCODE_ZALO_APPLICATION_NOT_INSTALLED = -1024
     const val RESULTCODE_ZALO_OUT_OF_DATE = -1025
+    const val RESULTCODE_CANT_LOGIN_GOOGLE = -1205
+    const val RESULTCODE_CANT_LOGIN_FACEBOOK = -1105
 
-
+    @JvmStatic
     fun findById(rawCode: Int): Int {
         when (rawCode) {
             0 -> return RESULTCODE_NO_ERROR

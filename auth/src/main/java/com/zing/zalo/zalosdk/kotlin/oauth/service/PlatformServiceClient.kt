@@ -65,7 +65,7 @@ class PlatformServiceClient(var context: Context, private val requestMessage: In
 
     private fun sendMessage() {
         val data = Bundle()
-        data.putString(NativeProtocol.KEY_REQUEST_APPLICATION_ID, AppInfo.getAppId(context))
+        data.putString(NativeProtocol.KEY_REQUEST_APPLICATION_ID, AppInfo.getInstance().getAppId())
 //		populateRequestBundle(data)
         val request = Message.obtain(null, this.requestMessage)
         request.arg1 = 1

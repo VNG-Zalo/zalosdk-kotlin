@@ -21,7 +21,7 @@ object AuthUtils {
 
         if (!settingsManager.isLoginViaBrowser()) return false
 
-        val appId = AppInfo.getAppId(context)
+        val appId = AppInfo.getInstance().getAppId()
         val pkgName = context.packageName
         if (TextUtils.isEmpty(appId)) return false
 

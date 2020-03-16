@@ -30,10 +30,10 @@ class HttpResponse(var request: IHttpRequest) : IHttpResponse {
             }
             bufferReader.close()
 
-            Log.d(  "HttpResponse","$sb")
+            Log.d("HttpResponse", "$sb")
             return sb.toString()
         } catch (ex: Exception) {
-            Log.e("HttpResponse",ex)
+            Log.e("HttpResponse", ex)
             return null
         }
     }
@@ -46,6 +46,6 @@ class HttpResponse(var request: IHttpRequest) : IHttpResponse {
             Log.w("getJSON", ex)
         }
 
-         return null;
+        return null;
     }
 }

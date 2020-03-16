@@ -12,7 +12,7 @@ interface IDeviceTracking {
     fun initDeviceTracking()
     fun getDeviceId(): String?
     fun getDeviceId(listener: DeviceTrackingListener?)
-    fun getVersion():String
+    fun getVersion(): String
 }
 
 @Keep

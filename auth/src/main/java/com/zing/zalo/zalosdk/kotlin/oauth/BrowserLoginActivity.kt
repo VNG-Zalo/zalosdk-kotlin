@@ -24,7 +24,7 @@ class BrowserLoginActivity : Activity() {
         if (data == null || data.query == null) return false
 
         val scheme = data.scheme
-        if (scheme == null || !scheme.startsWith("zalo-" + AppInfo.getAppId(this))) {
+        if (scheme == null || !scheme.startsWith("zalo-" + AppInfo.getInstance().getAppId())) {
             return false
         }
 

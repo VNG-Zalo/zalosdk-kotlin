@@ -7,9 +7,9 @@
 
 | JAVA | KOTLIN |
 | --- | --- |
-| Tự tạo hàm getApplicationHashKey để lấy hash key | Dùng trực tiếp hàm AppInfo.INSTANCE.getApplicationHashKey(this); trong core lib để lấy hash key  |
-| Thêm dependenciestừ maven, jCenter | Giữ nguyên |
-| Lấy appId từ trang developers và thêm vào file strings.xml, và thêm thẻ metadata cho appID trong AndroidManifest.xml: | Giữ nguyên. Thêm vào build.gradle (project)  `maven {url    "https://zalo.bintray.com/ZaloSDK"}`|
+| Tự tạo hàm getApplicationHashKey để lấy hash key | Dùng trực tiếp hàm AppInfo.getInstance().getApplicationHashKey(this); trong core lib để lấy hash key  |
+| Thêm dependencies từ maven, jCenter | Giữ nguyên |
+| Lấy appId từ trang developers và thêm vào file strings.xml, và thêm thẻ metadata cho appID trong AndroidManifest.xml: | Giữ nguyên. |
 | Thêm attribute name của Application | Xóa attribute name của Appplication trong manifest  |
 | Thêm activity để login Zalo bằng Web | Bỏ bước này (hoặc xóa đi nếu upgrade từ java sdk lên kotlin sdk) |
 
@@ -62,7 +62,7 @@
 | OLD | NEW |
 | --- | --- |
 | Singleton OpenApiService | Class ZaloOpenApi(context:Context, authCode:String) |
-| Singleton ZaloSDK | Class ZaloSDK(context:Context, authCode:String) |
+| Singleton ZaloSDK | Class ZaloSDK(context:Context) |
 
 - Một số thay đổi khác về interface và callback
 

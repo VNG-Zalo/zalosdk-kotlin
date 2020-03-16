@@ -15,7 +15,7 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath 'com.google.gms:google-services:4.0.1'
         classpath 'com.github.dcendents:android-maven-gradle-plugin:2.0'
-	classpath "com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4"
+        classpath "com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4"
     }
 }
 
@@ -30,14 +30,23 @@ allprojects {
     }
 }
 
+def zdklibPrefixVersion = "2.5."
+def zdklibPrefixVersionCode = "25"
 String date =  new SimpleDateFormat("MM-dd").format(new Date())
 String month = date.split("-")[0]
 String day = date.split("-")[1]
+Integer zdkVersionCode = Integer.parseInt(zdklibPrefixVersionCode+ month +day)
+
 ext {
+    //Core library
+    def kotlinCoroutinesVersion = "1.3.3"
+    kotlinCoroutinesCore = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinCoroutinesVersion"
+    kotlinCoroutinesAndroid = "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlinCoroutinesVersion"
     androidSupportV4 = "com.android.support:support-v4:28.0.0"
-    bintrayName = 'com.zing.zalo.zalosdk.kotlin'
-    kotlinCoroutinesCore = "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.2"
-    kotlinCoroutinesAndroid = "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.0"
+    androidxAppcompat = "androidx.appcompat:appcompat:1.1.0"
+
+
+    //Project's properties
     playServiceAdsVersion = '15.0.0'
     playServiceAuthVersion = '15.0.0'
     compileSdkVersion = 28
@@ -46,7 +55,9 @@ ext {
     minSdkVersion = 14
 
     //bintray jfrog
-    zdklibVersion = "2.5." + month + day
+    bintrayName = 'com.zing.zalo.zalosdk.kotlin'
+    zdklibVersion = zdklibPrefixVersion + month + day
+    zdklibVersionCode = zdkVersionCode
     bintrayRepo = 'ZaloSDKKotlin'
     libGroup = 'com.zing.zalo.zalosdk.kotlin' //group
     siteUrl = 'https://github.com/VNG-Zalo/zalosdk-kotlin'
@@ -61,7 +72,7 @@ ext {
     licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
     allLicenses = ["Apache-2.0"]
 
-    userOrg = 'zalo'  //important
+    userOrg = 'zalovng'  //important
 }
 
 task clean(type: Delete) {

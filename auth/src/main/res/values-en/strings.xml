@@ -6,4 +6,14 @@
     <string name="zalo_app_not_installed">Zalo is not installed yet</string>
     <string name="zalo_app_out_of_date">Zalo is out of date</string>
     <string name="no_network">Network unstable, please try again later</string>
+    <string name="create_password">Create a password to login next time. </string>
+    <string name="txt_password_regis">Password</string>
+    <string name="txt_password_regis_confirm">Confirm password</string>
+    <string name="create_pasword_done">Update</string>
+    <string name="create_password_caution">Password: Using password allows you to login on different device without the need to re-activate by receiving SMS message.\nSecurity: Please note not to share this password with anyone to ensure the security of your account.</string>
+    <string name="txt_input_male">Male</string>
+    <string name="txt_input_female">Female</string>
+    <string name="update_profile_done">Complete</string>
+    <string name="next_step"><![CDATA[or <a href="http://"><u>Skip</u></a>]]></string>
+    <string name="txt_input_name">Full name</string>
 </resources>

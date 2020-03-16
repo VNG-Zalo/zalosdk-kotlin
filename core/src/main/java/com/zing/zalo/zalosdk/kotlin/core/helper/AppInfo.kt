@@ -1,41 +1,62 @@
 package com.zing.zalo.zalosdk.kotlin.core.helper
 
 import android.annotation.SuppressLint
+import android.content.ActivityNotFoundException
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.pm.Signature
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.text.TextUtils
 import android.util.Base64
+import androidx.annotation.Keep
 import com.zing.zalo.zalosdk.kotlin.core.Constant
-import com.zing.zalo.zalosdk.kotlin.core.helper.Utils.isExternalStorageReadable
 import com.zing.zalo.zalosdk.kotlin.core.log.Log
+import com.zing.zalo.zalosdk.kotlin.core.module.BaseModule
 import java.io.File
 import java.net.URLEncoder
 import java.security.MessageDigest
 
-object AppInfo {
+class AppInfo : BaseModule() {
+
+    @Keep
+    companion object {
+        private val instance = AppInfo()
+        @JvmStatic
+        fun getInstance(): AppInfo {
+            return instance
+        }
+    }
+
     private val lock = Any()
     var extracted: Boolean = false
-    var appId: String? = null
-    var applicationHashKey: String? = null
-    var packageName: String? = null
-    var versionName: String? = null
-
+    private var appId: String = ""
+    private var applicationHashKey: String = ""
+    private var packageName: String = ""
+    private var versionName: String = ""
     internal var versionCode: Long = 0
-    internal var appName: String? = null
-    internal var firstInstallDate: String? = null
-    internal var installDate: String? = null
-    internal var lastUpdateDate: String? = null
-    internal var installerPackageName: String? = null
-    internal var preloadChannel: String? = null
+    internal var appName: String = ""
+    internal var firstInstallDate: String = ""
+    internal var installDate: String = ""
+    internal var lastUpdateDate: String = ""
+    internal var installerPackageName: String = ""
+    internal var preloadChannel: String = ""
 
     private var isAutoTrackingOpenApp: Boolean = false
 
-    fun isPackageExists(mContext: Context, targetPackage: String): Boolean {
-        val pm: PackageManager = mContext.packageManager
+    private lateinit var ctx: Context
+
+    override fun onStart(context: Context) {
+        super.onStart(context)
+        ctx = context
+        extractBasicAppInfo(context)
+    }
+
+    fun isPackageExists(context: Context, targetPackage: String): Boolean {
+        val pm: PackageManager = context.packageManager
         try {
             pm.getPackageInfo(targetPackage, PackageManager.GET_META_DATA)
         } catch (ex: Exception) {
@@ -44,21 +65,11 @@ object AppInfo {
         return true
     }
 
-    fun getAppIdLong(ctx: Context): Long {
-        val str = getAppId(ctx)
-        return try {
-            java.lang.Long.parseLong(str)
-        } catch (ex: Exception) {
-            Log.w("getAppIdLong", ex)
-            return 0L
-        }
-
-    }
 
     @SuppressLint("PackageManagerGetSignatures")
     @Suppress("DEPRECATION")
-    fun getApplicationHashKey(ctx: Context): String? {
-        if (applicationHashKey != null) return applicationHashKey
+    fun getApplicationHashKey(): String? {
+        if (!TextUtils.isEmpty(applicationHashKey)) return applicationHashKey
 
         try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
@@ -95,69 +106,89 @@ object AppInfo {
         return applicationHashKey
     }
 
-    fun getReferrer(context: Context): String {
+    fun isPackageExists(targetPackage: String): Boolean {
+        val pm: PackageManager = ctx.packageManager
+        try {
+            pm.getPackageInfo(targetPackage, PackageManager.GET_META_DATA)
+        } catch (ex: Exception) {
+            return false
+        }
+        return true
+    }
+
+    fun getAppIdLong(): Long {
+        val str = getAppId()
         return try {
-            context.getSharedPreferences("zacCookie", 0).getString("referrer", "") ?: ""
+            java.lang.Long.parseLong(str)
+        } catch (ex: Exception) {
+            Log.w("getAppIdLong", ex)
+            return 0L
+        }
+
+    }
+
+    fun getReferrer(): String {
+        return try {
+            ctx.getSharedPreferences("zacCookie", 0).getString("referrer", "") ?: ""
         } catch (ex: Exception) {
             ""
         }
     }
 
-    fun getPackageName(context: Context): String {
-        return getPropertyAsT(context, "packageName") ?: ""
-
+    fun getPackageName(): String {
+        return getPropertyAsT(ctx, "packageName") ?: ""
     }
 
-    fun getAppId(context: Context): String {
-        return getPropertyAsT(context, "appId") ?: ""
+    fun getAppId(): String {
+        return getPropertyAsT(ctx, "appId") ?: ""
     }
 
-    fun getAppName(context: Context): String {
-        return getPropertyAsT(context, "appName") ?: ""
+    fun getAppName(): String {
+        return getPropertyAsT(ctx, "appName") ?: ""
     }
 
     fun getSDKVersion(): String {
         return Constant.VERSION
     }
 
-    fun getVersionName(context: Context): String {
-        return getPropertyAsT(context, "versionName") ?: ""
+    fun getVersionName(): String {
+        return getPropertyAsT(ctx, "versionName") ?: ""
     }
 
-    fun getVersionCode(context: Context): Long {
-        return getPropertyAsT(context, "versionCode") ?: 0L
+    fun getVersionCode(): Long {
+        return getPropertyAsT(ctx, "versionCode") ?: 0L
     }
 
-    fun getInstallerPackageName(context: Context): String {
-        return getPropertyAsT(context, "installerPackageName") ?: ""
+    fun getInstallerPackageName(): String {
+        return getPropertyAsT(ctx, "installerPackageName") ?: ""
     }
 
-    fun getInstallDate(context: Context): String {
-        return getPropertyAsT(context, "installDate") ?: ""
+    fun getInstallDate(): String {
+        return getPropertyAsT(ctx, "installDate") ?: ""
     }
 
-    fun getFirstInstallDate(context: Context): String {
+    fun getFirstInstallDate(): String {
 
-        return getPropertyAsT(context, "firstInstallDate") ?: ""
+        return getPropertyAsT(ctx, "firstInstallDate") ?: ""
     }
 
-    fun getLastUpdate(context: Context): String {
+    fun getLastUpdate(): String {
 
-        return getPropertyAsT(context, "installDate") ?: ""
+        return getPropertyAsT(ctx, "installDate") ?: ""
     }
 
-    fun getFirstRunDate(context: Context): String {
-        return getPropertyAsT(context, "firstInstallDate") ?: ""
+    fun getFirstRunDate(): String {
+        return getPropertyAsT(ctx, "firstInstallDate") ?: ""
     }
 
-    fun getPreloadChannel(context: Context): String {
-        return getPropertyAsT(context, "preloadChannel") ?: ""
+    fun getPreloadChannel(): String {
+        return getPropertyAsT(ctx, "preloadChannel") ?: ""
     }
 
-    fun isPreInstalled(context: Context): Boolean {
+    fun isPreInstalled(): Boolean {
         try {
-            if (isExternalStorageReadable(context)) {
-                val file = prepareFileInExternalStore(context.packageName, false)
+            if (Utils.isExternalStorageReadable(ctx)) {
+                val file = prepareFileInExternalStore(ctx.packageName, false)
                 return if (file.exists()) {
                     true
                 } else {
@@ -171,6 +202,28 @@ object AppInfo {
 
         return false
     }
+
+    fun launchMarketApp(
+        context: Context,
+        targetPackage: String
+    ) {
+        try {
+            val intent =
+                Intent(Intent.ACTION_VIEW)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            intent.data = Uri.parse("market://details?id=$targetPackage")
+            context.startActivity(intent)
+        } catch (e: ActivityNotFoundException) {
+            val intent = Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse("https://play.google.com/store/apps/details?id=$targetPackage")
+            )
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            context.startActivity(intent)
+        }
+    }
+
+
 
     //#region private supportive method
     private fun prepareFileInExternalStore(fileName: String, clearIfExists: Boolean): File {
@@ -188,15 +241,11 @@ object AppInfo {
 
     @Suppress("UNCHECKED_CAST")
     private fun <T> getPropertyAsT(context: Context, key: String): T? {
-        var result: T?
         synchronized(lock) {
-            if (extracted)
-                result = findPropertyValue(key) as T
+            if (!extracted)
+                extractBasicAppInfo(context)
         }
-        extractBasicAppInfo(context)
-        result = findPropertyValue(key) as T
-
-        return result
+        return findPropertyValue(key) as T?
     }
 
 
@@ -261,7 +310,7 @@ object AppInfo {
                 }
 
                 appName = URLEncoder.encode(pInfo.applicationInfo.loadLabel(pm).toString(), "UTF-8")
-                installerPackageName = pm.getInstallerPackageName(packageName)
+                installerPackageName = pm.getInstallerPackageName(packageName) ?: ""
 
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
@@ -277,16 +326,16 @@ object AppInfo {
 
                 val bundle = appInfo.metaData
 
-                appId = getString(bundle, "com.zing.zalo.zalosdk.appID", null)
+                appId = getString(bundle, "com.zing.zalo.zalosdk.appID", null) ?: ""
 
                 if (TextUtils.isEmpty(appId)) {
-                    appId = getString(bundle, "appID", "")
+                    appId = getString(bundle, "appID", "") ?: ""
                 }
 
                 isAutoTrackingOpenApp =
                     getBoolean(bundle, "com.zing.zalosdk.configAutoTrackingActivity", false)
 
-                preloadChannel = getString(bundle, "com.zing.zalo.sdk.preloadChannel", "")
+                preloadChannel = getString(bundle, "com.zing.zalo.sdk.preloadChannel", "") ?: ""
 
             } catch (ex: Exception) {
                 Log.e("extractBasicAppInfo", ex)
@@ -297,4 +346,3 @@ object AppInfo {
     }
     //#endregion
 }
-	

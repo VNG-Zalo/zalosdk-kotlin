@@ -133,9 +133,9 @@ abstract class ZaloWebLoginBaseFragment : Fragment() {
         val url = StringBuilder()
         url.append(WEB_LOGIN_URL)
         try {
-            url.append(AppInfo.getAppIdLong(ctx))
+            url.append(AppInfo.getInstance().getAppIdLong())
             url.append("&sign_key=")
-            url.append(URLEncoder.encode(AppInfo.getApplicationHashKey(ctx), "UTF-8"))
+            url.append(URLEncoder.encode(AppInfo.getInstance().getApplicationHashKey(), "UTF-8"))
             url.append("&pkg_name=")
             url.append(URLEncoder.encode(ctx.packageName, "UTF-8"))
             url.append("&orientation=")

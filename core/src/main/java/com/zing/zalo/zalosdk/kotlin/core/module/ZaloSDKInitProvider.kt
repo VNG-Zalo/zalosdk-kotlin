@@ -5,7 +5,7 @@ import android.content.ContentValues
 import android.database.Cursor
 import android.net.Uri
 
-class ZaloSDKInitProvider: ContentProvider() {
+class ZaloSDKInitProvider : ContentProvider() {
 
     //#region methods not involved
     override fun insert(uri: Uri, values: ContentValues?): Uri? {

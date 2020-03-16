@@ -16,6 +16,8 @@ class ServiceMapManager private constructor() : BaseModule() {
     @Keep
     companion object {
         private val instance = ServiceMapManager()
+
+        @JvmStatic
         fun getInstance(): ServiceMapManager {
             return instance
         }

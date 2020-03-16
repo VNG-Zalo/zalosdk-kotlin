@@ -3,10 +3,10 @@ package com.zing.zalo.zalosdk.kotlin.core.devicetracking
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider
 import com.google.common.truth.Truth.assertThat
-import com.zing.zalo.zalosdk.kotlin.core.devicetrackingsdk.SdkTracking
 import com.zing.zalo.zalosdk.kotlin.core.Constant
 import com.zing.zalo.zalosdk.kotlin.core.SharedPreferenceConstant.PREF_PRIVATE_KEY
 import com.zing.zalo.zalosdk.kotlin.core.SharedPreferenceConstant.PREF_SDK_ID
+import com.zing.zalo.zalosdk.kotlin.core.devicetrackingsdk.SdkTracking
 import com.zing.zalo.zalosdk.kotlin.core.helper.AppInfoHelper
 import com.zing.zalo.zalosdk.kotlin.core.helper.Storage
 import com.zing.zalo.zalosdk.kotlin.core.http.HttpClient

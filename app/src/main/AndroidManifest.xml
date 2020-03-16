@@ -12,8 +12,11 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
-            tools:ignore="GoogleAppIndexingWarning">
-
+            tools:ignore="AllowBackup,GoogleAppIndexingWarning">
+        <activity android:name=".SettingsActivity"></activity>
+        <activity android:name=".AuthextActivity" />
+        <activity android:name=".ZPTrackingActivity" />
+        <activity android:name=".WakeUpActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,7 +24,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".OpenApiActivity" />
 
         <meta-data
@@ -30,7 +32,6 @@
         <meta-data
                 android:name="com.zing.zalo.sdk.preloadChannel"
                 android:value="@string/preloadChannel" />
-
     </application>
 
 </manifest>
