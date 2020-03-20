@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.zing.zalo.zalosdk.kotlin.core.settings.SettingsManager
-import java.lang.String
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -31,20 +30,19 @@ class SettingsActivity : AppCompatActivity() {
             ArrayList<KeyValue>()
         list.add(
             KeyValue(
-                "Wakeup interval",
-                String.valueOf(mgr.getWakeUpInterval())
+                "Wakeup interval", mgr.getWakeUpInterval().toString()
             )
         )
         list.add(
             KeyValue(
                 "Is out app Login",
-                String.valueOf(mgr.isLoginViaBrowser())
+                mgr.isLoginViaBrowser().toString()
             )
         )
         list.add(
             KeyValue(
                 "Use web view if zalo app not login",
-                String.valueOf(mgr.isUseWebViewLoginZalo())
+                mgr.isUseWebViewLoginZalo().toString()
             )
         )
         list.add(

@@ -1,5 +1,6 @@
 package com.zing.zalo.zalosdk.kotlin.oauth
 
+import android.content.Context
 import android.content.res.Resources
 import androidx.annotation.Keep
 
@@ -61,7 +62,7 @@ object ZaloOAuthResultCode {
         }
     }
 
-    fun findErrorMessageByID(rawCode: Int): String {
+    fun findErrorMessageByID(context: Context, rawCode: Int): String {
         return when (rawCode) {
             RESULTCODE_ZALO_UNKNOWN_ERROR -> "Lỗi không xác định"
             RESULTCODE_USER_BACK -> ""

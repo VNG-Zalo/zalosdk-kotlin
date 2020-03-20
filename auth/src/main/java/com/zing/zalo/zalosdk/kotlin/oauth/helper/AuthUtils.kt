@@ -36,17 +36,6 @@ object AuthUtils {
             return true
         }
 
-        Log.e("ZaloSDK support login via browser from version 2.4.0901")
-        Log.e("Please add this activity to your AndroidManifest.xml")
-        Log.e("  <activity android:name=\" " + BrowserLoginActivity::class.java.name + " \">")
-        Log.e("    <intent-filter>")
-        Log.e("      <action android:name=\"android.intent.action.VIEW\" />")
-        Log.e("      <category android:name=\"android.intent.category.DEFAULT\" />")
-        Log.e("      <category android:name=\"android.intent.category.BROWSABLE\" />")
-        Log.e("      <data android:scheme=\"zalo-$appId\" />")
-        Log.e("    </intent-filter>")
-        Log.e("  </activity>")
-
         return false
     }
 }

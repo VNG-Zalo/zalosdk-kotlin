@@ -90,6 +90,23 @@ abstract class ZaloWebLoginBaseFragment : Fragment() {
         )
     }
 
+    open fun onLoginFailed(
+        error: Int,
+        errorMsg: String,
+        errorReason: String,
+        errorDescription: String,
+        fromSource: String
+    ) {
+        if (listener != null) listener!!.onLoginFailed(
+            error,
+            errorMsg,
+            errorReason,
+            errorDescription,
+            fromSource
+        )
+    }
+
+
     @Suppress("DEPRECATION")
     private fun setupWebView(parentView: View) {
         webView = parentView.findViewById(R.id.zalosdk_login_webview)
@@ -102,7 +119,8 @@ abstract class ZaloWebLoginBaseFragment : Fragment() {
         webView.settings.setRenderPriority(WebSettings.RenderPriority.HIGH)
         webView.settings.allowContentAccess = true
 
-        val webClient = LoginEventDispatcher(WeakReference(this), callbackUrl)
+        val webClient =
+            LoginEventDispatcher(this.context?.applicationContext, WeakReference(this), callbackUrl)
         webView.webViewClient = webClient
 
         try {
@@ -161,6 +179,14 @@ abstract class ZaloWebLoginBaseFragment : Fragment() {
             zprotect: Int,
             name: String,
             isRegister: Boolean
+        )
+
+        fun onLoginFailed(
+            error: Int,
+            errorMsg: String,
+            errorReason: String,
+            errorDescription: String,
+            fromSource: String
         )
     }
 }

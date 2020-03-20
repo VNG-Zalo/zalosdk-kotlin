@@ -16,8 +16,11 @@ object Constant {
 
     const val GOOGLE_AUTHENTICATE_REQUEST_CODE = 0xfcd7
     const val ZALO_AUTHENTICATE_REQUEST_CODE = 0xfcd5
+    const val RESULT_CODE_USER_BACK = 2
+    const val RESULTCODE_USER_REJECT = 3
     const val RESULT_CODE_ZALO_NOT_LOGIN = 4
     const val RESULT_CODE_SUCCESSFUL = 0
+
 }
 
 @Keep

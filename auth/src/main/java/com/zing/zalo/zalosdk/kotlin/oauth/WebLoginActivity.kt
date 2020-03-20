@@ -107,6 +107,32 @@ class WebLoginActivity : FragmentActivity(),
         finish()
     }
 
+    override fun onLoginFailed(
+        error: Int,
+        errorMsg: String,
+        errorReason: String,
+        errorDescription: String,
+        fromSource: String
+    ) {
+        val data = Intent()
+        data.putExtra("error", error)
+
+        val extra = JSONObject()
+        try {
+            extra.put("errorMsg", errorMsg)
+            extra.put("error_description", errorDescription)
+            extra.put("error_reason", errorReason)
+            extra.put("from_source", fromSource)
+        } catch (ignored: JSONException) {
+            Log.e("onLoginFailed", ignored)
+        }
+
+
+        data.putExtra("data", extra.toString())
+        setResult(RESULT_OK, data)
+        finish()
+    }
+
     override fun onClick(p0: View?) {
         if (p0 === backButton) {
             hideSoftKeyboard()

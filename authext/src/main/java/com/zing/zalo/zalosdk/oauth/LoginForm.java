@@ -55,8 +55,10 @@ import com.zing.zalo.zalosdk.kotlin.oauth.ZaloOAuthResultCode;
 import com.zing.zalo.zalosdk.kotlin.oauth.ZaloSDK;
 import com.zing.zalo.zalosdk.kotlin.oauth.callback.ValidateOAuthCodeCallback;
 import com.zing.zalo.zalosdk.kotlin.oauth.helper.AuthStorage;
+import com.zing.zalo.zalosdk.kotlin.oauth.model.ErrorResponse;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -1377,6 +1379,11 @@ public class LoginForm extends RelativeLayout implements OnClickListener {
 
         @Override
         public void onAuthenticateError(int errorCode, @NotNull String message) {
+
+        }
+
+        @Override
+        public void onAuthenticateError(int errorCode, @Nullable String errorMsg, @NotNull ErrorResponse errorResponse) {
 
         }
     }

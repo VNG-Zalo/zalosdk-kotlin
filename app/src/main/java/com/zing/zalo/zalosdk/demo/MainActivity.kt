@@ -23,6 +23,7 @@ import com.zing.zalo.zalosdk.kotlin.oauth.ZaloSDK
 import com.zing.zalo.zalosdk.kotlin.oauth.callback.GetZaloLoginStatus
 import com.zing.zalo.zalosdk.kotlin.oauth.callback.ValidateOAuthCodeCallback
 import com.zing.zalo.zalosdk.kotlin.oauth.helper.AuthStorage
+import com.zing.zalo.zalosdk.kotlin.oauth.model.ErrorResponse
 
 
 class MainActivity : AppCompatActivity(), ValidateOAuthCodeCallback, GetZaloLoginStatus {
@@ -70,6 +71,7 @@ class MainActivity : AppCompatActivity(), ValidateOAuthCodeCallback, GetZaloLogi
             val displayName = data[Constant.user.DISPLAY_NAME]
             authCodeTextView.text = "Auth code: $code"
             userIDTextView.text = "User: $displayName \nUID: $uid"
+            showToast("Login Success")
         }
 
         override fun onAuthenticateError(errorCode: Int, message: String) {
@@ -79,6 +81,7 @@ class MainActivity : AppCompatActivity(), ValidateOAuthCodeCallback, GetZaloLogi
                 userIDTextView.text = null
             }
         }
+
     }
 
     private val eventTrackerListener = object : EventTrackerListener {

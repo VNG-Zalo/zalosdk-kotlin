@@ -16,6 +16,7 @@ import com.zing.zalo.zalosdk.kotlin.oauth.callback.GetZaloLoginStatus
 import com.zing.zalo.zalosdk.kotlin.oauth.callback.ValidateOAuthCodeCallback
 import com.zing.zalo.zalosdk.kotlin.oauth.helper.AuthStorage
 import com.zing.zalo.zalosdk.kotlin.oauth.helper.AuthUtils
+import com.zing.zalo.zalosdk.kotlin.oauth.model.ErrorResponse
 import com.zing.zalo.zalosdk.kotlin.oauth.service.ZaloService
 import com.zing.zalo.zalosdk.kotlin.oauth.task.ValidateOAuthCodeTask
 import org.json.JSONObject
@@ -25,12 +26,17 @@ import java.net.URLEncoder
 
 class Authenticator(val context: Context, private val mStorage: AuthStorage) :
     IAuthenticator {
-    private var wListener: WeakReference<IAuthenticateCompleteListener> =
-        WeakReference<IAuthenticateCompleteListener>(null)
+
     private var bIsZaloLoginSuccessful = false
     private var bIsZaloOutOfDate: Boolean = false
     var httpClient: HttpClient =
         HttpClient(ServiceMapManager.getInstance().urlFor(ServiceMapManager.KEY_URL_OAUTH))
+
+
+    companion object {
+        private var wListener: WeakReference<IAuthenticateCompleteListener> =
+            WeakReference<IAuthenticateCompleteListener>(null)
+    }
 
     private fun setOAuthCompleteListener(listener: IAuthenticateCompleteListener) {
         wListener = WeakReference(listener)
@@ -130,7 +136,10 @@ class Authenticator(val context: Context, private val mStorage: AuthStorage) :
             bIsZaloOutOfDate = true
 
             val errorMsg =
-                ZaloOAuthResultCode.findErrorMessageByID(ZaloOAuthResultCode.RESULTCODE_ZALO_OUT_OF_DATE)
+                ZaloOAuthResultCode.findErrorMessageByID(
+                    context,
+                    ZaloOAuthResultCode.RESULTCODE_ZALO_OUT_OF_DATE
+                )
             wListener.get()
                 ?.onAuthenticateError(ZaloOAuthResultCode.RESULTCODE_ZALO_OUT_OF_DATE, errorMsg)
             //tra ve error code
@@ -138,7 +147,10 @@ class Authenticator(val context: Context, private val mStorage: AuthStorage) :
             bIsZaloOutOfDate = true
 
             val errorMsg =
-                ZaloOAuthResultCode.findErrorMessageByID(ZaloOAuthResultCode.RESULTCODE_ZALO_OUT_OF_DATE)
+                ZaloOAuthResultCode.findErrorMessageByID(
+                    context,
+                    ZaloOAuthResultCode.RESULTCODE_ZALO_OUT_OF_DATE
+                )
             wListener.get()
                 ?.onAuthenticateError(ZaloOAuthResultCode.RESULTCODE_ZALO_OUT_OF_DATE, errorMsg)
             //tra ve error code
@@ -186,10 +198,11 @@ class Authenticator(val context: Context, private val mStorage: AuthStorage) :
                 .append("&ts=").append(System.currentTimeMillis())
                 .append("&lang=")
                 .append(Utils.getLanguage())
+                .append("&ref=zsdk")
         } catch (e: UnsupportedEncodingException) {
             wListener.get()?.onAuthenticateError(
                 ZaloOAuthResultCode.RESULTCODE_UNEXPECTED_ERROR,
-                e.message.toString()
+                e.toString()
             )
             return
         }
@@ -263,7 +276,14 @@ class Authenticator(val context: Context, private val mStorage: AuthStorage) :
 
         mStorage.setAccessTokenNewAPI("")
         if (data == null) {
-            wListener.get()?.onAuthenticateError(ZaloOAuthResultCode.RESULTCODE_USER_BACK, "")
+
+            val e = ZaloOAuthResultCode.RESULTCODE_USER_BACK
+            val errorMsg = ZaloOAuthResultCode.findErrorMessageByID(context, e)
+            val erResponse = ErrorResponse(e, errorMsg, "", "", "web_login")
+
+            wListener.get()?.onAuthenticateError(e, errorMsg)
+            wListener.get()?.onAuthenticateError(e, errorMsg, erResponse)
+
             return
         }
 
@@ -304,20 +324,41 @@ class Authenticator(val context: Context, private val mStorage: AuthStorage) :
                         ?.onAuthenticateError(ZaloOAuthResultCode.RESULTCODE_USER_BACK, "")
                 }
             }
+            Constant.RESULT_CODE_USER_BACK, Constant.RESULTCODE_USER_REJECT -> {
+                val e = ZaloOAuthResultCode.findById(error)
+                val errorMsg = ZaloOAuthResultCode.findErrorMessageByID(context, e)
+                val erResponse = ErrorResponse(e, errorMsg, "", "", "app")
 
+                wListener.get()
+                    ?.onAuthenticateError(e, errorMsg)
+                wListener.get()
+                    ?.onAuthenticateError(e, errorMsg, erResponse)
+            }
             else -> {
                 val e = ZaloOAuthResultCode.findById(error)
-
-                var errorMsg = ZaloOAuthResultCode.findErrorMessageByID(e)
+                var errorMsg = ZaloOAuthResultCode.findErrorMessageByID(context, e)
                 try {
                     val jsData = data.getStringExtra("data")
+
                     if (!TextUtils.isEmpty(jsData)) {
                         val exData = JSONObject(jsData!!)
                         val msg = exData.getString("errorMsg")
-                        if (msg.isNotEmpty()) errorMsg = msg
+
+                        if (!TextUtils.isEmpty(msg)) errorMsg = msg
+
+                        val errorDescription = exData.getString("error_description")
+                        val errorReason = exData.getString("error_reason")
+                        val fromSource = exData.getString("from_source")
+
+                        val erResponse =
+                            ErrorResponse(e, errorMsg, errorReason, errorDescription, fromSource)
+
+                        wListener.get()
+                            ?.onAuthenticateError(e, errorMsg, erResponse)
                     }
                 } catch (ex: Exception) {
-                    Log.w("receiveAuthData", "zalo return empty message")
+                    Log.w("receiveAuthData", ex)
+                    errorMsg = ex.toString()
                 }
 
                 wListener.get()?.onAuthenticateError(e, errorMsg)

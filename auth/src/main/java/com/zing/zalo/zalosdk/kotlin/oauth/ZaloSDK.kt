@@ -61,7 +61,7 @@ class ZaloSDK(context: Context) {
      * @return True if oauth code cached, otherwise false
      */
     fun isAuthenticate(callback: ValidateOAuthCodeCallback?): Boolean {
-        return mAuthenticator.isAuthenticate(mStorage.getOAuthCode().toString(), callback)!!
+        return mAuthenticator.isAuthenticate(mStorage.getOAuthCode().toString(), callback)
     }
 
     fun getVersion(): String {
