@@ -12,7 +12,6 @@ interface IAuthenticateCompleteListener {
     fun onAuthenticateSuccess(uid: Long, code: String, data: Map<String, Any>)
     fun onAuthenticateError(errorCode: Int, message: String)
 
-    @Deprecated("")
     fun onAuthenticateError(errorCode: Int, errorMsg: String?, errorResponse: ErrorResponse) {}
 }
 

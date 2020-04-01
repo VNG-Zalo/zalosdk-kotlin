@@ -341,14 +341,17 @@ class Authenticator(val context: Context, private val mStorage: AuthStorage) :
                     val jsData = data.getStringExtra("data")
 
                     if (!TextUtils.isEmpty(jsData)) {
-                        val exData = JSONObject(jsData!!)
-                        val msg = exData.getString("errorMsg")
+                        val exData = JSONObject(jsData)
+                        val extraData =
+                            JSONObject(exData.getString("data"))
 
+                        val msg = extraData.getString("errorMsg")
                         if (!TextUtils.isEmpty(msg)) errorMsg = msg
 
-                        val errorDescription = exData.getString("error_description")
-                        val errorReason = exData.getString("error_reason")
-                        val fromSource = exData.getString("from_source")
+                        val errorDescription =
+                            extraData.getString("error_description")
+                        val errorReason = extraData.getString("error_reason")
+                        val fromSource = extraData.getString("from_source")
 
                         val erResponse =
                             ErrorResponse(e, errorMsg, errorReason, errorDescription, fromSource)

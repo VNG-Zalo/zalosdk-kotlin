@@ -42,6 +42,7 @@ import com.zing.zalo.zalosdk.kotlin.oauth.Constant;
 import com.zing.zalo.zalosdk.kotlin.oauth.ZaloOAuthResultCode;
 import com.zing.zalo.zalosdk.kotlin.oauth.ZaloSDK;
 import com.zing.zalo.zalosdk.kotlin.oauth.helper.AuthStorage;
+import com.zing.zalo.zalosdk.kotlin.oauth.model.ErrorResponse;
 
 import org.json.JSONObject;
 
@@ -66,7 +67,7 @@ public class AuthenticateExtention {
     private AuthStorage authStorage;
     private OAuthCompleteListener listener;
 
-    AuthenticateExtention(Context context) {
+    public AuthenticateExtention(Context context) {
         mContext = context;
         authStorage = new AuthStorage(context);
         zaloSDK = new ZaloSDK(context);
@@ -443,13 +444,11 @@ public class AuthenticateExtention {
 //        ZaloSDK.Instance.getAuthenticator().setOAuthCompleteListener(listener);
         final Context ctx = context.getApplicationContext();
         if (!Utils.isOnline(ctx)) {
-            if (listener != null)
                 listener.onAuthenError(ZaloOAuthResultCode.RESULTCODE_UNEXPECTED_ERROR, "Mạng không ổn định, vui lòng thử lại sau");
             return;
         }
 
-        if (!TextUtils.isEmpty(Utils.getFacebookAppId(ctx))) {
-            if (listener != null)
+        if (TextUtils.isEmpty(Utils.getFacebookAppId(ctx))) {
                 listener.onAuthenError(ZaloOAuthResultCode.RESULTCODE_CANT_LOGIN_FACEBOOK, "Không tìm thấy meta-data com.facebook.sdk.ApplicationId");
         }
 
@@ -686,7 +685,9 @@ public class AuthenticateExtention {
                     listener.onGetOAuthComplete(response);
                 } else {
                     int e = ZaloOAuthResultCode.findById(errorCode);
+                    ErrorResponse errorResponse = new ErrorResponse(e,"","","","");
                     listener.onAuthenError(e, errorMsg);
+                    listener.onAuthenError(e,errorMsg,errorResponse);
                 }
             } catch (Exception ex) {
                 Log.e("AuthenticateTask", ex);

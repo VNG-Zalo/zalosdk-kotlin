@@ -8,6 +8,9 @@ import android.content.DialogInterface.OnClickListener;
 
 import com.zing.zalo.zalosdk.kotlin.core.helper.AppInfo;
 import com.zing.zalo.zalosdk.kotlin.oauth.ZaloSDK;
+import com.zing.zalo.zalosdk.kotlin.oauth.model.ErrorResponse;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Oauth authenticate callback
@@ -102,6 +105,17 @@ public class OAuthCompleteListener {
     public void onAuthenError(int errorCode) {
 
     }
+
+    /**
+     * This method would be called if error happen while authenticating
+     * Should use method onAuthenError(int errorCode, String message) instead
+     * @param errorCode Reference {@link com.zing.zalo.zalosdk.oauth.ZaloOAuthResultCode}
+     * @param errorResponse Reference {@link com.zing.zalo.zalosdk.kotlin.oauth.model.ErrorResponse}
+     */
+    public void onAuthenError(int errorCode, String errorMsg,@NotNull ErrorResponse errorResponse){
+
+    }
+
 
     /**
      * This method will be called after request permission success
