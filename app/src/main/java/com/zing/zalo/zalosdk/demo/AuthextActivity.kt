@@ -16,7 +16,7 @@ import com.zing.zalo.zalosdk.oauth.OauthResponse
 
 class AuthextActivity : AppCompatActivity() {
 
-private lateinit var authenticateExtension : AuthenticateExtention
+    private lateinit var authenticateExtension: AuthenticateExtention
     private lateinit var callbackTextView: TextView
     private lateinit var loginForm: LoginForm
     private var listener = object : OAuthCompleteListener() {
@@ -47,8 +47,8 @@ private lateinit var authenticateExtension : AuthenticateExtention
 
     }
 
-    private fun showToast(msg:String) {
-        Toast.makeText(this,msg,Toast.LENGTH_SHORT).show()
+    private fun showToast(msg: String) {
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -79,24 +79,26 @@ private lateinit var authenticateExtension : AuthenticateExtention
     }
 
     fun loginFacebookButton(view: View) {
-        authenticateExtension.authenticateWithFacebook(this,listener)
+        authenticateExtension.authenticateWithFacebook(this, listener)
     }
+
     fun loginGoogleButton(view: View) {
-        authenticateExtension.authenticateWithGooglePlus(this,listener)
+        authenticateExtension.authenticateWithGooglePlus(this, listener)
     }
 
     fun loginZingMeButton(view: View) {
         showDialogLoginZingMe()
     }
+
     fun loginGuestButton(view: View) {
-        authenticateExtension.authenticateWithGuest(this,listener)
+        authenticateExtension.authenticateWithGuest(this, listener)
     }
 
     private fun showDialogLoginZingMe() { //
         val dialogBuilder = AlertDialog.Builder(this)
         val inflater = this.layoutInflater
         val dialogView: View =
-            inflater.inflate(R.layout.layout_login_zingme_dialog,null)
+            inflater.inflate(R.layout.layout_login_zingme_dialog, null)
         val context: Context = this
         dialogBuilder.setView(dialogView)
         dialogBuilder.setMessage("Look at this dialog!")

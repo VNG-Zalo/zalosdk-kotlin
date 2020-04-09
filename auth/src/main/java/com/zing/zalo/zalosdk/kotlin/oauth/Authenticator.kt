@@ -159,14 +159,20 @@ class Authenticator(val context: Context, private val mStorage: AuthStorage) :
     }
 
     fun loginViaWeb(activity: Activity) {
+        val canUseBrowserLogin = AuthUtils.canUseBrowserLogin(context)
+
         if (!Utils.isOnline(context)) {
-            wListener.get()?.onAuthenticateError(
-                ZaloOAuthResultCode.RESULTCODE_ZALO_WEBVIEW_NO_NETWORK,
-                context.getString(R.string.no_network)
-            )
+            val e = ZaloOAuthResultCode.RESULTCODE_ZALO_WEBVIEW_NO_NETWORK
+            val errorMessage = ZaloOAuthResultCode.findErrorMessageByID(context, e)
+            val fromSource = if (canUseBrowserLogin) "browser" else "web_view"
+            val errorResponse = ErrorResponse(e,errorMessage,"","", fromSource)
+
+            wListener.get()?.onAuthenticateError(e, errorMessage)
+            wListener.get()?.onAuthenticateError(e,errorMessage,errorResponse)
+            return
         }
 
-        if (AuthUtils.canUseBrowserLogin(context)) {
+        if (canUseBrowserLogin) {
             loginViaBrowser(activity)
         } else {
             loginViaWebView(activity)
