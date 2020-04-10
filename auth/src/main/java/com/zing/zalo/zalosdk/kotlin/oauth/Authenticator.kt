@@ -355,9 +355,9 @@ class Authenticator(val context: Context, private val mStorage: AuthStorage) :
                         if (!TextUtils.isEmpty(msg)) errorMsg = msg
 
                         val errorDescription =
-                            extraData.getString("error_description")
-                        val errorReason = extraData.getString("error_reason")
-                        val fromSource = extraData.getString("from_source")
+                            extraData.optString("error_description","")
+                        val errorReason = extraData.optString("error_reason", "")
+                        val fromSource = extraData.optString("from_source", "")
 
                         val erResponse =
                             ErrorResponse(e, errorMsg, errorReason, errorDescription, fromSource)
