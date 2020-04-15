@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+
+    <TextView
+
+            android:text="Set default link: "
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+        <Button
+                android:id="@+id/linkButton"
+                android:text="@string/default_link_button"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:backgroundTint="#05A3E5"/>
+
+        <Button
+                android:id="@+id/imageUrlButton"
+                android:text="@string/default_image_link_button"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:backgroundTint="#05A3E5"/>
+
+        <Button
+                android:id="@+id/videoUrlButton"
+                android:text="@string/default_video_link_button"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:backgroundTint="#05A3E5"/>
+
+    </LinearLayout>
+
+    <EditText
+            android:id="@+id/input_message_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:hint="Message"
+            android:inputType="text" />
+
+    <EditText
+            android:id="@+id/input_url_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:hint="Zingnews.vn"
+            android:inputType="text" />
+
+</LinearLayout>

@@ -2,17 +2,38 @@ package com.zing.zalo.zalosdk.demo
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.text.TextUtils
+import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.zing.zalo.zalosdk.demo.OpenApiAction.*
 import com.zing.zalo.zalosdk.kotlin.oauth.ZaloSDK
 import com.zing.zalo.zalosdk.kotlin.openapi.ZaloOpenApi
 import com.zing.zalo.zalosdk.kotlin.openapi.ZaloOpenApiCallback
 import com.zing.zalo.zalosdk.kotlin.openapi.ZaloPluginCallback
-import com.zing.zalo.zalosdk.kotlin.openapi.model.FeedData
 import org.json.JSONObject
 
 class OpenApiActivity : AppCompatActivity(), ZaloOpenApiCallback, ZaloPluginCallback {
+
+
+    private lateinit var getProfileButton: Button
+    private lateinit var getFriendListUsedAppButton: Button
+    private lateinit var getFriendListInvitableButton: Button
+    private lateinit var inviteFriendUseAppButton: Button
+    private lateinit var postToWallButton: Button
+    private lateinit var sendMsgToFriendButton: Button
+    private lateinit var sendMessageViaApp: Button
+    private lateinit var sharePostViaApp: Button
+
+    private lateinit var callBackTextView: TextView
+
+    private lateinit var zaloSDK: ZaloSDK
+    private lateinit var zaloOpenApi: ZaloOpenApi
+
+    private val friendID = arrayOf("1491696566623706686")
+
     @SuppressLint("SetTextI18n")
     override fun onResult(
         isSuccess: Boolean,
@@ -27,20 +48,6 @@ class OpenApiActivity : AppCompatActivity(), ZaloOpenApiCallback, ZaloPluginCall
         callBackTextView.text = data.toString()
     }
 
-    private lateinit var getProfileButton: Button
-    private lateinit var getFriendListUsedAppButton: Button
-    private lateinit var getFriendListInvitableButton: Button
-    private lateinit var inviteFriendUseAppButton: Button
-    private lateinit var postToWallButton: Button
-    private lateinit var sendMsgToFriendButton: Button
-    private lateinit var sendMessageViaApp: Button
-    private lateinit var sharePostViaApp: Button
-
-    private lateinit var callBackTextView: TextView
-
-    private lateinit var zaloSDK:ZaloSDK
-
-    private lateinit var zaloOpenApi: ZaloOpenApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_open_api)
@@ -81,7 +88,6 @@ class OpenApiActivity : AppCompatActivity(), ZaloOpenApiCallback, ZaloPluginCall
     private fun bindViewsListener() {
         getProfileButton.setOnClickListener {
             val fields = arrayOf("id", "birthday", "gender", "picture", "name")
-//            ZaloOpenApi.getInstance().getProfile(fields, this)
             zaloOpenApi.getProfile(fields, this)
         }
         getFriendListUsedAppButton.setOnClickListener {
@@ -94,9 +100,7 @@ class OpenApiActivity : AppCompatActivity(), ZaloOpenApiCallback, ZaloPluginCall
         }
 
         inviteFriendUseAppButton.setOnClickListener {
-            val friendsList = arrayOf("")
-            zaloOpenApi.inviteFriendUseApp(friendsList, "Hello!", this)
-
+            zaloOpenApi.inviteFriendUseApp(friendID, "Hello!", this)
         }
 
         postToWallButton.setOnClickListener {
@@ -108,27 +112,91 @@ class OpenApiActivity : AppCompatActivity(), ZaloOpenApiCallback, ZaloPluginCall
         }
 
         sendMsgToFriendButton.setOnClickListener {
-            zaloOpenApi.sendMsgToFriend("1491696566623706686", "msg", "http://vnexpress.net", this)
+            showDialogInputMessage(SendMessageToFriend)
         }
 
         sendMessageViaApp.setOnClickListener {
-            zaloOpenApi.shareMessage(mockFeedData(), this)
+            showDialogInputMessage(ShareMessageViaApp)
         }
 
         sharePostViaApp.setOnClickListener {
-            zaloOpenApi.shareFeed(mockFeedData(), this)
+            showDialogInputMessage(ShareFeedViaApp)
         }
     }
 
-    private fun mockFeedData(): FeedData {
-        val feed = FeedData()
-        feed.msg = "Prefill message"
-        feed.link = "https://news.zing.vn"
-        feed.linkTitle = "Zing News"
-        feed.linkSource = "https://news.zing.vn"
-        feed.linkThumb =
-            listOf("https://img.v3.news.zdn.vn/w660/Uploaded/xpcwvovb/2015_12_15/cua_kinh_2.jpg")
-        return feed
+    private fun showDialogInputMessage(case: OpenApiAction) { //
+
+        val dialogBuilder = AlertDialog.Builder(this)
+        val inflater = this.layoutInflater
+        val dialogView: View = inflater.inflate(R.layout.layout_input_url, null)
+
+        dialogBuilder.setView(dialogView)
+        dialogBuilder.setMessage("Dialog")
+            .setCancelable(true)
+            .setPositiveButton("OK") { dialog, id ->
+                val url =
+                    dialogView.findViewById<TextView>(R.id.input_url_text_view).text.toString()
+                val msg =
+                    dialogView.findViewById<TextView>(R.id.input_message_text_view).text.toString()
+                handleClickButtonApi(case, msg, url)
+            }
+        dialogBuilder.create().show()
+
+        setOnClickListenerButton(dialogView)
+        configDialogUILogic(case, dialogView)
+
     }
+
+    private fun handleClickButtonApi(case: OpenApiAction, msg: String, url: String) {
+
+        val message = if (TextUtils.isEmpty(msg)) "" else msg
+        when (case) {
+            ShareMessageViaApp -> {
+                zaloOpenApi.shareMessage(message, this)
+            }
+            SendMessageToFriend -> {
+                zaloOpenApi.sendMsgToFriend(friendID[0], message, url, this)
+            }
+            ShareFeedViaApp -> {
+                zaloOpenApi.shareFeed(url, this)
+            }
+        }
+    }
+
+    private fun configDialogUILogic(case: OpenApiAction, view: View) {
+        val inputMessageTextView = view.findViewById<TextView>(R.id.input_message_text_view)
+        val inputUrlTextView = view.findViewById<TextView>(R.id.input_url_text_view)
+        when (case) {
+            ShareMessageViaApp -> {
+                inputUrlTextView.visibility = View.GONE
+            }
+            ShareFeedViaApp -> {
+                inputMessageTextView.visibility = View.GONE
+            }
+            SendMessageToFriend -> return
+        }
+    }
+
+    private fun setOnClickListenerButton(view: View) {
+        val inputUrlTextView = view.findViewById<TextView>(R.id.input_url_text_view)
+        view.findViewById<Button>(R.id.linkButton).setOnClickListener {
+            inputUrlTextView.text = "https://zingnews.vn/"
+        }
+
+        view.findViewById<Button>(R.id.imageUrlButton).setOnClickListener {
+            inputUrlTextView.text = "https://homepages.cae.wisc.edu/~ece533/images/boat.png"
+        }
+        view.findViewById<Button>(R.id.videoUrlButton).setOnClickListener {
+            inputUrlTextView.text = "https://www.radiantmediaplayer.com/media/bbb-360p.mp4"
+        }
+
+    }
+
     //#endregion
+}
+
+enum class OpenApiAction {
+    ShareMessageViaApp,
+    SendMessageToFriend,
+    ShareFeedViaApp
 }
