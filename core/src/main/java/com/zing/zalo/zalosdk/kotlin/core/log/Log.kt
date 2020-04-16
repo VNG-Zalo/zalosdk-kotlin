@@ -6,8 +6,8 @@ import java.util.*
 object Log {
     private const val LOG_TAG = "ZDK"
 
-    private const val isUnitTesting = true
-//    private const val isUnitTesting = false
+    //    private const val isUnitTesting = true
+    private const val isUnitTesting = false
 
     private const val VERBOSE = android.util.Log.VERBOSE
     private const val DEBUG = android.util.Log.DEBUG
@@ -21,6 +21,7 @@ object Log {
         logLevel = android.util.Log.VERBOSE
     }
 
+    @JvmStatic
     fun d(msg: String) {
         d(LOG_TAG, msg)
     }
@@ -29,6 +30,7 @@ object Log {
         d(LOG_TAG, format, *args)
     }
 
+    @JvmStatic
     fun d(tag: String, msg: String) {
         log(DEBUG, tag, msg)
     }
@@ -53,6 +55,7 @@ object Log {
         e(LOG_TAG, format, *args)
     }
 
+    @JvmStatic
     fun e(tag: String, msg: String) {
         log(ERROR, tag, msg)
     }
@@ -69,10 +72,12 @@ object Log {
         log(ERROR, tag.simpleName, format, *args)
     }
 
+    @JvmStatic
     fun e(ex: Exception) {
         e(LOG_TAG, ex)
     }
 
+    @JvmStatic
     fun e(tag: String, ex: Exception) {
         val msg = android.util.Log.getStackTraceString(ex)
         log(ERROR, tag, msg)
@@ -91,6 +96,7 @@ object Log {
         i(LOG_TAG, format, *args)
     }
 
+    @JvmStatic
     fun i(tag: String, msg: String) {
         log(INFO, tag, msg)
     }
@@ -115,6 +121,7 @@ object Log {
         v(LOG_TAG, format, *args)
     }
 
+    @JvmStatic
     fun v(tag: String, msg: String) {
         log(VERBOSE, tag, msg)
     }
@@ -123,6 +130,7 @@ object Log {
         log(VERBOSE, tag.simpleName, msg)
     }
 
+    @JvmStatic
     fun v(tag: String, format: String, vararg args: Any) {
         log(VERBOSE, tag, format, *args)
     }
@@ -143,6 +151,7 @@ object Log {
         log(WARN, tag, ex.message.toString())
     }
 
+    @JvmStatic
     fun w(tag: String, msg: String) {
         log(WARN, tag, msg)
     }
@@ -151,6 +160,7 @@ object Log {
         log(WARN, tag.simpleName, msg)
     }
 
+    @JvmStatic
     fun w(tag: String, format: String, vararg args: Any) {
         log(WARN, tag, format, *args)
     }
@@ -159,6 +169,7 @@ object Log {
         log(WARN, tag.simpleName, format, *args)
     }
 
+    @JvmStatic
     fun w(e: Exception?) {
         if (e != null) {
             w(e.toString())

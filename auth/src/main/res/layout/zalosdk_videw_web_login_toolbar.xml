@@ -2,26 +2,26 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:orientation="vertical"
-        android:background="@color/back_ground_blue">
+        android:background="@color/back_ground_blue"
+        android:orientation="vertical">
 
     <TextView
-            android:layout_centerInParent="true"
+            android:id="@+id/zalosdk_txt_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@android:color/white"
-            android:id="@+id/zalosdk_txt_title"
+            android:layout_centerInParent="true"
             android:text="Title"
+            android:textColor="@android:color/white"
             android:textSize="18dp" />
 
     <ImageView
             android:id="@+id/zalosdk_back_control"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
             android:layout_width="42dp"
             android:layout_height="48dp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
             android:scaleType="centerInside"
             android:src="@drawable/zalosdk_icon_back_arrow" />
 </RelativeLayout>

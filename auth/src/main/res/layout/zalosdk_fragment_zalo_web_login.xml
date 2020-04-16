@@ -12,11 +12,11 @@
             android:visibility="visible" />
 
     <ProgressBar
-            android:layout_gravity="center"
             android:id="@+id/zalosdk_progress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
+            android:layout_gravity="center"
             android:indeterminate="true"
             android:indeterminateDrawable="@drawable/zalosdk_progress"
             android:visibility="visible" />

@@ -1,1 +1,1 @@
-include ':app', ':core', ':auth', ':analytics', ':openapi'
+include ':app', ':core', ':auth', ':analytics', ':openapi', ':wakeup', ':zptracking', ':authext'

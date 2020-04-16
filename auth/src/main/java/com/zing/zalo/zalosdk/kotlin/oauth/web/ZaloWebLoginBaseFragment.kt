@@ -90,6 +90,23 @@ abstract class ZaloWebLoginBaseFragment : Fragment() {
         )
     }
 
+    open fun onLoginFailed(
+        error: Int,
+        errorMsg: String,
+        errorReason: String,
+        errorDescription: String,
+        fromSource: String
+    ) {
+        if (listener != null) listener!!.onLoginFailed(
+            error,
+            errorMsg,
+            errorReason,
+            errorDescription,
+            fromSource
+        )
+    }
+
+
     @Suppress("DEPRECATION")
     private fun setupWebView(parentView: View) {
         webView = parentView.findViewById(R.id.zalosdk_login_webview)
@@ -102,7 +119,8 @@ abstract class ZaloWebLoginBaseFragment : Fragment() {
         webView.settings.setRenderPriority(WebSettings.RenderPriority.HIGH)
         webView.settings.allowContentAccess = true
 
-        val webClient = LoginEventDispatcher(WeakReference(this), callbackUrl)
+        val webClient =
+            LoginEventDispatcher(this.context?.applicationContext, WeakReference(this), callbackUrl)
         webView.webViewClient = webClient
 
         try {
@@ -133,9 +151,9 @@ abstract class ZaloWebLoginBaseFragment : Fragment() {
         val url = StringBuilder()
         url.append(WEB_LOGIN_URL)
         try {
-            url.append(AppInfo.getAppIdLong(ctx))
+            url.append(AppInfo.getInstance().getAppIdLong())
             url.append("&sign_key=")
-            url.append(URLEncoder.encode(AppInfo.getApplicationHashKey(ctx), "UTF-8"))
+            url.append(URLEncoder.encode(AppInfo.getInstance().getApplicationHashKey(), "UTF-8"))
             url.append("&pkg_name=")
             url.append(URLEncoder.encode(ctx.packageName, "UTF-8"))
             url.append("&orientation=")
@@ -161,6 +179,14 @@ abstract class ZaloWebLoginBaseFragment : Fragment() {
             zprotect: Int,
             name: String,
             isRegister: Boolean
+        )
+
+        fun onLoginFailed(
+            error: Int,
+            errorMsg: String,
+            errorReason: String,
+            errorDescription: String,
+            fromSource: String
         )
     }
 }

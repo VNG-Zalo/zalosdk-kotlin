@@ -12,7 +12,7 @@
 
 #Device Tracking
 -keep class com.zing.zalo.zalosdk.kotlin.core.devicetrackingsdk.** { *; }
--keep class com.zing.zalo.devicetrackingsdk.** {*;}
+-keep class com.zing.zalo.zalosdk.java.devicetrackingsdk.**  {*;}
 #-keepclasseswithmembers class com.zing.zalo.zalosdk.kotlin.core.devicetrackingsdk.model.PreloadInfo {*;}
 
 #App Tracking
@@ -37,10 +37,10 @@
 
 #Service Map
 -keep class com.zing.zalo.zalosdk.kotlin.core.servicemap.** { *;}
-
+-keep class com.zing.zalo.zalosdk.java.servicemap.** { *;}
 #SettingManager
 -keep class com.zing.zalo.zalosdk.kotlin.core.settings.** {*;}
-
+-keep class com.zing.zalo.zalosdk.java.settings.** { *;}
 # -keep public class * extends android.content.BroadcastReceiver
 #Android"s module
 #-keep public class * extends android.app.Activity

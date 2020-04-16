@@ -72,6 +72,7 @@ bintray {
 apply from: '../bintray.gradle'
 
 dependencies {
+    implementation rootProject.ext.androidxAppcompat
     //Zalo SDK Dependence
     implementation project(':core')
 

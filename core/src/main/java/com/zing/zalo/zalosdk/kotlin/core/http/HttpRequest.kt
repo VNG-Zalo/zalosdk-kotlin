@@ -162,6 +162,10 @@ class HttpMultipartRequest(path: String) : BasePostHttpRequest(path), IMultipart
         dos.flush()
     }
 
+    fun setBody(data: ByteArray) {
+        this.fileData = data
+    }
+
     override fun setFileParameter(key: String, name: String, data: ByteArray) {
         fileKey = key
         fileName = name

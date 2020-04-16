@@ -18,6 +18,7 @@ import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.slot
 import io.mockk.verify
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.TestCoroutineScope
 import org.json.JSONObject
 import org.junit.After
@@ -30,6 +31,7 @@ import java.io.ByteArrayOutputStream
 import java.io.File
 import java.net.URLEncoder
 
+@ExperimentalCoroutinesApi
 @RunWith(RobolectricTestRunner::class)
 class DeviceTrackingTest {
     private lateinit var context: Context

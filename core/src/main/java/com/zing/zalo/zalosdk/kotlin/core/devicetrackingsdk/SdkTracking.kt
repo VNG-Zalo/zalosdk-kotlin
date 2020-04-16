@@ -18,6 +18,7 @@ import kotlinx.coroutines.launch
 import org.json.JSONException
 import java.util.concurrent.atomic.AtomicBoolean
 
+
 class SdkTracking private constructor() : BaseModule(), ISdkTracking {
     internal var storage: Storage? = null
     private val loading = AtomicBoolean(false)
@@ -32,6 +33,7 @@ class SdkTracking private constructor() : BaseModule(), ISdkTracking {
 
     companion object {
         private val instance = SdkTracking()
+        @JvmStatic
         fun getInstance(): SdkTracking {
             return instance
         }
@@ -106,14 +108,14 @@ class SdkTracking private constructor() : BaseModule(), ISdkTracking {
             try {
                 val deviceIdData = DeviceInfo.prepareDeviceIdData(context).toString()
                 val request = HttpUrlEncodedRequest(Constant.api.API_SDK_ID)
-                request.addParameter("appId", AppInfo.getAppId(context))
+                request.addParameter("appId", AppInfo.getInstance().getAppId())
                 request.addParameter("sdkv", DeviceInfo.getSDKVersion())
                 request.addParameter("pl", "android")
                 request.addParameter("osv", DeviceInfo.getOSVersion())
                 request.addParameter("model", DeviceInfo.getModel())
                 request.addParameter("screenSize", DeviceInfo.getScreenSize(context))
                 request.addParameter("device", deviceIdData)
-                request.addParameter("ref", AppInfo.getReferrer(context))
+                request.addParameter("ref", AppInfo.getInstance().getReferrer())
 
                 val jsonObject = httpClient.send(request).getJSON()
                 val errorCode = jsonObject?.getInt("error")

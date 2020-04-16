@@ -21,10 +21,12 @@ import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 import java.util.*
 import java.util.concurrent.TimeUnit
+import java.util.zip.GZIPOutputStream
 
 object Utils {
     private var language: String? = null
 
+    @JvmStatic
     @SuppressLint("WrongConstant")
     fun isPermissionGranted(context: Context, permission: String): Boolean {
         val permissionCheck = if (Build.VERSION.SDK_INT >= 23) {
@@ -234,6 +236,78 @@ object Utils {
         return null
     }
 
+    fun getBoolean(obj: JSONObject, key: String): Boolean? {
+        if (obj.has(key)) {
+            try {
+                return obj.getBoolean(key)
+            } catch (e: JSONException) {
+                try {
+                    return obj.getInt(key) != 0
+                } catch (ignored: JSONException) {
+                }
+
+            }
+
+        }
+        return null
+    }
+
+    fun getCurrentProcessName(context: Context): String {
+        try {
+            val manager = context.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+            val myPid = Process.myPid()
+            for (processInfo in manager.runningAppProcesses) {
+                if (processInfo.pid == myPid) {
+                    return processInfo.processName
+                }
+            }
+
+            return context.packageName
+        } catch (ex: Exception) {
+            return "default"
+        }
+    }
+
+    fun convertTimeToMilliSeconds(@NotNull time: Int, @NotNull unit: TimeUnit): Long {
+        return when (unit) {
+            TimeUnit.SECONDS -> time * 1000L
+            TimeUnit.HOURS -> time * 3600 * 1000L
+            TimeUnit.MINUTES -> time * 60 * 1000L
+            else -> time.toLong()
+        }
+    }
+
+    fun isZaloSupportCallBack(context: Context): Boolean {
+        return getVersionCodeOfPackage(context, Constant.ZALO_PACKAGE_NAME) > 1100123
+    }
+
+    @JvmStatic
+    @Throws(IOException::class)
+    fun gzipCompress(string: String): ByteArray? {
+        val os = ByteArrayOutputStream(string.length)
+        val gos = GZIPOutputStream(os)
+        gos.write(string.toByteArray())
+        gos.close()
+        val compressed = os.toByteArray()
+        os.close()
+        return compressed
+    }
+
+    @JvmStatic
+    fun getSDKVersion(): String {
+        return Constant.VERSION
+    }
+
+    @JvmStatic
+    fun loadListDeviceIDWakeUp(context: Context): String? {
+        val privateStorage =
+            Storage(context).createPrivateStorage(Constant.sharedPreference.PREF_NAME_WAKEUP)
+        return privateStorage.getString(
+            Constant.sharedPreference.PREF_KEY_LIST_DEVICEID_WAKE_UP
+        )
+    }
+
+
     //#region private supportive method
     private fun md5(input: String): String {
         var res = ""
@@ -281,51 +355,6 @@ object Utils {
         return f
     }
 
-    fun getBoolean(obj: JSONObject, key: String): Boolean? {
-        if (obj.has(key)) {
-            try {
-                return obj.getBoolean(key)
-            } catch (e: JSONException) {
-                try {
-                    return obj.getInt(key) != 0
-                } catch (ignored: JSONException) {
-                }
-
-            }
-
-        }
-        return null
-    }
-
-    fun getCurrentProcessName(context: Context): String {
-        try {
-            val manager = context.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
-            val myPid = Process.myPid()
-            for (processInfo in manager.runningAppProcesses) {
-                if (processInfo.pid == myPid) {
-                    return processInfo.processName
-                }
-            }
-
-            return context.packageName
-        } catch (ex: Exception) {
-            return "default"
-        }
-    }
-
-    fun convertTimeToMilliSeconds(@NotNull time: Int, @NotNull unit: TimeUnit): Long {
-        return when (unit) {
-            TimeUnit.SECONDS -> time * 1000L
-            TimeUnit.HOURS -> time * 3600 * 1000L
-            TimeUnit.MINUTES -> time * 60 * 1000L
-            else -> time.toLong()
-        }
-    }
-
-    fun isZaloSupportCallBack(context: Context): Boolean {
-        return getVersionCodeOfPackage(context, Constant.ZALO_PACKAGE_NAME) > 1100123
-    }
-
     private fun getVersionCodeOfPackage(oContext: Context, packageId: String): Long {
         try {
             val pInfo = oContext.packageManager.getPackageInfo(packageId, 0)
@@ -342,4 +371,5 @@ object Utils {
 
         return -1L
     }
+    //#endregion
 }

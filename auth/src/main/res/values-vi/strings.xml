@@ -6,4 +6,18 @@
     <string name="zalo_app_not_installed">Bạn chưa cài Zalo!</string>
     <string name="zalo_app_out_of_date">Bản Zalo hiện tại không tương thích!</string>
     <string name="no_network">Mạng không ổn định, vui lòng thử lại sau</string>
+    <string name="zalosdk_cancel">Trở lại</string>
+    <string name="create_password">Hãy tạo mật khẩu để đăng nhập lần sau</string>
+    <string name="txt_password_regis">Mật khẩu</string>
+    <string name="txt_password_regis_confirm">Xác nhận mật khẩu</string>
+    <string name="create_pasword_done">CẬP NHẬT</string>
+    <string name="create_password_caution">Mật khẩu: Sử dụng mật khẩu cho phép bạn đăng nhập trên các thiết bị khác nhau mà không cần kích hoạt lại qua SMS.\nBảo mật: Lưu ý không chia sẻ mật khẩu với bất kỳ ai để đảm bảo an toàn cho tài khoản của bạn.</string>
+    <string name="txt_input_male">Nam</string>
+    <string name="txt_input_female">Nữ</string>
+    <string name="update_profile_done">HOÀN TẤT</string>
+    <string name="next_step"><![CDATA[hoặc <a href="http://"><u>Bỏ qua</u></a>]]></string>
+    <string name="txt_input_name">Nhập họ tên</string>
+    <string name="title_sent_email_confirm">Thông tin xác thực sẽ gửi đến email trên</string>
+    <string name="tt_continue_login_login_form">Hoặc chơi tiếp</string>
+    <string name="tt_continue_login">Bỏ qua</string>
 </resources>

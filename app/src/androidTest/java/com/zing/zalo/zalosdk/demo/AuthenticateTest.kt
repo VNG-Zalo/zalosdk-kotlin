@@ -75,7 +75,7 @@ class AuthenticateTest : AppBase() {
 
 
         val wakeUp =
-            Storage(context).privateSharedPreferences(SharedPreferenceConstant.PREFS_NAME_WAKEUP)
+            Storage(context).createPrivateStorage(SharedPreferenceConstant.PREF_NAME_WAKEUP)
         wakeUp.setBoolean(SettingsManager.KEY_SETTINGS_OUT_APP_LOGIN, false)
         val setting = SettingsManager.getInstance()
         setting.wakeUpStorage = wakeUp
@@ -128,7 +128,7 @@ class AuthenticateTest : AppBase() {
 
         //#1 setup
         val wakeUp =
-            Storage(context).privateSharedPreferences(SharedPreferenceConstant.PREFS_NAME_WAKEUP)
+            Storage(context).createPrivateStorage(SharedPreferenceConstant.PREF_NAME_WAKEUP)
         wakeUp.setBoolean(SettingsManager.KEY_SETTINGS_OUT_APP_LOGIN, true)
         val setting = SettingsManager.getInstance()
         setting.wakeUpStorage = wakeUp
@@ -139,7 +139,7 @@ class AuthenticateTest : AppBase() {
         clickButtonWithText("Login Web")
 
         //#3 Assert Activity & result
-        val appUID = AppInfo.getAppId(context)
+        val appUID = AppInfo.getInstance().getAppId()
         val resultUri =
             "zalo-$appUID://oauthcode?uid=5981149385211560544&code=vFeAvARfeb_Dodhjfxxh0hdBKRgIYVqe-SuUaO6AbXhmh2oHfeRm8hlCQxoUXzOHfF1xWyU8iW6_z3gCojUA1vJpKxJuZUiKxl06ZV-rh06SzdIsqOldEwhdJvVRkCXlxvCyeTRRdnphXqhNruVRTOEB2Agpykbs_TOln9kEboVAtbAJuPhY4VAVU-JZXQCzwlfVgh7RW0RVgZY1Wf-jMDAd6DhikveckB52_f78usQyidcBZ93E4xhHLR2KdVmhwDacWBpPz5cNend1gj2N8eN-hx2JWW90ZyQVmjdpVbkbdiJZikCZ1lptouHY4-V8T6vgHKXBix0vUtvxQ6ATcGmXFsXAVFwwHdinDXKYxfvS22uQlDyNB9Iyjry&gender=male&phone=&dob=22%2F08%2F1989&socialId=&display_name=Duydbidjmdkdldidj%CC%81smdhshsnmmwhsnshsnsush&error=0&errorMsg=&scope=access_profile,access_friends_list"
         val myIntent = Intent(Intent.ACTION_VIEW, Uri.parse(resultUri))

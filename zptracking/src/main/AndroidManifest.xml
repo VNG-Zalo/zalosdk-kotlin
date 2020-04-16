@@ -1,0 +1,6 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+
+        package="com.zing.zalo.tracking.pixel">
+
+    <application android:supportsRtl="true"></application>
+</manifest>

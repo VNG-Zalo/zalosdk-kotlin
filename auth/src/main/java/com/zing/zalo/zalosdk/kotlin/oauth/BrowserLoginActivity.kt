@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import com.zing.zalo.zalosdk.kotlin.core.helper.AppInfo
+import com.zing.zalo.zalosdk.kotlin.core.log.Log
 import org.json.JSONException
 import org.json.JSONObject
 
@@ -24,26 +25,43 @@ class BrowserLoginActivity : Activity() {
         if (data == null || data.query == null) return false
 
         val scheme = data.scheme
-        if (scheme == null || !scheme.startsWith("zalo-" + AppInfo.getAppId(this))) {
+        if (scheme == null || !scheme.startsWith("zalo-" + AppInfo.getInstance().getAppId())) {
             return false
         }
 
         val intent = Intent()
+        val extra = JSONObject()
+        val extraData = JSONObject()
         val sError = data.getQueryParameter("error")
 
         if (sError != null && Integer.parseInt(sError) != 0) {
-            intent.putExtra("error", Integer.parseInt(data.getQueryParameter("error")!!))
-            intent.putExtra("data", "{}")
-        } else if (data.getQueryParameter("code") != null) {
-            intent.putExtra("uid", java.lang.Long.parseLong(data.getQueryParameter("uid")!!))
-            intent.putExtra("code", data.getQueryParameter("code"))
-
-            val extra = JSONObject()
-            val extraData = JSONObject()
             try {
-                extraData.put("display_name", data.getQueryParameter("display_name"))
+                extraData.put("errorMsg", data.getQueryParameter("errorMsg") ?: "")
+                extraData.put("from_source", "browser")
                 extra.put("data", extraData)
             } catch (ignored: JSONException) {
+                Log.e("handleBrowserCallback", ignored)
+            }
+            intent.putExtra("error", Integer.parseInt(data.getQueryParameter("error")!!))
+            intent.putExtra("data", extra.toString())
+
+        } else if (data.getQueryParameter("code") != null) {
+            val uid = data.getQueryParameter("uid") ?: ""
+            val code = data.getQueryParameter("code") ?: ""
+
+            intent.putExtra("uid", uid.toLong())
+            intent.putExtra("code", code)
+
+            try {
+                extraData.put("display_name", data.getQueryParameter("display_name"))
+                extraData.put("scope", data.getQueryParameter("scope"))
+                extraData.put("socialId", data.getQueryParameter("socialId"))
+                extraData.put("dob", data.getQueryParameter("dob"))
+                extraData.put("gender", data.getQueryParameter("gender"))
+                extraData.put("from_source", "browser")
+                extra.put("data", extraData)
+            } catch (ignored: JSONException) {
+                Log.e("handleBrowserCallback", ignored)
             }
 
             intent.putExtra("data", extra.toString())

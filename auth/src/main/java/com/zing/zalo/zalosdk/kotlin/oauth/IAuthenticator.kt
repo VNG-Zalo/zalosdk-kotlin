@@ -5,11 +5,16 @@ import android.content.Intent
 import androidx.annotation.Keep
 import com.zing.zalo.zalosdk.kotlin.oauth.callback.GetZaloLoginStatus
 import com.zing.zalo.zalosdk.kotlin.oauth.callback.ValidateOAuthCodeCallback
+import com.zing.zalo.zalosdk.kotlin.oauth.model.ErrorResponse
 
 @Keep
 interface IAuthenticateCompleteListener {
     fun onAuthenticateSuccess(uid: Long, code: String, data: Map<String, Any>)
     fun onAuthenticateError(errorCode: Int, message: String)
+
+    @Deprecated("")
+    fun onAuthenticateError(errorCode: Int, errorMsg: String?, errorResponse: ErrorResponse) {
+    }
 }
 
 @Keep

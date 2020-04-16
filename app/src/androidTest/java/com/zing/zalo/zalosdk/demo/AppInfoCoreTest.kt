@@ -21,7 +21,7 @@ class AppInfoCoreTest : AppBase() {
     @Test
     @Throws(UiObjectNotFoundException::class, IOException::class)
     fun testGetApplicationHashKey() {
-        val hashKey = AppInfo.getApplicationHashKey(context)
+        val hashKey = AppInfo.getInstance().getApplicationHashKey()
         assertEquals("RtcyQvjS3YtXLs/yEPwB8LN3Hr0=", hashKey)
     }
 
@@ -29,22 +29,22 @@ class AppInfoCoreTest : AppBase() {
     @Throws(UiObjectNotFoundException::class, IOException::class)
     fun testAppInfoPackage() {
         //Todo: switch
-        val isExist = AppInfo.isPackageExists(context, "com.zing.zalo")
+        val isExist = AppInfo.getInstance().isPackageExists( "com.zing.zalo")
 //        val isExist = AppInfo.isPackageExists(context, Constant.core.ZALO_PACKAGE_NAME)
         
         assertEquals(isExist, true)
 
-        val packageName = AppInfo.getPackageName(context)
+        val packageName = AppInfo.getInstance().getPackageName()
         assertEquals(packageName, "com.zing.zalo.zalosdk.demo")
     }
 
     @Test
     @Throws(UiObjectNotFoundException::class, IOException::class)
     fun testGetAppID() {
-        val appIdString = AppInfo.getAppId(context)
+        val appIdString = AppInfo.getInstance().getAppId()
         assertEquals("1829577289837795818", appIdString)
 
-        val appIdLong = AppInfo.getAppIdLong(context)
+        val appIdLong = AppInfo.getInstance().getAppIdLong()
         assertEquals(1829577289837795818L, appIdLong)
     }
 

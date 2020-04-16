@@ -39,7 +39,7 @@ class HttpClient(private val baseUrl: String) : IHttpClient {
             Log.e("HttpClient", ex)
         }
 
-        return response;
+        return response
     }
 
 }

@@ -1,0 +1,1 @@
+-keep class me.zalo.startuphelper.StartupHelperUtil

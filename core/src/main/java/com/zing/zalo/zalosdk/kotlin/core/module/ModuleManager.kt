@@ -8,6 +8,7 @@ import com.zing.zalo.zalosdk.kotlin.core.apptracking.AppTrackerStorage
 import com.zing.zalo.zalosdk.kotlin.core.devicetrackingsdk.DeviceTracking
 import com.zing.zalo.zalosdk.kotlin.core.devicetrackingsdk.DeviceTrackingListener
 import com.zing.zalo.zalosdk.kotlin.core.devicetrackingsdk.SdkTracking
+import com.zing.zalo.zalosdk.kotlin.core.helper.AppInfo
 import com.zing.zalo.zalosdk.kotlin.core.helper.Storage
 import com.zing.zalo.zalosdk.kotlin.core.log.Log
 import com.zing.zalo.zalosdk.kotlin.core.servicemap.ServiceMapManager
@@ -22,17 +23,18 @@ object ModuleManager {
     private var context: Context? = null
 
     init {
+        val appInfo = AppInfo.getInstance()
         val dt = DeviceTracking.getInstance()
         val st = SdkTracking.getInstance()
         val sm = SettingsManager.getInstance()
         val smm = ServiceMapManager.getInstance()
 
+        modules.add(appInfo)
         modules.add(smm)
         modules.add(sm)
         modules.add(st)
         dt.sdkTracking = st
         modules.add(dt)
-
 
     }
 

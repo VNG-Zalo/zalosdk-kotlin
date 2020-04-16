@@ -11,7 +11,7 @@ object TestUtils {
 
 object DataHelper {
 
-    const val PACKAGES_NAME = "{\n" +
+    const val APP_PACKAGE_NAMES = "{\n" +
             "  \"error\": 0,\n" +
             "  \"data\": {\n" +
             "    \"scanId\": \"${AppInfoHelper.scanId}\",\n" +

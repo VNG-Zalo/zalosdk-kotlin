@@ -2,7 +2,24 @@
 
 All notable changes to this project will be documented in this file.
 
-## [2.5.0219] - 2020/02/19
+## 2.5.0316 - 2020/03/16
+
+### Added
+
+- Module Zptracking, Wakeup, Authext
+- ZingAnalyticsManager trong analytics module
+- LocalizedString
+
+### Fixed
+
+- Openapi trả về json error khi Zalo app chưa được install
+- Fixed getSDKVersion trả về version thay vì chuỗi rỗng
+
+### Changed
+
+- Thay đổi static AppInfo sang Singleton AppInfo.getInstance()
+
+## 2.5.0219 - 2020/02/19
 
 ### Changed
 

@@ -9,10 +9,10 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.zing.zalo.zalosdk.kotlin.analytics.EventStorage
 import com.zing.zalo.zalosdk.kotlin.analytics.EventTracker
 import com.zing.zalo.zalosdk.kotlin.analytics.EventTrackerListener
 import com.zing.zalo.zalosdk.kotlin.analytics.model.Event
-import com.zing.zalo.zalosdk.kotlin.core.apptracking.AppTracker
 import com.zing.zalo.zalosdk.kotlin.core.apptracking.AppTrackerListener
 import com.zing.zalo.zalosdk.kotlin.core.helper.AppInfo
 import com.zing.zalo.zalosdk.kotlin.core.log.Log
@@ -23,6 +23,7 @@ import com.zing.zalo.zalosdk.kotlin.oauth.ZaloSDK
 import com.zing.zalo.zalosdk.kotlin.oauth.callback.GetZaloLoginStatus
 import com.zing.zalo.zalosdk.kotlin.oauth.callback.ValidateOAuthCodeCallback
 import com.zing.zalo.zalosdk.kotlin.oauth.helper.AuthStorage
+import com.zing.zalo.zalosdk.kotlin.oauth.model.ErrorResponse
 
 
 class MainActivity : AppCompatActivity(), ValidateOAuthCodeCallback, GetZaloLoginStatus {
@@ -32,9 +33,12 @@ class MainActivity : AppCompatActivity(), ValidateOAuthCodeCallback, GetZaloLogi
     private lateinit var registerButton: Button
     private lateinit var validateButton: Button
     private lateinit var checkAppLoginButton: Button
-    private lateinit var appTrackingButton: Button
+    private lateinit var settingButton: Button
     private lateinit var eventTrackingButton: Button
+    private lateinit var wakeUpButton: Button
     private lateinit var openApiButton: Button
+    private lateinit var zpTrackingButton: Button
+
     private lateinit var appIDTextView: TextView
     private lateinit var loginStatusTextView: TextView
     private lateinit var authCodeTextView: TextView
@@ -43,6 +47,8 @@ class MainActivity : AppCompatActivity(), ValidateOAuthCodeCallback, GetZaloLogi
     private lateinit var mStorage: AuthStorage
     
     private lateinit var zaloSDK: ZaloSDK
+
+    private val eventTracker = EventTracker.getInstance()
 
     private val appTrackerListener: AppTrackerListener = object : AppTrackerListener {
         override fun onAppTrackerCompleted(
@@ -65,6 +71,7 @@ class MainActivity : AppCompatActivity(), ValidateOAuthCodeCallback, GetZaloLogi
             val displayName = data[Constant.user.DISPLAY_NAME]
             authCodeTextView.text = "Auth code: $code"
             userIDTextView.text = "User: $displayName \nUID: $uid"
+            showToast("Login Success")
         }
 
         override fun onAuthenticateError(errorCode: Int, message: String) {
@@ -74,6 +81,7 @@ class MainActivity : AppCompatActivity(), ValidateOAuthCodeCallback, GetZaloLogi
                 userIDTextView.text = null
             }
         }
+
     }
 
     private val eventTrackerListener = object : EventTrackerListener {
@@ -92,6 +100,8 @@ class MainActivity : AppCompatActivity(), ValidateOAuthCodeCallback, GetZaloLogi
         configureLogic()
         configureUI()
         bindViewsListener()
+
+        eventTracker.setListener(eventTrackerListener)
     }
 
 
@@ -148,10 +158,11 @@ class MainActivity : AppCompatActivity(), ValidateOAuthCodeCallback, GetZaloLogi
         validateButton = findViewById(R.id.validate_oauth_code_button)
         checkAppLoginButton = findViewById(R.id.check_app_login_button)
         openApiButton = findViewById(R.id.open_api_button)
+        wakeUpButton = findViewById(R.id.wake_up_button)
         eventTrackingButton = findViewById(R.id.event_tracking_button)
-        appTrackingButton = findViewById(R.id.app_tracking_button)
+        settingButton = findViewById(R.id.setting_button)
         eventTrackingButton = findViewById(R.id.event_tracking_button)
-
+        zpTrackingButton = findViewById(R.id.zptracking_button)
 
         appIDTextView = findViewById(R.id.app_id_text_view)
         userIDTextView = findViewById(R.id.user_id_text_view)
@@ -166,7 +177,7 @@ class MainActivity : AppCompatActivity(), ValidateOAuthCodeCallback, GetZaloLogi
         mStorage = AuthStorage(this)
 
 
-        appIDTextView.text = "App ID: ${AppInfo.getAppId(this)}"
+        appIDTextView.text = "App ID: ${AppInfo.getInstance().getAppId()}"
         authCodeTextView.text = "Auth code: ${zaloSDK.getOauthCode()}"
         userIDTextView.text = "User ID: ${mStorage.getZaloDisplayName()}"
     }
@@ -202,22 +213,41 @@ class MainActivity : AppCompatActivity(), ValidateOAuthCodeCallback, GetZaloLogi
             zaloSDK.getZaloLoginStatus(this)
         }
 
-        appTrackingButton.setOnClickListener {
-            val appTracker = AppTracker()
-            appTracker.listener = appTrackerListener
+        settingButton.setOnClickListener {
+            val intent = Intent(this, SettingsActivity::class.java)
+            startActivity(intent)
         }
 
         eventTrackingButton.setOnClickListener {
 
-            val eventTracker = EventTracker.getInstance()
+
 
             eventTracker.addEvent(mockEvent())
-            eventTracker.setListener(eventTrackerListener)
-            eventTracker.dispatchEventImmediate(mockEvent())
+
+            val eventStorage =EventStorage(this)
+            val event = eventStorage.loadEventsFromDevice()
+            Log.d("event size",event.size.toString())
+//            eventTracker.dispatchEventImmediate(mockEvent())
+
         }
 
         openApiButton.setOnClickListener {
             val intent = Intent(this, OpenApiActivity::class.java)
+            startActivity(intent)
+        }
+
+        wakeUpButton.setOnClickListener{
+            val intent = Intent(this, WakeUpActivity::class.java)
+            startActivity(intent)
+        }
+
+        zpTrackingButton.setOnClickListener{
+            val intent = Intent(this, ZPTrackingActivity::class.java)
+            startActivity(intent)
+        }
+
+        findViewById<Button>(R.id.authext_button).setOnClickListener{
+            val intent = Intent(this, AuthextActivity::class.java)
             startActivity(intent)
         }
     }

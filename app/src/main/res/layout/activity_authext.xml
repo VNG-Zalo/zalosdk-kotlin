@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".AuthextActivity" android:orientation="vertical">
+
+    <Button
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:text="Login Form"
+            android:id="@+id/login_authext_button"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:backgroundTint="#05A3E5"/>
+    <Button
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:text="Text button"
+            android:id="@+id/text_button"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:backgroundTint="#05A3E5"/>
+    <com.zing.zalo.zalosdk.oauth.ZingMeLoginView
+            android:layout_width="match_parent"
+            android:id="@+id/ZingMeLoginView"
+            android:layout_height="wrap_content"
+            android:background="#50000000"/>
+
+    <com.zing.zalo.zalosdk.oauth.LoginForm
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/LoginForm"
+            android:background="#50000000"/>
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Callback result will be shown here"
+                android:id="@+id/callback_text_view"/>
+    </ScrollView>
+
+</LinearLayout>

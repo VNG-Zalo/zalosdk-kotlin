@@ -68,7 +68,7 @@ class AppTracker : BaseModule(), IAppTracker {
         try {
             val request = HttpGetRequest(Constant.api.API_TRACKING_URL)
             request.addQueryStringParameter("pl", "android")
-            request.addQueryStringParameter("appId", AppInfo.getAppId(context!!))
+            request.addQueryStringParameter("appId", AppInfo.getInstance().getAppId())
             request.addQueryStringParameter("zdId", deviceId)
             request.addQueryStringParameter(
                 "sdkId",
@@ -164,9 +164,9 @@ class AppTracker : BaseModule(), IAppTracker {
 
         val jsonData = JSONObject()
         jsonData.put("pl", "android")
-        jsonData.put("appId", AppInfo.getAppId(context!!))
-        jsonData.put("an", AppInfo.getAppName(context!!))
-        jsonData.put("av", AppInfo.getVersionName(context!!))
+        jsonData.put("appId", AppInfo.getInstance().getAppId())
+        jsonData.put("an", AppInfo.getInstance().getAppName())
+        jsonData.put("av", AppInfo.getInstance().getVersionName())
         jsonData.put("oauthCode", storage.getOAuthCode())
         jsonData.put("osv", Build.VERSION.RELEASE)
         jsonData.put("sdkv", Constant.VERSION)

@@ -3,6 +3,7 @@ package com.zing.zalo.zalosdk.kotlin.oauth
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import com.zing.zalo.zalosdk.java.LocalizedString
 import com.zing.zalo.zalosdk.kotlin.core.log.Log
 import com.zing.zalo.zalosdk.kotlin.oauth.callback.GetZaloLoginStatus
 import com.zing.zalo.zalosdk.kotlin.oauth.callback.ValidateOAuthCodeCallback
@@ -60,7 +61,7 @@ class ZaloSDK(context: Context) {
      * @return True if oauth code cached, otherwise false
      */
     fun isAuthenticate(callback: ValidateOAuthCodeCallback?): Boolean {
-        return mAuthenticator.isAuthenticate(mStorage.getOAuthCode().toString(), callback)!!
+        return mAuthenticator.isAuthenticate(mStorage.getOAuthCode().toString(), callback)
     }
 
     fun getVersion(): String {
@@ -76,6 +77,10 @@ class ZaloSDK(context: Context) {
         return mAuthenticator.onActivityResult(activity, requestCode, resultCode, data)!!
     }
 
+
+    fun getLocalizedString(): LocalizedString {
+        return LocalizedString()
+    }
 
     //#region private supportive method
     private fun verifyConfig(context: Context) {

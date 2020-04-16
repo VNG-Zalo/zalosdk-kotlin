@@ -9,5 +9,8 @@
 -keepnames class com.zing.zalo.zalosdk.kotlin.analytics.sqlite.**{*;}
 -keepnames class com.zing.zalo.zalosdk.kotlin.analytics.EventStorage {*;}
 
+-keep class com.zing.zalo.zalosdk.kotlin.analytics.ZingAnalyticsManager {*;}
+-keep class com.zing.zalo.zalosdk.kotlin.analytics.PendingEvent
+
 # Output a source map file
 -printmapping proguard.map

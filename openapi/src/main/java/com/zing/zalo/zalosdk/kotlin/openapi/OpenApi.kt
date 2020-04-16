@@ -12,6 +12,7 @@ import com.zing.zalo.zalosdk.kotlin.core.http.HttpGetRequest
 import com.zing.zalo.zalosdk.kotlin.core.http.HttpUrlEncodedRequest
 import com.zing.zalo.zalosdk.kotlin.core.http.IHttpRequest
 import com.zing.zalo.zalosdk.kotlin.core.log.Log
+import com.zing.zalo.zalosdk.kotlin.openapi.ZaloOAuthResultCode.RESULTCODE_ZALO_APPLICATION_NOT_INSTALLED
 import com.zing.zalo.zalosdk.kotlin.openapi.exception.OpenApiException
 import com.zing.zalo.zalosdk.kotlin.openapi.model.FeedData
 import kotlinx.coroutines.CoroutineScope
@@ -24,7 +25,7 @@ import org.json.JSONObject
 import java.lang.ref.WeakReference
 import java.util.concurrent.TimeUnit
 
-class OpenApi(
+internal class OpenApi(
     var context: Context,
     var oauthCode: String?,
     var isBroadcastRegistered: Boolean,
@@ -211,8 +212,7 @@ class OpenApi(
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             context.startActivity(intent)
         } else {
-            Log.w("Zalo app is not installed!")
-
+            callbackError(callback, RESULTCODE_ZALO_APPLICATION_NOT_INSTALLED)
         }
     }
 
@@ -225,7 +225,10 @@ class OpenApi(
                     else {
                         val result = JSONObject()
                         result.put("error", errorCode)
-                        result.put("message", ZaloOAuthResultCode.findErrorMessageByID(errorCode))
+                        result.put(
+                            "message",
+                            ZaloOAuthResultCode.findErrorMessageByID(context, errorCode)
+                        )
                         GlobalScope.launch(Dispatchers.Main) { callback.onResult(result) }
 //                        callback.onResult(result)
                     }
@@ -248,7 +251,6 @@ class OpenApi(
 
     private fun isAccessTokenValid(): Boolean {
         if (!TextUtils.isEmpty(accessToken) && accessTokenExpiredTime > System.currentTimeMillis()) return true
-
         Log.w("isAccessTokenValid", "Token is not valid")
         return false
     }
@@ -378,12 +380,15 @@ class OpenApi(
         val authCode = oauthCode ?: ""
         if (TextUtils.isEmpty(authCode)) throw OpenApiException("Auth code is invalid - Login again!")
         accessTokenRequest.addQueryStringParameter("code", authCode)
-        accessTokenRequest.addQueryStringParameter("pkg_name", AppInfo.getPackageName(context))
+        accessTokenRequest.addQueryStringParameter(
+            "pkg_name",
+            AppInfo.getInstance().getPackageName()
+        )
         accessTokenRequest.addQueryStringParameter(
             "sign_key",
-            AppInfo.getApplicationHashKey(context) ?: ""
+            AppInfo.getInstance().getApplicationHashKey() ?: ""
         )
-        accessTokenRequest.addQueryStringParameter("app_id", AppInfo.getAppId(context))
+        accessTokenRequest.addQueryStringParameter("app_id", AppInfo.getInstance().getAppId())
         accessTokenRequest.addQueryStringParameter("version", Constant.VERSION)
         accessTokenRequest.addQueryStringParameter(
             "zdevice",
@@ -417,4 +422,19 @@ class OpenApi(
         }
         return errorCode
     }
+
+    private fun callbackError(
+        callback: ZaloPluginCallback?,
+        errorCode: Int
+    ) {
+
+        val message = ZaloOAuthResultCode.findErrorMessageByID(context, errorCode)
+        val errorJson = JSONObject()
+        errorJson.put("error", errorCode)
+        errorJson.put("message", message)
+
+        Log.w("OpenApi", message)
+        callback?.onResult(false, errorCode, message, errorJson.toString())
+    }
+    //#endregion
 }

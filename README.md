@@ -17,7 +17,7 @@ ZaloSDK for Android
 - Lấy application hash key
 
 ```
-        AppInfo.INSTANCE.getApplicationHashKey(this);
+        AppInfo.getInstance().getApplicationHashKey(this);
 ```
 
 - Đăng ký app trên web
