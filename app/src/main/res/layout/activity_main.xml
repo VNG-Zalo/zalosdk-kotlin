@@ -16,59 +16,16 @@
                 android:layout_height="match_parent"
                 android:stretchColumns="1">
             <!--        region-->
-            <Button
-                    android:id="@+id/login_mobile_button"
-                    style="@style/Widget.AppCompat.Button.Colored"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:backgroundTint="#05A3E5"
-                    android:gravity="center"
-                    android:text="Login Mobile" />
 
             <Button
-                    android:id="@+id/login_via_button"
+                    android:id="@+id/auth_activity_button"
                     style="@style/Widget.AppCompat.Button.Colored"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:backgroundTint="#05A3E5"
                     android:gravity="center"
-                    android:text="Login Via" />
-
-            <Button
-                    android:id="@+id/login_web_button"
-                    style="@style/Widget.AppCompat.Button.Colored"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:backgroundTint="#05A3E5"
-                    android:gravity="center"
-                    android:text="Login Web" />
-
-            <Button
-                    android:id="@+id/register_button"
-                    style="@style/Widget.AppCompat.Button.Colored"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:backgroundTint="#05A3E5"
-                    android:gravity="center"
-                    android:text="REGISTER" />
-
-            <Button
-                    android:id="@+id/validate_oauth_code_button"
-                    style="@style/Widget.AppCompat.Button.Colored"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:backgroundTint="#05A3E5"
-                    android:gravity="center"
-                    android:text="VALIDATE OAUTH CODE" />
-
-            <Button
-                    android:id="@+id/check_app_login_button"
-                    style="@style/Widget.AppCompat.Button.Colored"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:backgroundTint="#05A3E5"
-                    android:gravity="center"
-                    android:text="Check App Login" />
+                    android:onClick="onClickAuthActivityButton"
+                    android:text="OAuth" />
 
             <Button
                     android:id="@+id/setting_button"
@@ -77,6 +34,7 @@
                     android:layout_height="50dp"
                     android:backgroundTint="#05A3E5"
                     android:gravity="center"
+                    android:onClick="onClickSettingActivityButton"
                     android:text="Setting" />
 
             <Button
@@ -86,6 +44,7 @@
                     android:layout_height="50dp"
                     android:backgroundTint="#05A3E5"
                     android:gravity="center"
+                    android:onClick="onClickEventTrackingButton"
                     android:text="Event Tracking" />
 
             <Button
@@ -95,6 +54,7 @@
                     android:layout_height="50dp"
                     android:backgroundTint="#05A3E5"
                     android:gravity="center"
+                    android:onClick="onClickWakeUpActivityButton"
                     android:text="Wake Up" />
 
             <Button
@@ -104,6 +64,7 @@
                     android:layout_height="50dp"
                     android:backgroundTint="#05A3E5"
                     android:gravity="center"
+                    android:onClick="onClickOpenApiActivityButton"
                     android:text="Open Api" />
 
             <Button
@@ -113,6 +74,7 @@
                     android:layout_height="50dp"
                     android:backgroundTint="#05A3E5"
                     android:gravity="center"
+                    android:onClick="onClickZpTrackingActivityButton"
                     android:text="ZP Tracking" />
 
             <Button
@@ -122,29 +84,13 @@
                     android:layout_height="50dp"
                     android:backgroundTint="#05A3E5"
                     android:gravity="center"
+                    android:onClick="onClickAuthextActivityButton"
                     android:text="Authext" />
 
             <TextView
                     android:id="@+id/app_id_text_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
-
-            <TextView
-                    android:id="@+id/user_id_text_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-            <TextView
-                    android:id="@+id/auth_code_text_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:maxLines="3" />
-
-            <TextView
-                    android:id="@+id/login_status_text_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:maxLines="3" />
             <!--        endregion-->
         </TableLayout>
     </ScrollView>

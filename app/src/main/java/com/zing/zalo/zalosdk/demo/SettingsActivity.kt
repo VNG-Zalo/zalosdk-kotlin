@@ -35,13 +35,13 @@ class SettingsActivity : AppCompatActivity() {
         )
         list.add(
             KeyValue(
-                "Is out app Login",
+                "Is Login via Browser: ",
                 mgr.isLoginViaBrowser().toString()
             )
         )
         list.add(
             KeyValue(
-                "Use web view if zalo app not login",
+                "Is use web view login: ",
                 mgr.isUseWebViewLoginZalo().toString()
             )
         )
