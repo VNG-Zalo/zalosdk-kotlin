@@ -116,10 +116,7 @@ class SettingsManager : BaseModule() {
                 request.addQueryStringParameter("appId", AppInfo.getInstance().getAppId())
                 request.addQueryStringParameter("sdkv", AppInfo.getInstance().getSDKVersion())
                 request.addQueryStringParameter("pkg", AppInfo.getInstance().getPackageName())
-                request.addQueryStringParameter(
-                    "zdId",
-                    DeviceTracking.getInstance().getDeviceId() ?: ""
-                )
+                request.addQueryStringParameter("zdId", DeviceTracking.getInstance().getDeviceId() ?: "")
 
                 val jsonObject = httpClient.send(request).getJSON() ?: return@launch
                 val errorCode = jsonObject.getInt("error")

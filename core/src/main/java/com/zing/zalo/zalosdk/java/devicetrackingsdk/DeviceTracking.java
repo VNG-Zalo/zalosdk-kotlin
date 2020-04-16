@@ -9,10 +9,9 @@ import org.jetbrains.annotations.Nullable;
 public class DeviceTracking implements IDeviceTracking {
 
     private static DeviceTracking instance = new DeviceTracking();
-    private com.zing.zalo.zalosdk.kotlin.core.devicetrackingsdk.DeviceTracking kotlinDeviceTracking = com.zing.zalo.zalosdk.kotlin.core.devicetrackingsdk.DeviceTracking.getInstance();
 
-    private DeviceTracking() {
-    }
+    private DeviceTracking() { }
+    private com.zing.zalo.zalosdk.kotlin.core.devicetrackingsdk.DeviceTracking kotlinDeviceTracking = com.zing.zalo.zalosdk.kotlin.core.devicetrackingsdk.DeviceTracking.getInstance();
 
     public static DeviceTracking getInstance() {
         return instance;

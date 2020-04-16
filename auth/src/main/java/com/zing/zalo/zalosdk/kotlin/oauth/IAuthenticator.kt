@@ -13,8 +13,7 @@ interface IAuthenticateCompleteListener {
     fun onAuthenticateError(errorCode: Int, message: String)
 
     @Deprecated("")
-    fun onAuthenticateError(errorCode: Int, errorMsg: String?, errorResponse: ErrorResponse) {
-    }
+    fun onAuthenticateError(errorCode: Int, errorMsg: String?, errorResponse: ErrorResponse) {}
 }
 
 @Keep

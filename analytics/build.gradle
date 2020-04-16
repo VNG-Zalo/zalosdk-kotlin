@@ -75,7 +75,7 @@ dependencies {
     implementation rootProject.ext.androidxAppcompat
     //Zalo SDK Dependence
     implementation project(':core')
-
+//
     testImplementation 'junit:junit:4.12'
     testImplementation 'androidx.test:core:1.2.0'
     testImplementation 'org.robolectric:robolectric:4.1'

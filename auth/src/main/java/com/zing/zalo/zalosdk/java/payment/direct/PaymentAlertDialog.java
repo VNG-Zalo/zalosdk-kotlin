@@ -19,7 +19,6 @@ public class PaymentAlertDialog extends PaymentDialog implements View.OnClickLis
     public PaymentAlertDialog(Context context) {
         super(context);
     }
-
     public PaymentAlertDialog(Context context, OnOkListener listener) {
         super(context);
         this.listener = listener;

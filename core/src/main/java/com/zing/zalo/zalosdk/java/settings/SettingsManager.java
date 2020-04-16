@@ -4,13 +4,12 @@ import android.content.Context;
 
 public class SettingsManager {
 
-    private static SettingsManager instance = new SettingsManager();
+    private static SettingsManager instance= new SettingsManager();
+    private SettingsManager(){}
     private com.zing.zalo.zalosdk.kotlin.core.settings.SettingsManager kotlinSettingManager = com.zing.zalo.zalosdk.kotlin.core.settings.SettingsManager.getInstance();
 
-    private SettingsManager() {
-    }
-
-    public static SettingsManager getInstance() {
+    public static SettingsManager getInstance()
+    {
         return instance;
     }
 
