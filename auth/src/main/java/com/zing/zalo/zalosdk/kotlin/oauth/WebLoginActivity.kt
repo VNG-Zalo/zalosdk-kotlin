@@ -118,11 +118,14 @@ class WebLoginActivity : FragmentActivity(),
         data.putExtra("error", error)
 
         val extra = JSONObject()
+        val extraData = JSONObject()
         try {
-            extra.put("errorMsg", errorMsg)
-            extra.put("error_description", errorDescription)
-            extra.put("error_reason", errorReason)
-            extra.put("from_source", fromSource)
+            extraData.put("errorMsg", errorMsg)
+            extraData.put("error_description", errorDescription)
+            extraData.put("error_reason", errorReason)
+            extraData.put("from_source", fromSource)
+
+            extra.put("data", extraData)
         } catch (ignored: JSONException) {
             Log.e("onLoginFailed", ignored)
         }

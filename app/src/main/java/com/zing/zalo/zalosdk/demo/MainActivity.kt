@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity(), ValidateOAuthCodeCallback, GetZaloLogi
     private lateinit var userIDTextView: TextView
 
     private lateinit var mStorage: AuthStorage
-    
+
     private lateinit var zaloSDK: ZaloSDK
 
     private val eventTracker = EventTracker.getInstance()
@@ -80,6 +80,20 @@ class MainActivity : AppCompatActivity(), ValidateOAuthCodeCallback, GetZaloLogi
                 authCodeTextView.text = null
                 userIDTextView.text = null
             }
+        }
+
+        override fun onAuthenticateError(
+            errorCode: Int,
+            errorMsg: String?,
+            errorResponse: ErrorResponse
+        ) {
+            super.onAuthenticateError(errorCode, errorMsg, errorResponse)
+            val msg = "ErrorCode: ${errorResponse.errorCode} \n" +
+                    "Error Message: ${errorResponse.errorMsg} \n" +
+                    "Error description: ${errorResponse.errorDescription} \n" +
+                    "Error reason: ${errorResponse.errorReason} \n" +
+                    "Error fromSource: ${errorResponse.fromSource} "
+            showToast(msg)
         }
 
     }
@@ -185,6 +199,7 @@ class MainActivity : AppCompatActivity(), ValidateOAuthCodeCallback, GetZaloLogi
     private fun configureLogic() {
         zaloSDK = ZaloSDK(this)
     }
+
     private fun bindViewsListener() {
         loginMobileButton.setOnClickListener {
             zaloSDK.unAuthenticate()
@@ -221,12 +236,11 @@ class MainActivity : AppCompatActivity(), ValidateOAuthCodeCallback, GetZaloLogi
         eventTrackingButton.setOnClickListener {
 
 
-
             eventTracker.addEvent(mockEvent())
 
-            val eventStorage =EventStorage(this)
+            val eventStorage = EventStorage(this)
             val event = eventStorage.loadEventsFromDevice()
-            Log.d("event size",event.size.toString())
+            Log.d("event size", event.size.toString())
 //            eventTracker.dispatchEventImmediate(mockEvent())
 
         }
@@ -236,17 +250,17 @@ class MainActivity : AppCompatActivity(), ValidateOAuthCodeCallback, GetZaloLogi
             startActivity(intent)
         }
 
-        wakeUpButton.setOnClickListener{
+        wakeUpButton.setOnClickListener {
             val intent = Intent(this, WakeUpActivity::class.java)
             startActivity(intent)
         }
 
-        zpTrackingButton.setOnClickListener{
+        zpTrackingButton.setOnClickListener {
             val intent = Intent(this, ZPTrackingActivity::class.java)
             startActivity(intent)
         }
 
-        findViewById<Button>(R.id.authext_button).setOnClickListener{
+        findViewById<Button>(R.id.authext_button).setOnClickListener {
             val intent = Intent(this, AuthextActivity::class.java)
             startActivity(intent)
         }

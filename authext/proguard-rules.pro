@@ -12,7 +12,17 @@
 -keep interface com.zing.zalo.zalosdk.oauth.LoginForm$ShowProtectGuestAccountListener { *;}
 -keep class com.zing.zalo.zalosdk.oauth.ZingMeBaseLoginView { *; }
 -keep class com.zing.zalo.zalosdk.oauth.ZingMeLoginView { *; }
--keepclasseswithmembernames class com.zing.zalo.zalosdk.oauth.OAuthCompleteListener { *; }
+#-keepclasseswithmembernames class com.zing.zalo.zalosdk.oauth.OAuthCompleteListener { *; }
+
+-keep class com.zing.zalo.zalosdk.oauth.OAuthCompleteListener
+-keepclassmembers class com.zing.zalo.zalosdk.oauth.OAuthCompleteListener {
+    public <methods>;
+    public <fields>;
+    protected <methods>;
+    protected <fields>;
+}
+
+
 -keep class com.zing.zalo.zalosdk.oauth.OauthResponse { *; }
 -keepclassmembers class com.zing.zalo.zalosdk.oauth.LoginForm$LoginListener {
     public *;

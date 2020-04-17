@@ -25,18 +25,18 @@ public class DeviceTracking implements IDeviceTracking {
     @Override
     public String getDeviceId() {
 
-        return kotlinDeviceTracking.getDeviceId();
+        return com.zing.zalo.zalosdk.kotlin.core.devicetrackingsdk.DeviceTracking.getInstance().getDeviceId();
     }
 
     @Override
     public void getDeviceId(@Nullable DeviceTrackingListener listener) {
-        kotlinDeviceTracking.getDeviceId(listener);
+        com.zing.zalo.zalosdk.kotlin.core.devicetrackingsdk.DeviceTracking.getInstance().getDeviceId(listener);
     }
 
     @NotNull
     @Override
     public String getVersion() {
-        return kotlinDeviceTracking.getVersion();
+        return com.zing.zalo.zalosdk.kotlin.core.devicetrackingsdk.DeviceTracking.getInstance().getVersion();
     }
 
     public long getDeviceIdExpireTime() {

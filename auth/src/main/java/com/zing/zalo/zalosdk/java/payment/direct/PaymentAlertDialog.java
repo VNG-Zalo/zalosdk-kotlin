@@ -15,7 +15,6 @@ public class PaymentAlertDialog extends PaymentDialog implements View.OnClickLis
     String okTitle;
     boolean hideOkButton = false;
     String title;
-
     public PaymentAlertDialog(Context context) {
         super(context);
     }

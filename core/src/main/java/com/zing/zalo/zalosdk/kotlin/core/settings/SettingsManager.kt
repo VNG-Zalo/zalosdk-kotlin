@@ -62,7 +62,7 @@ class SettingsManager : BaseModule() {
         wakeUpStorage = Storage(context).createPrivateStorage(PREF_NAME_WAKEUP)
 
         if (isExpiredSetting()) {
-            DeviceTracking.getInstance().getDeviceId(object : DeviceTrackingListener {
+            DeviceTracking.getInstance().getDeviceId(object: DeviceTrackingListener{
                 override fun onComplete(result: String) {
                     makeGetSDKSettingRequest()
                 }
@@ -122,8 +122,8 @@ class SettingsManager : BaseModule() {
                 val errorCode = jsonObject.getInt("error")
 
                 if (errorCode != 0) {
-                    val errorMsg = "$errorCode - " + jsonObject.getString("errorMsg")
-                    Log.e("makeGetSDKSettingRequest", errorMsg)
+                    val errorMsg= "$errorCode - " + jsonObject.getString("errorMsg")
+                    Log.e("makeGetSDKSettingRequest",errorMsg)
                     return@launch
                 }
 

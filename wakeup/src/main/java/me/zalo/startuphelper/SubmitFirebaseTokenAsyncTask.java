@@ -27,7 +27,6 @@ public class SubmitFirebaseTokenAsyncTask extends AsyncTask<Void, Void, Boolean>
     private final String sourceFrom;
     private final String firebaseToken;
     private final Callback callback;
-
     SubmitFirebaseTokenAsyncTask(Type type, String params, String firebaseToken, String _sourceFrom, Callback callback) {
         this.type = type;
         this.params = params;

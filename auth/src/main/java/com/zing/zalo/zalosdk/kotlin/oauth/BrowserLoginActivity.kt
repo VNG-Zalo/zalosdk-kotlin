@@ -35,14 +35,23 @@ class BrowserLoginActivity : Activity() {
         val sError = data.getQueryParameter("error")
 
         if (sError != null && Integer.parseInt(sError) != 0) {
+
             try {
-                extraData.put("errorMsg", data.getQueryParameter("errorMsg") ?: "")
+                intent.putExtra("error", Integer.parseInt(data.getQueryParameter("error")!!))
+
+                val errorMsg = data.getQueryParameter("errorMsg")
+                val errorDescription = data.getQueryParameter("error_description")
+                val errorReason = data.getQueryParameter("error_reason")
+
+                extraData.put("errorMsg", errorMsg ?: "")
+                extraData.put("error_description", errorDescription ?: "")
+                extraData.put("error_reason", errorReason ?: "")
                 extraData.put("from_source", "browser")
                 extra.put("data", extraData)
             } catch (ignored: JSONException) {
                 Log.e("handleBrowserCallback", ignored)
             }
-            intent.putExtra("error", Integer.parseInt(data.getQueryParameter("error")!!))
+
             intent.putExtra("data", extra.toString())
 
         } else if (data.getQueryParameter("code") != null) {

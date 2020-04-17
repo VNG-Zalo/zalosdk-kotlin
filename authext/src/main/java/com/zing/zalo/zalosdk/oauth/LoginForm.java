@@ -1116,7 +1116,6 @@ public class LoginForm extends RelativeLayout implements OnClickListener {
         TEXT_CENTER,
         NORMAL
     }
-
     public interface ShowProtectGuestAccountListener {
         boolean onShowProtectGuestAccount(int loginGuestCount, int numberOfShown, Date lastShownTime);
     }

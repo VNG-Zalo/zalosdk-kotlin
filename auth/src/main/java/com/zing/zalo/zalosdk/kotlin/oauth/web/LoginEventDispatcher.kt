@@ -3,6 +3,7 @@ package com.zing.zalo.zalosdk.kotlin.oauth.web
 import android.content.Context
 import android.graphics.Bitmap
 import android.net.Uri
+import android.os.Build
 import android.view.View
 import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
@@ -29,6 +30,8 @@ class LoginEventDispatcher(
         if (that.get() != null) that.get()!!.progressBar.visibility = View.VISIBLE
     }
 
+
+    /** @see {https://developer.android.com/reference/android/webkit/WebViewClient} */
     override fun onReceivedError(
         view: WebView?,
         request: WebResourceRequest?,
@@ -38,13 +41,22 @@ class LoginEventDispatcher(
 
         if (that.get() != null) {
             that.get()!!.progressBar.visibility = View.GONE
-            that.get()!!.onLoginCompleted(-1, 0, "", 0, "", false)
+
+            var e = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                error?.errorCode ?: -1
+            } else {
+                -1
+            }
+            e = if (e == -2) ZaloOAuthResultCode.RESULTCODE_ZALO_WEBVIEW_NO_NETWORK else -1
+
+            that.get()!!.onLoginFailed(e, "", "", "", "web_view")
         }
 
     }
 
     @Suppress("DEPRECATION")
     override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
+
         if (processCallbackUrl(url!!)) return true
         return super.shouldOverrideUrlLoading(view, url)
 

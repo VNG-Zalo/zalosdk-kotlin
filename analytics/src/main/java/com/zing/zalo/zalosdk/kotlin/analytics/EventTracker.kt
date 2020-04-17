@@ -69,7 +69,7 @@ class EventTracker : BaseModule(), IEventTracker {
         @Keep
         override fun run() {
             dispatchEvent()
-            dispatchHandler.postDelayed(this, DELAY_MINUTE)
+            dispatchHandler.postDelayed(this, DELAY_MINUTE )
         }
     }
 
@@ -162,7 +162,7 @@ class EventTracker : BaseModule(), IEventTracker {
         }
     }
 
-    fun setMaxEventsStored(num: Int) {
+    fun setMaxEventsStored(num:Int) {
 
     }
 

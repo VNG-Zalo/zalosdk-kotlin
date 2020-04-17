@@ -25,4 +25,14 @@ object ZaloWebRegisterFragment : ZaloWebLoginBaseFragment() {
     ) {
         super.onLoginCompleted(error, uid, oauth, zProtect, name, true)
     }
+
+    override fun onLoginFailed(
+        error: Int,
+        errorMsg: String,
+        errorReason: String,
+        errorDescription: String,
+        fromSource: String
+    ) {
+        super.onLoginFailed(error, errorMsg, errorReason, errorDescription, fromSource)
+    }
 }

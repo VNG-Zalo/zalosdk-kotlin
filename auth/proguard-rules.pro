@@ -9,6 +9,9 @@
     public *;
  }
 
+ -keep class com.zing.zalo.zalosdk.kotlin.oauth.model.** {*;}
+
+
 -keep enum  com.zing.zalo.zalosdk.kotlin.oauth.LoginVia { *;}
 -keep class com.zing.zalo.zalosdk.kotlin.oauth.callback.** { *;}
 

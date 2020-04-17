@@ -25,7 +25,7 @@ object AppInfoHelper {
         every { AppInfo.getInstance().getPackageName() } returns packageName
         every { AppInfo.getInstance().getReferrer() } returns referrer
 
-        every { AppInfo.getInstance().extracted } returns true
+        every { AppInfo.getInstance().extracted} returns true
 //        AppInfoClone.getInstance().extracted = true
 //        AppInfoClone.getInstance().appId = appId
 //        AppInfoClone.getInstance().appName = appName

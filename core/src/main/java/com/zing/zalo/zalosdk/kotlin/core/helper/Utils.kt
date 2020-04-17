@@ -292,7 +292,6 @@ object Utils {
         os.close()
         return compressed
     }
-
     @JvmStatic
     fun getSDKVersion(): String {
         return Constant.VERSION

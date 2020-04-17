@@ -47,7 +47,6 @@ public class SettingsManager {
     public Long getExpiredTime(Context context) {
         return kotlinSettingManager.getExpiredTime();
     }
-
     ///////
     public long getWakeUpInterval() {
         return kotlinSettingManager.getWakeUpInterval();

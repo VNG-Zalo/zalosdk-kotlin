@@ -159,14 +159,20 @@ class Authenticator(val context: Context, private val mStorage: AuthStorage) :
     }
 
     fun loginViaWeb(activity: Activity) {
+        val canUseBrowserLogin = AuthUtils.canUseBrowserLogin(context)
+
         if (!Utils.isOnline(context)) {
-            wListener.get()?.onAuthenticateError(
-                ZaloOAuthResultCode.RESULTCODE_ZALO_WEBVIEW_NO_NETWORK,
-                context.getString(R.string.no_network)
-            )
+            val e = ZaloOAuthResultCode.RESULTCODE_ZALO_WEBVIEW_NO_NETWORK
+            val errorMessage = ZaloOAuthResultCode.findErrorMessageByID(context, e)
+            val fromSource = if (canUseBrowserLogin) "browser" else "web_view"
+            val errorResponse = ErrorResponse(e,errorMessage,"","", fromSource)
+
+            wListener.get()?.onAuthenticateError(e, errorMessage)
+            wListener.get()?.onAuthenticateError(e,errorMessage,errorResponse)
+            return
         }
 
-        if (AuthUtils.canUseBrowserLogin(context)) {
+        if (canUseBrowserLogin) {
             loginViaBrowser(activity)
         } else {
             loginViaWebView(activity)
@@ -341,14 +347,17 @@ class Authenticator(val context: Context, private val mStorage: AuthStorage) :
                     val jsData = data.getStringExtra("data")
 
                     if (!TextUtils.isEmpty(jsData)) {
-                        val exData = JSONObject(jsData!!)
-                        val msg = exData.getString("errorMsg")
+                        val exData = JSONObject(jsData)
+                        val extraData =
+                            JSONObject(exData.getString("data"))
 
+                        val msg = extraData.getString("errorMsg")
                         if (!TextUtils.isEmpty(msg)) errorMsg = msg
 
-                        val errorDescription = exData.getString("error_description")
-                        val errorReason = exData.getString("error_reason")
-                        val fromSource = exData.getString("from_source")
+                        val errorDescription =
+                            extraData.optString("error_description","")
+                        val errorReason = extraData.optString("error_reason", "")
+                        val fromSource = extraData.optString("from_source", "")
 
                         val erResponse =
                             ErrorResponse(e, errorMsg, errorReason, errorDescription, fromSource)
