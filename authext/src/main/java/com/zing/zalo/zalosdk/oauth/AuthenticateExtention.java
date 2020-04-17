@@ -352,6 +352,7 @@ public class AuthenticateExtention {
 
     void _authenticateWithGooglePlus(Activity activity,
                                      OAuthCompleteListener listener, int overrideTheme) {
+        this.listener = listener;
         if (listener == null)
             throw new IllegalArgumentException(
                     "OAuthCompleteListener must be set.");
@@ -400,8 +401,19 @@ public class AuthenticateExtention {
             if (mFacebook != null) {
                 mFacebook.authorizeCallback(requestCode, resultCode, data);
             }
-        } else if (requestCode == Constant.GOOGLE_AUTHENTICATE_REQUEST_CODE) {
+        }
+        else if (requestCode == Constant.ZALO_AUTHENTICATE_REQUEST_CODE) {
+            zaloSDK.onActivityResult(activity, requestCode, resultCode, data);
+        }
+        else { onGoogleSignInSActivityResult(activity,requestCode,resultCode,data);}
 
+        return false;
+    }
+
+    public boolean onGoogleSignInSActivityResult(Activity activity, int requestCode,
+                                                 int resultCode, Intent data) {
+
+        if (requestCode == Constant.GOOGLE_AUTHENTICATE_REQUEST_CODE) {
             listener.onFinishLoading();
             if (data != null) {
                 GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
@@ -423,10 +435,7 @@ public class AuthenticateExtention {
                     listener.onAuthenError(ZaloOAuthResultCode.RESULTCODE_CANT_LOGIN_GOOGLE, "Không thể đăng nhập Google.");
                 }
             }
-        } else if (requestCode == Constant.ZALO_AUTHENTICATE_REQUEST_CODE) {
-            zaloSDK.onActivityResult(activity, requestCode, resultCode, data);
         }
-
         return false;
     }
 
@@ -444,21 +453,13 @@ public class AuthenticateExtention {
 //        ZaloSDK.Instance.getAuthenticator().setOAuthCompleteListener(listener);
         final Context ctx = context.getApplicationContext();
         if (!Utils.isOnline(ctx)) {
-                listener.onAuthenError(ZaloOAuthResultCode.RESULTCODE_UNEXPECTED_ERROR, "Mạng không ổn định, vui lòng thử lại sau");
+            listener.onAuthenError(ZaloOAuthResultCode.RESULTCODE_UNEXPECTED_ERROR, "Mạng không ổn định, vui lòng thử lại sau");
             return;
         }
 
         if (TextUtils.isEmpty(Utils.getFacebookAppId(ctx))) {
-                listener.onAuthenError(ZaloOAuthResultCode.RESULTCODE_CANT_LOGIN_FACEBOOK, "Không tìm thấy meta-data com.facebook.sdk.ApplicationId");
+            listener.onAuthenError(ZaloOAuthResultCode.RESULTCODE_CANT_LOGIN_FACEBOOK, "Không tìm thấy meta-data com.facebook.sdk.ApplicationId");
         }
-
-//		try {
-//			Class.forName("com.facebook.Session");
-//		} catch(Exception ex) {
-//			this.listener.onAuthenError(ZaloOAuthResultCode.RESULTCODE_CANT_LOGIN_FACEBOOK, "Chưa cài đặt FacebookSDK!");
-//			return;
-//		}
-
 
         if (mFacebook == null) {
             mFacebook = new Facebook(context.getApplicationContext(), Utils.getFacebookAppId(context));
@@ -685,9 +686,9 @@ public class AuthenticateExtention {
                     listener.onGetOAuthComplete(response);
                 } else {
                     int e = ZaloOAuthResultCode.findById(errorCode);
-                    ErrorResponse errorResponse = new ErrorResponse(e,"","","","");
+                    ErrorResponse errorResponse = new ErrorResponse(e, "", "", "", "");
                     listener.onAuthenError(e, errorMsg);
-                    listener.onAuthenError(e,errorMsg,errorResponse);
+                    listener.onAuthenError(e, errorMsg, errorResponse);
                 }
             } catch (Exception ex) {
                 Log.e("AuthenticateTask", ex);

@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".AuthDemoActivity">
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+        <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:stretchColumns="1">
+
+            <Button
+                    android:id="@+id/login_mobile_button"
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:backgroundTint="#05A3E5"
+                    android:gravity="center"
+                    android:onClick="onClickZaloLoginMobileButton"
+                    android:text="Login Mobile" />
+
+            <Button
+                    android:id="@+id/login_via_button"
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:backgroundTint="#05A3E5"
+                    android:gravity="center"
+                    android:onClick="onClickZaloLoginViaWebAppButton"
+                    android:text="Login Via APP or WEB" />
+
+            <Button
+                    android:id="@+id/login_web_button"
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:backgroundTint="#05A3E5"
+                    android:gravity="center"
+                    android:onClick="onClickZaloLoginWebButton"
+                    android:text="Login Web" />
+
+
+            <Button
+                    android:id="@+id/login_facebook_button"
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:backgroundTint="#05A3E5"
+                    android:gravity="center"
+                    android:onClick="onClickLoginFacebookButton"
+                    android:text="Login Facebook" />
+
+            <Button
+                    android:id="@+id/login_google_button"
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:backgroundTint="#05A3E5"
+                    android:gravity="center"
+                    android:onClick="onClickLoginGoogleButton"
+                    android:text="Login Google" />
+
+            <Button
+                    android:id="@+id/zing_me_login_b"
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:backgroundTint="#05A3E5"
+                    android:gravity="center"
+                    android:onClick="onClickLoginZingmeButton"
+                    android:text="Login ZingMe" />
+
+            <Button
+                    android:id="@+id/login_guest_button"
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:backgroundTint="#05A3E5"
+                    android:gravity="center"
+                    android:onClick="onClickLoginGuestButton"
+                    android:text="Login with guest" />
+
+
+            <Button
+                    android:id="@+id/register_button"
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:backgroundTint="#05A3E5"
+                    android:gravity="center"
+                    android:onClick="onClickRegisterButton"
+                    android:text="REGISTER" />
+
+            <Button
+                    android:id="@+id/validate_oauth_code_button"
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:backgroundTint="#05A3E5"
+                    android:gravity="center"
+                    android:onClick="onClickValidateOAuthCodeButton"
+                    android:text="VALIDATE OAUTH CODE" />
+
+            <Button
+                    android:id="@+id/check_app_login_button"
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:backgroundTint="#05A3E5"
+                    android:gravity="center"
+                    android:onClick="onClickCheckAppLoginButton"
+                    android:text="Check App Login" />
+
+            <TextView
+                    android:id="@+id/result_text_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="3" />
+
+            <TextView
+                    android:id="@+id/login_status_text_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="3" />
+        </TableLayout>
+    </ScrollView>
+</LinearLayout>
