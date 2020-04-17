@@ -28,8 +28,6 @@ class WebLoginActivity : FragmentActivity(),
     private lateinit var titleView: TextView
     private lateinit var backButton: ImageView
 
-    private lateinit var zaloSDK: ZaloSDK
-
     private var registerOnly: Boolean = false
     private var frameLayoutId: Int = 0
 
@@ -43,20 +41,14 @@ class WebLoginActivity : FragmentActivity(),
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        zaloSDK.onActivityResult(this, requestCode, resultCode, data)
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         changeStatusBarColor()
         registerOnly = intent.getBooleanExtra("registerOnly", false)
         //show web login view
-        initLateVar()
+
         configureUI()
         bindViewListener()
-
 
         if (savedInstanceState == null) {
             if (registerOnly) {
@@ -70,7 +62,6 @@ class WebLoginActivity : FragmentActivity(),
             }
         }
     }
-
 
     override fun setTitle(title: String) {
         titleView.text = title
@@ -99,8 +90,6 @@ class WebLoginActivity : FragmentActivity(),
         } catch (ex: JSONException) {
             Log.w("onLoginCompleted", ex)
         }
-
-
 
         data.putExtra("data", extra.toString())
         setResult(RESULT_OK, data)
@@ -156,10 +145,6 @@ class WebLoginActivity : FragmentActivity(),
 
         titleView = findViewById(R.id.zalosdk_txt_title)
         backButton = findViewById(R.id.zalosdk_back_control)
-    }
-
-    private fun initLateVar() {
-        zaloSDK = ZaloSDK(this)
     }
 
     private fun bindViewListener() {

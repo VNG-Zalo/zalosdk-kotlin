@@ -30,7 +30,6 @@ class LoginEventDispatcher(
         if (that.get() != null) that.get()!!.progressBar.visibility = View.VISIBLE
     }
 
-
     /** @see {https://developer.android.com/reference/android/webkit/WebViewClient} */
     override fun onReceivedError(
         view: WebView?,
@@ -47,9 +46,15 @@ class LoginEventDispatcher(
             } else {
                 -1
             }
-            e = if (e == -2) ZaloOAuthResultCode.RESULTCODE_ZALO_WEBVIEW_NO_NETWORK else -1
+            e = if (e == -2) ZaloOAuthResultCode.RESULTCODE_ZALO_WEBVIEW_NO_NETWORK else e
 
-            that.get()!!.onLoginFailed(e, "", "", "", "web_view")
+            val errorDescription = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                error?.description.toString()
+            }
+            else ""
+
+
+            that.get()!!.onLoginFailed(e, "", "", errorDescription, "web_view")
         }
 
     }
