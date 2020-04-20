@@ -8,8 +8,6 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
 import android.widget.TextView
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import com.zing.zalo.zalosdk.kotlin.analytics.EventTracker
 import com.zing.zalo.zalosdk.kotlin.analytics.EventTrackerListener
 import com.zing.zalo.zalosdk.kotlin.core.helper.AppInfo
@@ -129,7 +127,7 @@ class AuthDemoActivity : ZBaseActivity(), ValidateOAuthCodeCallback, GetZaloLogi
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         zaloSDK.onActivityResult(this, requestCode, resultCode, data)
-        authenticateExtension.onGoogleSignInSActivityResult(this,requestCode,resultCode,data)
+        authenticateExtension.onActivityResult(this,requestCode,resultCode,data)
     }
 
     override fun onValidateComplete(
@@ -176,18 +174,21 @@ class AuthDemoActivity : ZBaseActivity(), ValidateOAuthCodeCallback, GetZaloLogi
         zaloSDK.unAuthenticate()
         zaloSDK.authenticate(this, LoginVia.WEB, authenticateListener)
     }
+
     fun onClickLoginFacebookButton(view: View) {
         authenticateExtension.authenticateWithFacebook(this, listener)
     }
     fun onClickLoginGoogleButton(view: View) {
         authenticateExtension.authenticateWithGooglePlus(this, listener)
     }
+
     fun onClickLoginZingmeButton(view: View) {
         showDialogLoginZingMe()
     }
     fun onClickLoginGuestButton(view: View) {
         authenticateExtension.authenticateWithGuest(this, listener)
     }
+
     fun onClickRegisterButton(view: View) {
         zaloSDK.registerZalo(this, authenticateListener)
     }

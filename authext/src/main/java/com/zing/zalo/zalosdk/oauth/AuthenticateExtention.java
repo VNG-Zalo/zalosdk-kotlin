@@ -394,24 +394,16 @@ public class AuthenticateExtention {
         _authenticateWithFacebook(context, listener);
     }
 
+    /**
+     * Call when receive data from startActivityResult Login FACEBOOK, GOOGLE PLUS
+     *
+     * @param activity    Activity the login activity
+     * @param requestCode
+     * @param resultCode  Activity the login activity
+     * @param data
+     */
     public boolean onActivityResult(Activity activity, int requestCode,
-                                    int resultCode, Intent data, OAuthCompleteListener listener) {
-        Context ctx = activity.getApplicationContext();
-        if (requestCode == Facebook.DEFAULT_AUTH_ACTIVITY_CODE) {
-            if (mFacebook != null) {
-                mFacebook.authorizeCallback(requestCode, resultCode, data);
-            }
-        }
-        else if (requestCode == Constant.ZALO_AUTHENTICATE_REQUEST_CODE) {
-            zaloSDK.onActivityResult(activity, requestCode, resultCode, data);
-        }
-        else { onGoogleSignInSActivityResult(activity,requestCode,resultCode,data);}
-
-        return false;
-    }
-
-    public boolean onGoogleSignInSActivityResult(Activity activity, int requestCode,
-                                                 int resultCode, Intent data) {
+                                    int resultCode, Intent data) {
 
         if (requestCode == Constant.GOOGLE_AUTHENTICATE_REQUEST_CODE) {
             listener.onFinishLoading();
@@ -435,6 +427,12 @@ public class AuthenticateExtention {
                     listener.onAuthenError(ZaloOAuthResultCode.RESULTCODE_CANT_LOGIN_GOOGLE, "Không thể đăng nhập Google.");
                 }
             }
+        } else if (requestCode == Facebook.DEFAULT_AUTH_ACTIVITY_CODE) {
+            if (mFacebook != null) {
+                mFacebook.authorizeCallback(requestCode, resultCode, data);
+            }
+        } else if (requestCode == Constant.ZALO_AUTHENTICATE_REQUEST_CODE) {
+            zaloSDK.onActivityResult(activity, requestCode, resultCode, data);
         }
         return false;
     }

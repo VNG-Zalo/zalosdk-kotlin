@@ -173,7 +173,7 @@ public class LoginForm extends RelativeLayout implements OnClickListener {
                                     int resultCode, Intent data) {
         if (authenticateExtention != null) {
             Log.i("debuglog", "LoginForm-----onActivityResult");
-            authenticateExtention.onActivityResult(activity, requestCode, resultCode, data, loginListener);
+            authenticateExtention.onActivityResult(activity, requestCode, resultCode, data);
         }
         return false;
     }
