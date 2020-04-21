@@ -3,14 +3,12 @@ package com.zing.zalo.zalosdk.demo
 import android.content.Intent
 import android.os.Bundle
 import android.widget.TextView
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import com.zing.zalo.zalosdk.kotlin.oauth.model.ErrorResponse
 import com.zing.zalo.zalosdk.oauth.LoginForm
 import com.zing.zalo.zalosdk.oauth.OAuthCompleteListener
 import com.zing.zalo.zalosdk.oauth.OauthResponse
 
-class AuthextActivity :ZBaseActivity(){
+class LoginFormActivity :ZBaseActivity(){
 
     private lateinit var callbackTextView: TextView
     private lateinit var loginForm: LoginForm
@@ -51,7 +49,7 @@ class AuthextActivity :ZBaseActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContentView(R.layout.activity_authext)
+        setContentView(R.layout.activity_login_form)
         loginForm = findViewById(R.id.LoginForm)
         callbackTextView = findViewById(R.id.callback_text_view)
         loginForm.setOAuthCompleteListener(listener)

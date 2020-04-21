@@ -7,7 +7,7 @@
 
     <include
             android:id="@+id/zalosdk_toolbar"
-            layout="@layout/zalosdk_videw_web_login_toolbar" />
+            layout="@layout/zalosdk_view_web_login_toolbar" />
 
     <FrameLayout
             android:id="@+id/zalosdk_weblogin_container"

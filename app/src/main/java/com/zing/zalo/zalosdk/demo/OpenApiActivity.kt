@@ -158,7 +158,7 @@ class OpenApiActivity : AppCompatActivity(), ZaloOpenApiCallback, ZaloPluginCall
                 zaloOpenApi.shareFeed(url, this)
             }
             PostToWall -> {
-                zaloOpenApi.postToWall(message,url, this)
+                zaloOpenApi.postToWall(url,message, this)
             }
         }
     }

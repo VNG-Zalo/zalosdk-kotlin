@@ -3,7 +3,6 @@ package com.zing.zalo.zalosdk.demo
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.zing.zalo.zalosdk.kotlin.analytics.EventStorage
 import com.zing.zalo.zalosdk.kotlin.analytics.EventTracker
@@ -55,8 +54,8 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent(this, ZPTrackingActivity::class.java)
         startActivity(intent)
     }
-    fun onClickAuthextActivityButton(view: View) {
-        val intent = Intent(this, AuthextActivity::class.java)
+    fun onClickLoginFormActivityButton(view: View) {
+        val intent = Intent(this, LoginFormActivity::class.java)
         startActivity(intent)
     }
 
