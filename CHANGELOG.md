@@ -1,6 +1,23 @@
 # Changelog
 
-All notable changes to this project will be documented in this file.
+## 2.5.0421 - 2020/04/21
+
+### Added
+
+- Thêm data class ErrorResponse, xử lý trong callback khi xuất hiện lỗi khi đăng nhập web_login, browser và App
+- Thêm onAuthenticateError(errorCode: Int, errorMsg: String?, errorResponse: ErrorResponse) trong interface IAuthenticateCompleteListener
+- Thêm new method shareMessage, shareFeed với string param
+### Deprecated
+
+- Deprecated FeedData
+- Deprecated old method shareMessage, shareFeed với FeedData param
+
+### Fixed
+
+- Fix lỗi khi  user đăng nhập bằng browser không back về app
+- Fix bug login facebook no facebook id, google no default_web_client
+- Fix callback ErrorResponse webview, browser, register zalo khi không có internet
+- Fix không nhận data onActivityResult khi login Facebook APP
 
 ## 2.5.0316 - 2020/03/16
 

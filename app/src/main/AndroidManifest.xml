@@ -15,7 +15,7 @@
             tools:ignore="AllowBackup,GoogleAppIndexingWarning">
         <activity android:name=".AuthDemoActivity"></activity>
         <activity android:name=".SettingsActivity" />
-        <activity android:name=".AuthextActivity" />
+        <activity android:name=".LoginFormActivity" />
         <activity android:name=".ZPTrackingActivity" />
         <activity android:name=".WakeUpActivity" />
         <activity android:name=".MainActivity">

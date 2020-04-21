@@ -48,7 +48,7 @@ class EventTracker : BaseModule(), IEventTracker {
 
         private val instance = EventTracker()
 
-        //Lazy singleton ??
+        @JvmStatic
         fun getInstance(): EventTracker {
             return instance
         }

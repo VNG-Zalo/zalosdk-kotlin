@@ -6,7 +6,7 @@
         android:orientation="vertical"
         tools:context=".MainActivity">
 
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fillViewport="true">
@@ -15,10 +15,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:stretchColumns="1">
-            <!--        region-->
 
             <Button
-                    android:id="@+id/auth_activity_button"
                     style="@style/Widget.AppCompat.Button.Colored"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
@@ -28,7 +26,6 @@
                     android:text="OAuth" />
 
             <Button
-                    android:id="@+id/setting_button"
                     style="@style/Widget.AppCompat.Button.Colored"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
@@ -38,17 +35,6 @@
                     android:text="Setting" />
 
             <Button
-                    android:id="@+id/event_tracking_button"
-                    style="@style/Widget.AppCompat.Button.Colored"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:backgroundTint="#05A3E5"
-                    android:gravity="center"
-                    android:onClick="onClickEventTrackingButton"
-                    android:text="Event Tracking" />
-
-            <Button
-                    android:id="@+id/wake_up_button"
                     style="@style/Widget.AppCompat.Button.Colored"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
@@ -58,7 +44,6 @@
                     android:text="Wake Up" />
 
             <Button
-                    android:id="@+id/open_api_button"
                     style="@style/Widget.AppCompat.Button.Colored"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
@@ -68,7 +53,6 @@
                     android:text="Open Api" />
 
             <Button
-                    android:id="@+id/zptracking_button"
                     style="@style/Widget.AppCompat.Button.Colored"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
@@ -78,20 +62,18 @@
                     android:text="ZP Tracking" />
 
             <Button
-                    android:id="@+id/authext_button"
                     style="@style/Widget.AppCompat.Button.Colored"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:backgroundTint="#05A3E5"
                     android:gravity="center"
-                    android:onClick="onClickAuthextActivityButton"
-                    android:text="Authext" />
+                    android:onClick="onClickLoginFormActivityButton"
+                    android:text="Login Form" />
 
             <TextView
                     android:id="@+id/app_id_text_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
-            <!--        endregion-->
         </TableLayout>
     </ScrollView>
 </LinearLayout>

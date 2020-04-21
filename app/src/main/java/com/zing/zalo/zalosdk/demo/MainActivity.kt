@@ -3,7 +3,6 @@ package com.zing.zalo.zalosdk.demo
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.zing.zalo.zalosdk.kotlin.analytics.EventStorage
 import com.zing.zalo.zalosdk.kotlin.analytics.EventTracker
@@ -35,14 +34,7 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent(this, SettingsActivity::class.java)
         startActivity(intent)
     }
-    fun onClickEventTrackingButton(view: View) {
-        eventTracker.addEvent(mockEvent())
 
-        val eventStorage = EventStorage(this)
-        val event = eventStorage.loadEventsFromDevice()
-        Log.d("event size", event.size.toString())
-
-    }
     fun onClickOpenApiActivityButton(view: View) {
         val intent = Intent(this, OpenApiActivity::class.java)
         startActivity(intent)
@@ -55,24 +47,14 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent(this, ZPTrackingActivity::class.java)
         startActivity(intent)
     }
-    fun onClickAuthextActivityButton(view: View) {
-        val intent = Intent(this, AuthextActivity::class.java)
+    fun onClickLoginFormActivityButton(view: View) {
+        val intent = Intent(this, LoginFormActivity::class.java)
         startActivity(intent)
     }
-
 
     fun onClickAuthActivityButton(view: View) {
         val intent = Intent(this, AuthDemoActivity::class.java)
         startActivity(intent)
     }
 
-    private fun mockEvent(): Event {
-        val timeStamp = System.currentTimeMillis()
-        val action = "action-$timeStamp"
-        val params = mutableMapOf<String, String>()
-
-        params["name"] = "datahelper-$timeStamp"
-        params["age"] = timeStamp.toString()
-        return Event(action, params, timeStamp)
-    }
 }
