@@ -146,19 +146,19 @@ class OpenApiActivity : AppCompatActivity(), ZaloOpenApiCallback, ZaloPluginCall
 
     private fun handleClickButtonApi(case: OpenApiAction, msg: String, url: String) {
 
-        val message = if (TextUtils.isEmpty(msg)) "" else msg
+//        val msg = if (TextUtils.isEmpty(msg)) "" else msg
         when (case) {
             ShareMessageViaApp -> {
-                zaloOpenApi.shareMessage(message, this)
-            }
-            SendMessageToFriend -> {
-                zaloOpenApi.sendMsgToFriend(friendID[0], message, url, this)
+                zaloOpenApi.shareMessage(msg, this)
             }
             ShareFeedViaApp -> {
                 zaloOpenApi.shareFeed(url, this)
             }
+            SendMessageToFriend -> {
+                zaloOpenApi.sendMsgToFriend(friendID[0], msg, url, this)
+            }
             PostToWall -> {
-                zaloOpenApi.postToWall(url,message, this)
+                zaloOpenApi.postToWall(url,msg, this)
             }
         }
     }
