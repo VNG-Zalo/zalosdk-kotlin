@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">Demo</string>
+    <string name="app_name" translatable="false">zSDK Kotlin</string>
     <string name="zalosdk_app_id" translatable="false">1829577289837795818</string>
     <string name="preloadChannel" translatable="false">OPPODATA</string>
     <string name="zalosdk_login_protocol_schema" translatable="false">zalo-1829577289837795818</string>

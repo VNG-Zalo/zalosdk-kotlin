@@ -40,15 +40,6 @@
                     android:layout_height="50dp"
                     android:backgroundTint="#05A3E5"
                     android:gravity="center"
-                    android:onClick="onClickEventTrackingButton"
-                    android:text="Event Tracking" />
-
-            <Button
-                    style="@style/Widget.AppCompat.Button.Colored"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:backgroundTint="#05A3E5"
-                    android:gravity="center"
                     android:onClick="onClickWakeUpActivityButton"
                     android:text="Wake Up" />
 
