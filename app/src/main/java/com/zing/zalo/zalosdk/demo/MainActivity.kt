@@ -34,14 +34,7 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent(this, SettingsActivity::class.java)
         startActivity(intent)
     }
-    fun onClickEventTrackingButton(view: View) {
-        eventTracker.addEvent(mockEvent())
 
-        val eventStorage = EventStorage(this)
-        val event = eventStorage.loadEventsFromDevice()
-        Log.d("event size", event.size.toString())
-
-    }
     fun onClickOpenApiActivityButton(view: View) {
         val intent = Intent(this, OpenApiActivity::class.java)
         startActivity(intent)
@@ -59,19 +52,9 @@ class MainActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-
     fun onClickAuthActivityButton(view: View) {
         val intent = Intent(this, AuthDemoActivity::class.java)
         startActivity(intent)
     }
 
-    private fun mockEvent(): Event {
-        val timeStamp = System.currentTimeMillis()
-        val action = "action-$timeStamp"
-        val params = mutableMapOf<String, String>()
-
-        params["name"] = "datahelper-$timeStamp"
-        params["age"] = timeStamp.toString()
-        return Event(action, params, timeStamp)
-    }
 }
