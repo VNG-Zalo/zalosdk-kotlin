@@ -12,7 +12,6 @@ import com.zing.zalo.zalosdk.kotlin.core.http.HttpGetRequest
 import com.zing.zalo.zalosdk.kotlin.core.http.HttpUrlEncodedRequest
 import com.zing.zalo.zalosdk.kotlin.core.http.IHttpRequest
 import com.zing.zalo.zalosdk.kotlin.core.log.Log
-import com.zing.zalo.zalosdk.kotlin.openapi.ZaloOAuthResultCode.RESULTCODE_ZALO_APPLICATION_NOT_INSTALLED
 import com.zing.zalo.zalosdk.kotlin.openapi.exception.OpenApiException
 import com.zing.zalo.zalosdk.kotlin.openapi.model.FeedData
 import kotlinx.coroutines.CoroutineScope
@@ -160,6 +159,12 @@ internal class OpenApi(
         link: String,
         @Nullable callback: ZaloOpenApiCallback
     ) {
+        if (TextUtils.isEmpty(msg)) {
+            val errorJSON = JSONObject()
+                .put("error", ZaloOAuthResultCode.RESULTCODE_INVALID_PARAM)
+                .put("message", "Message must not be null or empty")
+            return callback.onResult(errorJSON)
+        }
         val request = HttpUrlEncodedRequest(Constant.api.GRAPH_ME_MESSAGE_PATH)
         request.addParameter("to", friendId)
         request.addParameter("message", msg)
@@ -180,6 +185,7 @@ internal class OpenApi(
         shareZalo(context, feedData, "message", callback)
     }
 
+
     /**
      * đăng bài viết lên trang nhật ký của user thông qua app Zalo.
      * https://developers.zalo.me/docs/sdk/android-sdk/tuong-tac-voi-app-zalo/dang-bai-viet-post-447
@@ -193,9 +199,18 @@ internal class OpenApi(
         shareZalo(context, feedData, "feed", callback)
     }
 
+    override fun shareMessage(message: String, callback: ZaloPluginCallback?) {
+        shareZalo(context, message, "message", callback)
+    }
+
+    override fun shareFeed(link: String, callback: ZaloPluginCallback?) {
+        shareZalo(context, link, "feed", callback)
+    }
+
 
     //#region private supportive method
-    internal fun shareZalo(
+    @Deprecated("")
+    private fun shareZalo(
         context: Context,
         feedData: FeedData,
         shareTo: String,
@@ -212,8 +227,51 @@ internal class OpenApi(
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             context.startActivity(intent)
         } else {
-            callbackError(callback, RESULTCODE_ZALO_APPLICATION_NOT_INSTALLED)
+            Log.w("Zalo app is not installed!")
         }
+    }
+
+    private fun shareZalo(
+        context: Context,
+        message: String,
+        shareTo: String,
+        callback: ZaloPluginCallback?
+    ) {
+        try {
+            if (TextUtils.isEmpty(message))
+                throw OpenApiException(
+                    ZaloOAuthResultCode.RESULTCODE_INVALID_PARAM,
+                    "Message or link must not be null or empty!"
+                )
+
+            val intent = getShareIntentZaloApp(message, shareTo)
+            val ableCalled = intent.resolveActivityInfo(context.packageManager, 0) != null
+
+            if (!ableCalled)
+                throw OpenApiException(
+                    ZaloOAuthResultCode.RESULTCODE_ZALO_APPLICATION_NOT_INSTALLED,
+                    context.getString(R.string.zalo_app_not_installed)
+                )
+
+            registerBroadCast(context)
+
+            callbackZaloPluginClient = if (callback == null) null else WeakReference(callback)
+
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            context.startActivity(intent)
+
+
+        } catch (ex: OpenApiException) {
+            callback?.onResult(false, ex.error_code, ex.message, null)
+        } catch (ex: java.lang.Exception) {
+            callback?.onResult(
+                false,
+                ZaloOAuthResultCode.RESULTCODE_UNEXPECTED_ERROR,
+                ex.message,
+                null
+            )
+        }
+
     }
 
     private fun callApiRequest(request: IHttpRequest, @Nullable callback: ZaloOpenApiCallback) {
@@ -225,12 +283,8 @@ internal class OpenApi(
                     else {
                         val result = JSONObject()
                         result.put("error", errorCode)
-                        result.put(
-                            "message",
-                            ZaloOAuthResultCode.findErrorMessageByID(context, errorCode)
-                        )
+                        result.put("message", ZaloOAuthResultCode.findErrorMessageByID(context,errorCode))
                         GlobalScope.launch(Dispatchers.Main) { callback.onResult(result) }
-//                        callback.onResult(result)
                     }
                 }
             } else
@@ -251,10 +305,12 @@ internal class OpenApi(
 
     private fun isAccessTokenValid(): Boolean {
         if (!TextUtils.isEmpty(accessToken) && accessTokenExpiredTime > System.currentTimeMillis()) return true
-        Log.w("isAccessTokenValid", "Token is not valid")
+
+        Log.w("isAccessTokenValid", "Invalid ")
         return false
     }
 
+    @Deprecated("")
     private fun getShareIntentZaloApp(
         feedData: FeedData,
         shareTo: String
@@ -281,12 +337,50 @@ internal class OpenApi(
         return intent
     }
 
+    private fun getShareIntentZaloApp(
+        message: String,
+        shareTo: String
+    ): Intent {
+        val intent = Intent(Intent.ACTION_SEND)
+        intent.type = "text/plain"
+        intent.component = ComponentName(
+            Constant.ZALO_PACKAGE_NAME,
+            "com.zing.zalo.ui.TempShareViaActivity"
+        )
+//        intent.putExtra(Intent.EXTRA_SUBJECT, feedData.msg)
+        intent.putExtra(Intent.EXTRA_TEXT, message)
+        val tokenShareZalo = System.currentTimeMillis().toString()
+        intent.putExtra("token", tokenShareZalo)
+
+        when (shareTo) {
+            "feed" -> intent.putExtra(ZALO_PARAM_POST_FEED, true)
+            "message" -> intent.putExtra("hidePostFeed", true)
+        }
+
+        intent.putExtra("autoBack2S", true)
+        intent.putExtra(ZALO_PARAM_BACK_TO_SOURCE, true)
+        return intent
+    }
+
+
+    private fun setErrorAndInvokeZaloOpenApiCallbackToUser(
+        callback: ZaloOpenApiCallback?,
+        errorCode: Int,
+        message: String
+    ) {
+        val errorJSON = JSONObject()
+        errorJSON.put("error", errorCode)
+        errorJSON.put("message", message)
+        callback?.onResult(errorJSON)
+    }
+
     private fun registerBroadCast(context: Context) {
         if (Utils.isZaloSupportCallBack(context)) {
             if (!isBroadcastRegistered) {
                 val intentFilter = IntentFilter()
                 intentFilter.addAction("com.zing.zalo.shareFeedResultInfo")
                 feedCallbackReceiver = object : BroadcastReceiver() {
+                    @Throws(OpenApiException::class)
                     override fun onReceive(ctx: Context?, intent: Intent?) {
                         Log.d(
                             "ZaloOpenApi - broadCastCallBack",
@@ -308,7 +402,10 @@ internal class OpenApi(
                                     }
                                     val callback =
                                         callbackZaloPluginClient!!.get()
-                                            ?: throw OpenApiException("Can't get callback zalo plugin client!")
+                                            ?: throw OpenApiException(
+                                                ZaloOAuthResultCode.RESULTCODE_UNEXPECTED_ERROR,
+                                                "Can't get callback zalo plugin client!"
+                                            )
                                     callback.onResult(
                                         isSuccess,
                                         data.getInt("error_code"),
@@ -378,12 +475,12 @@ internal class OpenApi(
     private fun makeGetAccessTokenRequest(): Int {
 
         val authCode = oauthCode ?: ""
-        if (TextUtils.isEmpty(authCode)) throw OpenApiException("Auth code is invalid - Login again!")
-        accessTokenRequest.addQueryStringParameter("code", authCode)
-        accessTokenRequest.addQueryStringParameter(
-            "pkg_name",
-            AppInfo.getInstance().getPackageName()
+        if (TextUtils.isEmpty(authCode)) throw OpenApiException(
+            ZaloOAuthResultCode.RESULTCODE_INVALID_OAUTH_CODE,
+            "Authcode is invalid - Login again!"
         )
+        accessTokenRequest.addQueryStringParameter("code", authCode)
+        accessTokenRequest.addQueryStringParameter("pkg_name", AppInfo.getInstance().getPackageName())
         accessTokenRequest.addQueryStringParameter(
             "sign_key",
             AppInfo.getInstance().getApplicationHashKey() ?: ""
@@ -422,19 +519,4 @@ internal class OpenApi(
         }
         return errorCode
     }
-
-    private fun callbackError(
-        callback: ZaloPluginCallback?,
-        errorCode: Int
-    ) {
-
-        val message = ZaloOAuthResultCode.findErrorMessageByID(context, errorCode)
-        val errorJson = JSONObject()
-        errorJson.put("error", errorCode)
-        errorJson.put("message", message)
-
-        Log.w("OpenApi", message)
-        callback?.onResult(false, errorCode, message, errorJson.toString())
-    }
-    //#endregion
 }

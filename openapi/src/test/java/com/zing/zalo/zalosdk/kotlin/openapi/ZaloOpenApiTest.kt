@@ -201,7 +201,6 @@ class ZaloOpenApiTest {
                 testScope
             )
         mock.shareMessage(mockFeedData(), null)
-
         //3.a verify
         assertThat(broadcastReceiver.isCaptured).isTrue()
         assertThat(intent.captured.getBooleanExtra("hidePostFeed", false)).isTrue()
@@ -342,10 +341,6 @@ class ZaloOpenApiTest {
         val feed = FeedData()
         feed.msg = "Prefill message"
         feed.link = "https://news.zing.vn"
-        feed.linkTitle = "Zing News"
-        feed.linkSource = "https://news.zing.vn"
-        feed.linkThumb =
-            listOf("https://img.v3.news.zdn.vn/w660/Uploaded/xpcwvovb/2015_12_15/cua_kinh_2.jpg")
         return feed
     }
 

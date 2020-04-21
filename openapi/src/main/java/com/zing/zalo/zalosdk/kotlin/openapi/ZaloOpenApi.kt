@@ -1,6 +1,7 @@
 package com.zing.zalo.zalosdk.kotlin.openapi
 
 import android.content.Context
+import android.text.TextUtils
 import com.zing.zalo.zalosdk.kotlin.core.http.HttpClient
 import com.zing.zalo.zalosdk.kotlin.core.servicemap.ServiceMapManager
 import com.zing.zalo.zalosdk.kotlin.openapi.model.FeedData
@@ -8,6 +9,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import org.jetbrains.annotations.Nullable
+import org.json.JSONObject
 
 class ZaloOpenApi(context: Context, oauthCode: String?) {
 
@@ -130,6 +132,9 @@ class ZaloOpenApi(context: Context, oauthCode: String?) {
      * @param feedData: object feed cần share
      * @param callback: SDK sẽ gọi về callback này khi thông tin đã được gửicho app Zalo.
      */
+    @Deprecated(Constant.DEPRECATED_MESSAGE,
+        ReplaceWith(".shareMessage(String message,ZaloPluginCallback callback)")
+    )
     fun shareMessage(
         feedData: FeedData,
         callback: ZaloPluginCallback?
@@ -143,11 +148,40 @@ class ZaloOpenApi(context: Context, oauthCode: String?) {
      * @param feedData: object feed cần share
      * @param callback: callback: SDK sẽ gọi về callback này khi thông tin đã được gửicho app Zalo.
      */
+    @Deprecated(Constant.DEPRECATED_MESSAGE, ReplaceWith(".shareFeed(String link,ZaloPluginCallback callback)"))
     fun shareFeed(
         feedData: FeedData,
         callback: ZaloPluginCallback?
     ) {
         openApi.shareFeed(feedData, callback)
+    }
+
+
+    /**
+     * đăng bài viết lên trang nhật ký của user thông qua app Zalo.
+     * https://developers.zalo.me/docs/sdk/android-sdk/tuong-tac-voi-app-zalo/dang-bai-viet-post-447
+     * @param message: message cần share
+     * @param callback: callback: SDK sẽ gọi về callback này khi thông tin đã được gửicho app Zalo.
+     */
+    fun shareMessage(
+        message: String,
+        @Nullable callback: ZaloPluginCallback?
+    ) {
+        openApi.shareMessage(message, callback)
+    }
+
+
+    /**
+     * đăng bài viết lên trang nhật ký của user thông qua app Zalo.
+     * https://developers.zalo.me/docs/sdk/android-sdk/tuong-tac-voi-app-zalo/dang-bai-viet-post-447
+     * @param feedData: object feed cần share
+     * @param callback: callback: SDK sẽ gọi về callback này khi thông tin đã được gửicho app Zalo.
+     */
+    fun shareFeed(
+        link: String,
+        @Nullable callback: ZaloPluginCallback?
+    ) {
+        openApi.shareFeed(link, callback)
     }
 
 

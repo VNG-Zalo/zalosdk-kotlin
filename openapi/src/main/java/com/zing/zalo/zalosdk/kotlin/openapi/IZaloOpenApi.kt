@@ -34,13 +34,25 @@ interface IZaloOpenApi {
         @Nullable callback: ZaloOpenApiCallback
     )
 
+    @Deprecated("")
     fun shareMessage(
         feedData: FeedData,
         @Nullable callback: ZaloPluginCallback?
     )
 
+    @Deprecated("")
     fun shareFeed(
         feedData: FeedData,
+        @Nullable callback: ZaloPluginCallback?
+    )
+
+    fun shareMessage(
+        message:String ,
+        @Nullable callback: ZaloPluginCallback?
+    )
+
+    fun shareFeed(
+        link:String,
         @Nullable callback: ZaloPluginCallback?
     )
 

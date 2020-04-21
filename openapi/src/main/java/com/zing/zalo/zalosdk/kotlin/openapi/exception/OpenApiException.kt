@@ -1,3 +1,6 @@
 package com.zing.zalo.zalosdk.kotlin.openapi.exception
 
-class OpenApiException(message: String) : Exception(message)
+
+
+class OpenApiException (var error_code: Int, message: String):Exception(message) {
+}

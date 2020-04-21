@@ -1,7 +1,10 @@
 <resources>
     <string name="app_name" translatable="false">Demo</string>
-    <string name="zalosdk_app_id" translatable="false">1188893058792179309</string>
+    <string name="zalosdk_app_id" translatable="false">1829577289837795818</string>
     <string name="preloadChannel" translatable="false">OPPODATA</string>
-    <string name="zalosdk_login_protocol_schema" translatable="false">zalo-1188893058792179309</string>
+    <string name="zalosdk_login_protocol_schema" translatable="false">zalo-1829577289837795818</string>
     <string name="facebook_appid" translatable="false">789039914458492</string>
+    <string name="default_link_button" translatable="false">Normal Link</string>
+    <string name="default_image_link_button" translatable="false">Image Url</string>
+    <string name="default_video_link_button" translatable="false">Video Url</string>
 </resources>
